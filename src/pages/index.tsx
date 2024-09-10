@@ -1,11 +1,2 @@
-import React from 'react'
-
-const Index = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
-
-export default Index
+export {default as Login} from './auth/login.tsx'
+export {default as Dashboard} from './Dashboard/dashboard.tsx'
