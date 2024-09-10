@@ -1,5 +1,4 @@
-import StatisticCard from '@/components/custom/cards/statistic-card';
-import React from 'react';
+import {StatisticCard} from "@/components";
 
 const Dashboard = () => {
   return (
