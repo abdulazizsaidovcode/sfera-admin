@@ -252,6 +252,30 @@ module.exports = {
             transform: "translate(-50%, -50%) scale(0.9)",
           },
         },
+        "border-beam": {
+          "100%": {
+            "offset-distance": "100%",
+          },
+        },
+        "shine-pulse": {
+          "0%": {
+            "background-position": "0% 0%",
+          },
+          "50%": {
+            "background-position": "100% 100%",
+          },
+          to: {
+            "background-position": "0% 0%",
+          },
+        },
+        meteor: {
+          "0%": { transform: "rotate(215deg) translateX(0)", opacity: "1" },
+          "70%": { opacity: "1" },
+          "100%": {
+            transform: "rotate(215deg) translateX(-500px)",
+            opacity: "0",
+          },
+        },
       },
       animation: {
         'ping-once': 'ping 5s cubic-bezier(0, 0, 0.2, 1)',
@@ -260,6 +284,8 @@ module.exports = {
         'spin-2': 'spin 2s linear infinite',
         'spin-3': 'spin 3s linear infinite',
         ripple: "ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite",
+        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
+        meteor: "meteor 5s linear infinite",
       }
     }
   },
