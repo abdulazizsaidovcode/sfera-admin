@@ -20,6 +20,7 @@ const BentoCard = (
         description,
         href,
         cta,
+        onSetRole
     }: {
         name: string;
         className: string;
@@ -28,6 +29,7 @@ const BentoCard = (
         description: string;
         href: string;
         cta: string;
+        onSetRole: () => void
     }) => (
     <div
         key={name}
@@ -38,7 +40,7 @@ const BentoCard = (
         )}
     >
         <BorderBeam size={600} duration={10} delay={2}/>
-        <Meteors number={50} />
+        <Meteors number={50}/>
         <div>{background}</div>
         <div
             className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6 transition-all duration-300 group-hover:-translate-y-10">
@@ -56,7 +58,7 @@ const BentoCard = (
             )}
         >
             <Button variant="ghost" asChild size="sm" className="pointer-events-auto">
-                <Link to={href}>
+                <Link to={href} onClick={onSetRole}>
                     {cta}
                     <ArrowRightIcon className="ml-2 h-4 w-4"/>
                 </Link>

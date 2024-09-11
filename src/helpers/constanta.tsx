@@ -3,29 +3,32 @@ import {CalendarIcon, FileTextIcon, InputIcon} from "@radix-ui/react-icons";
 export const features = [
     {
         Icon: FileTextIcon,
-        name: "Save your files",
-        description: "We automatically save your files as you type.",
-        href: "/",
-        cta: "Learn more",
+        name: "Sfera Edu",
+        description: "Do you want to build your Sfera Edu website data?",
+        href: "/admin/dashboard",
+        cta: "Next",
         background: <></>,
         className: "h-50",
+        onSetRole: () => sessionStorage.setItem('admin_roles', 'ADMIN_EDU')
     },
     {
         Icon: InputIcon,
-        name: "Full text search",
-        description: "Search through all your files in one place.",
-        href: "/",
-        cta: "Learn more",
+        name: "Sfera Online",
+        description: "Do you want to build your Sfera Online website data?",
+        href: "/admin/dashboard",
+        cta: "Next",
         background: <></>,
         className: "h-50",
+        onSetRole: () => sessionStorage.setItem('admin_roles', 'ADMIN_ONLINE')
     },
     {
         Icon: CalendarIcon,
-        name: "Calendar",
-        description: "Use the calendar to filter your files by date.",
-        href: "/",
-        cta: "Learn more",
+        name: "Sfera Quiz",
+        description: "Do you want to build your Sfera Quiz website data?",
+        href: "/admin/dashboard",
+        cta: "Next",
         background: <></>,
         className: "h-50",
+        onSetRole: () => sessionStorage.setItem('admin_roles', 'ADMIN_QUIZ')
     }
 ];
