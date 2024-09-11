@@ -1,23 +1,41 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
+const {
+  default: flattenColorPalette,
+} = require("tailwindcss/lib/util/flattenColorPalette");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  darkMode: 'class',
+  darkMode: ["class"],
+  content: [
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+  ],
+  prefix: "",
   theme: {
-    backgroundImage: {
-      'custom-gradient': 'linear-gradient(90deg, #1D4ED8, #4F46E5)',
-    },
-    fontFamily: {
-      satoshi: ['Satoshi', 'sans-serif']
-    },
-    screens: {
-      '2xsm': '375px',
-      xsm: '465px',
-      '3xl': '2000px',
-      ...defaultTheme.screens
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
     },
     extend: {
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
+
       colors: {
         darkGreen: "#16423C",
         lighterGreen: "#6A9C89",
@@ -291,7 +309,18 @@ module.exports = {
         "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
         meteor: "meteor 5s linear infinite",
       }
-    }
+    },
   },
-  plugins: []
-};
+  plugins: [require("tailwindcss-animate"), addVariablesForColors],
+}
+
+function addVariablesForColors({ addBase, theme }) {
+  let allColors = flattenColorPalette(theme("colors"));
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ":root": newVars,
+  });
+}
