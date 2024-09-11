@@ -2,11 +2,13 @@ import DropdownUser from './DropdownUser';
 import {IoNotifications} from "react-icons/io5";
 import {AiFillMessage} from "react-icons/ai";
 import {RxDashboard} from "react-icons/rx";
+import {useNavigate} from "react-router-dom";
 
 const Header = (props: {
     sidebarOpen: string | boolean | undefined;
     setSidebarOpen: (arg0: boolean) => void;
 }) => {
+    const navigate = useNavigate();
     return (
         <header className="sticky top-0 z-999 flex w-full bg-lighterGreen drop-shadow-1">
             <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
@@ -54,9 +56,30 @@ const Header = (props: {
                 </div>
                 <div className="hidden sm:block"></div>
                 <div className="flex items-center gap-4">
-                    <RxDashboard size={26} className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer`} />
-                    <IoNotifications size={26} className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer`} />
-                    <AiFillMessage size={26} className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer mr-4`} />
+                    <RxDashboard
+                        size={26}
+                        className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer`}
+                        onClick={() => {
+                            sessionStorage.setItem('admin_roles', 'ADMIN_EDU')
+                            navigate('/edu/dashboard')
+                        }}
+                    />
+                    <IoNotifications
+                        size={26}
+                        className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer`}
+                        onClick={() => {
+                            sessionStorage.setItem('admin_roles', 'ADMIN_ONLINE')
+                            navigate('/online/dashboard')
+                        }}
+                    />
+                    <AiFillMessage
+                        size={26}
+                        className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer mr-4`}
+                        onClick={() => {
+                            sessionStorage.setItem('admin_roles', 'ADMIN_QUIZ')
+                            navigate('/quiz/dashboard')
+                        }}
+                    />
                     <DropdownUser/>
                 </div>
             </div>

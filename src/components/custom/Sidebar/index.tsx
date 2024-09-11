@@ -5,6 +5,7 @@ import {IoIosLogOut} from 'react-icons/io';
 import ShinyButton from '@/components/magicui/shiny-button';
 import logo from '@/assets/images/Sfer 1.png';
 import {sideData} from "@/helpers/constanta.tsx";
+import BlurFade from "@/components/magicui/blur-fade.tsx";
 
 interface SidebarProps {
     sidebarOpen: boolean;
@@ -85,29 +86,35 @@ const Sidebar = ({sidebarOpen, setSidebarOpen, isOpenModal, setIsOpenModal}: Sid
                                     pathname={location.pathname}
                                     to='/admin/site-role'
                                 />}
-                                {admin_role === 'ADMIN_QUIZ' && quizData.map(side => (
-                                    <MenuItem
-                                        title={side.title}
-                                        icon={side.icon}
-                                        pathname={location.pathname}
-                                        to={side.path}
-                                    />
+                                {admin_role === 'ADMIN_QUIZ' && quizData.map((side, idx) => (
+                                    <BlurFade duration={idx / 10 + .3} delay={idx / 9}>
+                                        <MenuItem
+                                            title={side.title}
+                                            icon={side.icon}
+                                            pathname={location.pathname}
+                                            to={side.path}
+                                        />
+                                    </BlurFade>
                                 ))}
-                                {admin_role === 'ADMIN_EDU' && eduData.map(side => (
-                                    <MenuItem
-                                        title={side.title}
-                                        icon={side.icon}
-                                        pathname={location.pathname}
-                                        to={side.path}
-                                    />
+                                {admin_role === 'ADMIN_EDU' && eduData.map((side, idx) => (
+                                    <BlurFade duration={idx / 10 + .3} delay={idx / 9}>
+                                        <MenuItem
+                                            title={side.title}
+                                            icon={side.icon}
+                                            pathname={location.pathname}
+                                            to={side.path}
+                                        />
+                                    </BlurFade>
                                 ))}
-                                {admin_role === 'ADMIN_ONLINE' && onlineData.map(side => (
-                                    <MenuItem
-                                        title={side.title}
-                                        icon={side.icon}
-                                        pathname={location.pathname}
-                                        to={side.path}
-                                    />
+                                {admin_role === 'ADMIN_ONLINE' && onlineData.map((side, idx) => (
+                                    <BlurFade duration={idx / 10 + .3} delay={idx / 9}>
+                                        <MenuItem
+                                            title={side.title}
+                                            icon={side.icon}
+                                            pathname={location.pathname}
+                                            to={side.path}
+                                        />
+                                    </BlurFade>
                                 ))}
                             </li>
                         </ul>

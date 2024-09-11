@@ -1,13 +1,14 @@
-import {CalendarIcon, FileTextIcon, InputIcon} from "@radix-ui/react-icons";
 import {LuLayoutDashboard} from "react-icons/lu";
-import {PiStudentFill} from "react-icons/pi";
-import {MdOutlineCategory} from "react-icons/md";
-import {SiTestcafe} from "react-icons/si";
+import {PiGlobeDuotone, PiStudentFill} from "react-icons/pi";
+import {MdCastForEducation, MdOutlineCategory} from "react-icons/md";
+import {SiCoursera, SiQuizlet, SiTestcafe} from "react-icons/si";
+import {FaLayerGroup} from "react-icons/fa";
+import {IoNotifications} from "react-icons/io5";
 
 // admin role tanlash uchun card data
 export const features = [
     {
-        Icon: FileTextIcon,
+        Icon: <MdCastForEducation className={`h-10 w-10 origin-left transform-gpu text-neutral-700 transition-all duration-300 ease-in-out group-hover:scale-75`} />,
         name: "Sfera Edu",
         description: "Do you want to build your Sfera Edu website data?",
         href: "/edu/dashboard",
@@ -17,7 +18,7 @@ export const features = [
         onSetRole: () => sessionStorage.setItem('admin_roles', 'ADMIN_EDU')
     },
     {
-        Icon: InputIcon,
+        Icon: <PiGlobeDuotone className={`h-10 w-10 origin-left transform-gpu text-neutral-700 transition-all duration-300 ease-in-out group-hover:scale-75`} />,
         name: "Sfera Online",
         description: "Do you want to build your Sfera Online website data?",
         href: "/online/dashboard",
@@ -27,7 +28,7 @@ export const features = [
         onSetRole: () => sessionStorage.setItem('admin_roles', 'ADMIN_ONLINE')
     },
     {
-        Icon: CalendarIcon,
+        Icon: <SiQuizlet className={`h-10 w-10 origin-left transform-gpu text-neutral-700 transition-all duration-300 ease-in-out group-hover:scale-75`} />,
         name: "Sfera Quiz",
         description: "Do you want to build your Sfera Quiz website data?",
         href: "/quiz/dashboard",
@@ -51,9 +52,9 @@ export const sideData = {
     ],
     eduData: [
         {title: 'Dashboard', icon: <LuLayoutDashboard size={20}/>, path: '/edu/dashboard'},
-        {title: 'Users', icon: <LuLayoutDashboard size={20}/>, path: '/edu/users'},
-        {title: 'Group', icon: <LuLayoutDashboard size={20}/>, path: '/edu/group'},
-        {title: 'Notification', icon: <LuLayoutDashboard size={20}/>, path: '/edu/notification'},
-        {title: 'Courses', icon: <LuLayoutDashboard size={20}/>, path: '/edu/course'},
+        {title: 'Users', icon: <PiStudentFill size={20}/>, path: '/edu/users'},
+        {title: 'Group', icon: <FaLayerGroup size={20}/>, path: '/edu/group'},
+        {title: 'Notification', icon: <IoNotifications size={20}/>, path: '/edu/notification'},
+        {title: 'Courses', icon: <SiCoursera size={20}/>, path: '/edu/course'},
     ],
 }
