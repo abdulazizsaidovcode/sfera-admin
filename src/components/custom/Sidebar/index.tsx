@@ -15,9 +15,9 @@ interface SidebarProps {
 
 const MenuItem = ({ title, to, pathname, icon }: { pathname: string, icon: any, title: string, to: string }) => {
     return (
-        <NavLink className={'text-black bg-[#6A9C89]'} to={to}>
+        <NavLink className={''} to={to}>
             <div
-                className={`py-3 px-4 my-3 ${pathname === to ? 'bg-[#20CC6D] group relative shadow flex items-center gap-2.5 font-medium text-black duration-300 ease-in-out cursor-pointer border-none rounded-lg' : 'bg-white hover:opacity-70 group relative shadow flex items-center gap-2.5 font-medium text-black duration-300 ease-in-out hover:bg-[#DAFBED] cursor-pointer border-stroke p-3 rounded-lg'}`}
+                className={`py-3 px-4 my-3 ${pathname === to ? 'bg-[#16423C] group relative shadow flex items-center gap-2.5 font-medium text-white duration-300 ease-in-out cursor-pointer border-none rounded-lg' : 'bg-white group relative shadow flex items-center gap-2.5 font-medium text-black duration-300 ease-in-out hover:opacity-80 cursor-pointer border-stroke p-3 rounded-lg'}`}
             >
                 {icon}
                 {title}
@@ -61,7 +61,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, isOpenModal, setIsOpenModal }: S
     return (
         <aside
             ref={sidebar}
-            className={`absolute left-0 top-0 z-10 flex h-screen w-72.5 flex-col overflow-y-hidden bg-[#C4DAD2] shadow-4 duration-300 ease-linear lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+            className={`absolute left-0 top-0 z-10 flex h-screen w-72.5 flex-col overflow-y-hidden bg-[#6A9C89] shadow-4 duration-300 ease-linear lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
             }`}
         >
             <div className="flex justify-start items-center gap-2 px-6 pb-5.5 lg:pb-6.5">
