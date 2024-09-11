@@ -1,14 +1,21 @@
+import {useState} from "react";
 import DropdownUser from './DropdownUser';
 import {IoNotifications} from "react-icons/io5";
 import {AiFillMessage} from "react-icons/ai";
 import {RxDashboard} from "react-icons/rx";
 import {useNavigate} from "react-router-dom";
+import {MdCastForEducation} from "react-icons/md";
+import {PiGlobeDuotone} from "react-icons/pi";
+import {SiQuizlet} from "react-icons/si";
 
 const Header = (props: {
     sidebarOpen: string | boolean | undefined;
     setSidebarOpen: (arg0: boolean) => void;
 }) => {
     const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
+    const openMenu = () => setIsOpen(true)
+    const closeMenu = () => setIsOpen(false)
     return (
         <header className="sticky top-0 z-999 flex w-full bg-lighterGreen drop-shadow-1">
             <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
@@ -58,30 +65,61 @@ const Header = (props: {
                 <div className="flex items-center gap-4">
                     <RxDashboard
                         size={26}
-                        className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer`}
+                        className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer ${isOpen && 'opacity-70'}`}
                         onClick={() => {
-                            sessionStorage.setItem('admin_roles', 'ADMIN_EDU')
-                            navigate('/edu/dashboard')
+                            openMenu()
+                            if (isOpen) closeMenu()
                         }}
                     />
                     <IoNotifications
                         size={26}
                         className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer`}
-                        onClick={() => {
-                            sessionStorage.setItem('admin_roles', 'ADMIN_ONLINE')
-                            navigate('/online/dashboard')
-                        }}
                     />
                     <AiFillMessage
                         size={26}
                         className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer mr-4`}
-                        onClick={() => {
-                            sessionStorage.setItem('admin_roles', 'ADMIN_QUIZ')
-                            navigate('/quiz/dashboard')
-                        }}
                     />
                     <DropdownUser/>
                 </div>
+
+                {isOpen && (
+                    <div
+                        className="absolute right-70 top-18 w-80 bg-black text-white rounded-2xl shadow-lg shadow-graydark p-4 grid grid-cols-3 gap-4 z-999">
+                        <div
+                            className="flex flex-col items-center hover:opacity-70 duration-300 cursor-pointer"
+                            onClick={() => {
+                                sessionStorage.setItem('admin_roles', 'ADMIN_EDU')
+                                navigate('/edu/dashboard')
+                                closeMenu()
+                            }}
+                        >
+                            <MdCastForEducation className="h-10 w-10"/>
+                            <span className="text-xs mt-2">Sfera Edu</span>
+                        </div>
+                        <div
+                            className="flex flex-col items-center hover:opacity-70 duration-300 cursor-pointer"
+                            onClick={() => {
+                                sessionStorage.setItem('admin_roles', 'ADMIN_ONLINE')
+                                navigate('/online/dashboard')
+                                closeMenu()
+                            }}
+                        >
+                            <PiGlobeDuotone className="h-10 w-10"/>
+                            <span className="text-xs mt-2">Sfera Online</span>
+                        </div>
+                        <div
+                            className="flex flex-col items-center hover:opacity-70 duration-300 cursor-pointer"
+                            onClick={() => {
+                                sessionStorage.setItem('admin_roles', 'ADMIN_QUIZ')
+                                navigate('/quiz/dashboard')
+                                closeMenu()
+                            }}
+                        >
+                            <SiQuizlet className="h-10 w-10"/>
+                            <span className="text-xs mt-2">Sfera Quiz</span>
+                        </div>
+                    </div>
+                )}
             </div>
         </header>
     );
