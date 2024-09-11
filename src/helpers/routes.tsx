@@ -13,7 +13,7 @@ export const routes = [
     {
         path: '/auth/login',
         element: <>
-            <PageTitle title="Login"/>
+            <PageTitle title="Admin | Login"/>
             <Login/>
         </>
     },
@@ -22,28 +22,28 @@ export const routes = [
     {
         path: '/quiz/dashboard',
         element: <>
-            <PageTitle title="Admin | Dashboard"/>
+            <PageTitle title="Quiz | Dashboard"/>
             <Dashboard/>
         </>
     },
     {
         path: '/quiz/category',
         element: <>
-            <PageTitle title="Admin | Dashboard"/>
+            <PageTitle title="Quiz | Category"/>
             <Dashboard/>
         </>
     },
     {
         path: '/quiz/test',
         element: <>
-            <PageTitle title="Admin | Dashboard"/>
+            <PageTitle title="Quiz | Test"/>
             <Dashboard/>
         </>
     },
     {
         path: '/quiz/users',
         element: <>
-            <PageTitle title="Admin | Dashboard"/>
+            <PageTitle title="Quiz | Users"/>
             <Dashboard/>
         </>
     },
@@ -52,7 +52,7 @@ export const routes = [
     {
         path: '/online/dashboard',
         element: <>
-            <PageTitle title="Admin | Dashboard"/>
+            <PageTitle title="Online platform | Dashboard"/>
             <Dashboard/>
         </>
     },
@@ -61,7 +61,35 @@ export const routes = [
     {
         path: '/edu/dashboard',
         element: <>
-            <PageTitle title="Admin | Dashboard"/>
+            <PageTitle title="Edu | Dashboard"/>
+            <Dashboard/>
+        </>
+    },
+    {
+        path: '/edu/users',
+        element: <>
+            <PageTitle title="Edu | Users"/>
+            <Dashboard/>
+        </>
+    },
+    {
+        path: '/edu/group',
+        element: <>
+            <PageTitle title="Edu | Groups"/>
+            <Dashboard/>
+        </>
+    },
+    {
+        path: '/edu/notification',
+        element: <>
+            <PageTitle title="Edu | Notification"/>
+            <Dashboard/>
+        </>
+    },
+    {
+        path: '/edu/course',
+        element: <>
+            <PageTitle title="Edu | Courses"/>
             <Dashboard/>
         </>
     },

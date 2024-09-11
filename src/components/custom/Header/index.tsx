@@ -1,4 +1,7 @@
 import DropdownUser from './DropdownUser';
+import {IoNotifications} from "react-icons/io5";
+import {AiFillMessage} from "react-icons/ai";
+import {RxDashboard} from "react-icons/rx";
 
 const Header = (props: {
     sidebarOpen: string | boolean | undefined;
@@ -50,7 +53,10 @@ const Header = (props: {
                     </button>
                 </div>
                 <div className="hidden sm:block"></div>
-                <div className="flex items-center gap-3 2xsm:gap-7">
+                <div className="flex items-center gap-4">
+                    <RxDashboard size={26} className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer`} />
+                    <IoNotifications size={26} className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer`} />
+                    <AiFillMessage size={26} className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer mr-4`} />
                     <DropdownUser/>
                 </div>
             </div>

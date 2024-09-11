@@ -1,10 +1,10 @@
 import {useEffect, useRef} from 'react';
 import {LuLayoutDashboard} from 'react-icons/lu';
 import {NavLink, useLocation} from 'react-router-dom';
-import {PiStudentFill} from 'react-icons/pi';
 import {IoIosLogOut} from 'react-icons/io';
 import ShinyButton from '@/components/magicui/shiny-button';
 import logo from '@/assets/images/Sfer 1.png';
+import {sideData} from "@/helpers/constanta.tsx";
 
 interface SidebarProps {
     sidebarOpen: boolean;
@@ -34,6 +34,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen, isOpenModal, setIsOpenModal}: Sid
     const trigger = useRef<any>(null);
     const sidebar = useRef<any>(null);
     const admin_role = sessionStorage.getItem('admin_roles');
+    const {quizData, onlineData, eduData} = sideData
 
     useEffect(() => {
         const clickHandler = ({target}: MouseEvent) => {
@@ -84,32 +85,30 @@ const Sidebar = ({sidebarOpen, setSidebarOpen, isOpenModal, setIsOpenModal}: Sid
                                     pathname={location.pathname}
                                     to='/admin/site-role'
                                 />}
-                                {admin_role === 'ADMIN_QUIZ' && (<>
+                                {admin_role === 'ADMIN_QUIZ' && quizData.map(side => (
                                     <MenuItem
-                                        title='Dashboard'
-                                        icon={<LuLayoutDashboard size={20}/>}
+                                        title={side.title}
+                                        icon={side.icon}
                                         pathname={location.pathname}
-                                        to='/quiz/dashboard'
+                                        to={side.path}
                                     />
+                                ))}
+                                {admin_role === 'ADMIN_EDU' && eduData.map(side => (
                                     <MenuItem
-                                        title='Category'
-                                        icon={<PiStudentFill size={20}/>}
+                                        title={side.title}
+                                        icon={side.icon}
                                         pathname={location.pathname}
-                                        to='/quiz/category'
+                                        to={side.path}
                                     />
+                                ))}
+                                {admin_role === 'ADMIN_ONLINE' && onlineData.map(side => (
                                     <MenuItem
-                                        title='Test'
-                                        icon={<PiStudentFill size={20}/>}
+                                        title={side.title}
+                                        icon={side.icon}
                                         pathname={location.pathname}
-                                        to='/quiz/test'
+                                        to={side.path}
                                     />
-                                    <MenuItem
-                                        title='Users'
-                                        icon={<PiStudentFill size={20}/>}
-                                        pathname={location.pathname}
-                                        to='/quiz/users'
-                                    />
-                                </>)}
+                                ))}
                             </li>
                         </ul>
                         <ShinyButton

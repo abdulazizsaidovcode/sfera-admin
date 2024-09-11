@@ -3,7 +3,7 @@ const DropdownUser = () => {
 
     const roles = (role: string) => {
         if (role === 'ADMIN_EDU') return 'Education admin'
-        else if (role === 'ADMIN_QUIZ') return 'Quiz test admin'
+        else if (role === 'ADMIN_QUIZ') return 'Quiz admin'
         else if (role === 'ADMIN_ONLINE') return 'Online platform admin'
     }
     return (
