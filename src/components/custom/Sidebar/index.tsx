@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
-import { LuLayoutDashboard } from 'react-icons/lu';
-import { NavLink, useLocation } from 'react-router-dom';
-import { PiStudentFill } from 'react-icons/pi';
-import { IoIosLogOut } from 'react-icons/io';
+import {useEffect, useRef} from 'react';
+import {LuLayoutDashboard} from 'react-icons/lu';
+import {NavLink, useLocation} from 'react-router-dom';
+import {PiStudentFill} from 'react-icons/pi';
+import {IoIosLogOut} from 'react-icons/io';
 import ShinyButton from '@/components/magicui/shiny-button';
 import logo from '@/assets/images/Sfer 1.png';
 
@@ -13,11 +13,14 @@ interface SidebarProps {
     setIsOpenModal?: (arg: boolean) => void;
 }
 
-const MenuItem = ({ title, to, pathname, icon }: { pathname: string, icon: any, title: string, to: string }) => {
+const MenuItem = ({title, to, pathname, icon}: { pathname: string, icon: any, title: string, to: string }) => {
     return (
         <NavLink className={''} to={to}>
             <div
-                className={`py-3 px-4 my-3 ${pathname === to ? 'bg-[#16423C] group relative shadow flex items-center gap-2.5 font-medium text-white duration-300 ease-in-out cursor-pointer border-none rounded-lg' : 'bg-white group relative shadow flex items-center gap-2.5 font-medium text-black duration-300 ease-in-out hover:opacity-80 cursor-pointer border-stroke p-3 rounded-lg'}`}
+                className={`py-3 px-4 my-3 ${pathname === to
+                    ? 'bg-darkGreen group relative shadow flex items-center gap-2.5 font-medium text-white duration-300 ease-in-out cursor-pointer border-none rounded-lg'
+                    : 'bg-white group relative shadow flex items-center gap-2.5 font-medium text-black duration-300 ease-in-out hover:opacity-80 cursor-pointer border-stroke p-3 rounded-lg'}`
+                }
             >
                 {icon}
                 {title}
@@ -26,13 +29,14 @@ const MenuItem = ({ title, to, pathname, icon }: { pathname: string, icon: any, 
     );
 };
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen, isOpenModal, setIsOpenModal }: SidebarProps) => {
+const Sidebar = ({sidebarOpen, setSidebarOpen, isOpenModal, setIsOpenModal}: SidebarProps) => {
     const location = useLocation();
     const trigger = useRef<any>(null);
     const sidebar = useRef<any>(null);
+    const admin_role = sessionStorage.getItem('admin_roles');
 
     useEffect(() => {
-        const clickHandler = ({ target }: MouseEvent) => {
+        const clickHandler = ({target}: MouseEvent) => {
             if (!sidebar.current || !trigger.current) return;
             if (
                 !sidebarOpen ||
@@ -46,7 +50,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, isOpenModal, setIsOpenModal }: S
     });
 
     useEffect(() => {
-        const keyHandler = ({ keyCode }: KeyboardEvent) => {
+        const keyHandler = ({keyCode}: KeyboardEvent) => {
             if (!sidebarOpen || keyCode !== 27) return;
             setSidebarOpen(false);
         };
@@ -61,12 +65,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, isOpenModal, setIsOpenModal }: S
     return (
         <aside
             ref={sidebar}
-            className={`absolute left-0 top-0 z-99 flex h-screen w-72.5 flex-col overflow-y-hidden bg-[#6A9C89] shadow-4 duration-300 ease-linear lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+            className={`absolute left-0 top-0 z-99 flex h-screen w-72.5 flex-col overflow-y-hidden bg-lighterGreen shadow-4 duration-300 ease-linear lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
             }`}
         >
             <div className="flex justify-start items-center gap-2 px-6 pb-5.5 lg:pb-6.5">
-                <NavLink to="/" className={'hidden lg:inline'}>
-                    <img src={logo} alt="Sfera" className='w-46 pt-4 flex justify-center items-center' />
+                <NavLink to="#" className={'hidden lg:inline'}>
+                    <img src={logo} alt="Sfera" className='w-46 pt-4 flex justify-center items-center'/>
                 </NavLink>
             </div>
             <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
@@ -74,23 +78,43 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, isOpenModal, setIsOpenModal }: S
                     <div className='flex flex-col'>
                         <ul className="mb-6 flex flex-col">
                             <li>
-                                <MenuItem
-                                    title='Dashboard'
-                                    icon={<LuLayoutDashboard size={20} />}
+                                {!admin_role && <MenuItem
+                                    title='Site role'
+                                    icon={<LuLayoutDashboard size={20}/>}
                                     pathname={location.pathname}
-                                    to='/admin/dashboard'
-                                />
-                                <MenuItem
-                                    title='Lesson'
-                                    icon={<PiStudentFill size={20} />}
-                                    pathname={location.pathname}
-                                    to='/course'
-                                />
+                                    to='/admin/site-role'
+                                />}
+                                {admin_role === 'ADMIN_QUIZ' && (<>
+                                    <MenuItem
+                                        title='Dashboard'
+                                        icon={<LuLayoutDashboard size={20}/>}
+                                        pathname={location.pathname}
+                                        to='/quiz/dashboard'
+                                    />
+                                    <MenuItem
+                                        title='Category'
+                                        icon={<PiStudentFill size={20}/>}
+                                        pathname={location.pathname}
+                                        to='/quiz/category'
+                                    />
+                                    <MenuItem
+                                        title='Test'
+                                        icon={<PiStudentFill size={20}/>}
+                                        pathname={location.pathname}
+                                        to='/quiz/test'
+                                    />
+                                    <MenuItem
+                                        title='Users'
+                                        icon={<PiStudentFill size={20}/>}
+                                        pathname={location.pathname}
+                                        to='/quiz/users'
+                                    />
+                                </>)}
                             </li>
                         </ul>
                         <ShinyButton
                             onClick={toggleModal}
-                            icon={<IoIosLogOut size={25} />}
+                            icon={<IoIosLogOut size={25}/>}
                             text='Logout'
                             className='bg-blue-400'
                         />

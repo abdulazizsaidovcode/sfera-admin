@@ -1,31 +1,21 @@
 import {Route, Routes} from 'react-router-dom'
 import DefaultLayout from './layout/DefaultLayout'
-import PageTitle from './components/custom/Header/PageTitle'
-import {Dashboard, Login} from "@/pages";
+import {routes} from "@/helpers/routes.tsx";
+
+// local admin roles
+// ADMIN_EDU, ADMIN_QUIZ, ADMIN_ONLINE
 
 function App() {
     return (
         <DefaultLayout>
             <Routes>
-                <Route
-                    path={`/admin/dashboard`}
-                    element={
-                        <>
-                            <PageTitle title="Admin | Dashboard"/>
-                            <Dashboard/>
-                        </>
-                    }
-                />
-                <Route
-                    index
-                    path={`/auth/login`}
-                    element={
-                        <>
-                            <PageTitle title="Login"/>
-                            <Login/>
-                        </>
-                    }
-                />
+                {routes.map(route => (
+                    <Route
+                        index={route.path === '/auth/login'}
+                        path={route.path}
+                        element={route.element}
+                    />
+                ))}
             </Routes>
         </DefaultLayout>
     )
