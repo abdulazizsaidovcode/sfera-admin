@@ -42,23 +42,23 @@ export const features = [
 // sidebar data
 export const sideData = {
     quizData: [
-        {title: 'Dashboard', icon: <LuLayoutDashboard size={20}/>, path: '/quiz/dashboard'},
-        {title: 'Category', icon: <MdOutlineCategory size={20}/>, path: '/quiz/category'},
+        {title: 'Boshqaruv paneli', icon: <LuLayoutDashboard size={20}/>, path: '/quiz/dashboard'},
+        {title: 'Yo\'nalishlar', icon: <MdOutlineCategory size={20}/>, path: '/quiz/category'},
         {title: 'Test', icon: <SiTestcafe size={20}/>, path: '/quiz/test'},
-        {title: 'Users', icon: <PiStudentFill size={20}/>, path: '/quiz/users'},
+        {title: 'Foydalanuvchilar', icon: <PiStudentFill size={20}/>, path: '/quiz/users'},
     ],
     onlineData: [
-        {title: 'Dashboard', icon: <LuLayoutDashboard size={20}/>, path: '/online/dashboard'},
-        {title: 'Users', icon: <PiStudentFill size={20}/>, path: '/online/users'},
-        {title: 'Group', icon: <FaLayerGroup size={20}/>, path: '/online/group'},
-        {title: 'Notification', icon: <IoNotifications size={20}/>, path: '/online/notification'},
-        {title: 'Courses', icon: <SiCoursera size={20}/>, path: '/online/course'},
+        {title: 'Boshqaruv paneli', icon: <LuLayoutDashboard size={20}/>, path: '/online/dashboard'},
+        {title: 'Foydalanuvchilar', icon: <PiStudentFill size={20}/>, path: '/online/users'},
+        {title: 'Guruhlar', icon: <FaLayerGroup size={20}/>, path: '/online/group'},
+        {title: 'Bildirishnoma', icon: <IoNotifications size={20}/>, path: '/online/notification'},
+        {title: 'Kurslar', icon: <SiCoursera size={20}/>, path: '/online/course'},
     ],
     eduData: [
-        {title: 'Dashboard', icon: <LuLayoutDashboard size={20}/>, path: '/edu/dashboard'},
-        {title: 'Users', icon: <PiStudentFill size={20}/>, path: '/edu/users'},
-        {title: 'Group', icon: <FaLayerGroup size={20}/>, path: '/edu/group'},
-        {title: 'Notification', icon: <IoNotifications size={20}/>, path: '/edu/notification'},
-        {title: 'Courses', icon: <SiCoursera size={20}/>, path: '/edu/course'},
+        {title: 'Boshqaruv paneli', icon: <LuLayoutDashboard size={20}/>, path: '/edu/dashboard'},
+        {title: 'Foydalanuvchilar', icon: <PiStudentFill size={20}/>, path: '/edu/users'},
+        {title: 'Guruhlar', icon: <FaLayerGroup size={20}/>, path: '/edu/group'},
+        {title: 'Bildirishnoma', icon: <IoNotifications size={20}/>, path: '/edu/notification'},
+        {title: 'Kurslar', icon: <SiCoursera size={20}/>, path: '/edu/course'},
     ],
 }
