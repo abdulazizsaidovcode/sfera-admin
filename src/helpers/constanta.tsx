@@ -8,6 +8,8 @@ import {BiCategory} from "react-icons/bi";
 import {FaCircleQuestion} from "react-icons/fa6";
 import {IThead} from "@/components/custom/tables/table.tsx";
 
+import images from '@/assets/images/img.avif'
+
 // admin role tanlash uchun card data
 export const features = [
     {
@@ -78,7 +80,7 @@ export const dashboardThead: IThead[] = [
     {id: 4, name: 'thead 4'}
 ];
 
-// dashboard tbody vaqtinchlaik data
+// dashboard tbody vaqtinchalik data
 export const dashboardTbody = [
     {id: 1, tr: '1', thead1: 'Row 1 Data 1', thead2: 'Row 1 Data 2', thead3: 'Row 1 Data 3', thead4: 'Row 1 Data 4'},
     {id: 2, tr: '2', thead1: 'Row 2 Data 1', thead2: 'Row 2 Data 2', thead3: 'Row 2 Data 3', thead4: 'Row 2 Data 4'},
@@ -98,10 +100,18 @@ export const statisticData = [
     {name: 'Statistic 8', count: 168, icon: <FaUsers className={`text-2xl`}/>},
 ]
 
-// dashboard line chart vaqtinchlaik data
+// dashboard line chart vaqtinchalik data
 export const lineChartData = {
     title: 'Hafatalik o\'sish',
     seriesTitle: 'Kunlik sts',
     category: ['Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba', 'Yakshanba'],
     seriesData: [166, 189, 145, 567, 864, 657, 987]
 }
+
+//cource card data vaqtinchalik
+export const courseData = [
+    {title: 'front', imgUrl: images, desc: 'A card perspective effect, hover over the card to elevate card elements.'},
+    {title: 'back', imgUrl: images, desc: 'A card perspective effect, hover over the card to elevate card elements.'},
+    {title: '3 ds max', imgUrl: images, desc: 'A card perspective effect, hover over the card to elevate card elements.'},
+    {title: 'foundation', imgUrl: images, desc: 'A card perspective effect, hover over the card to elevate card elements.'}
+]
