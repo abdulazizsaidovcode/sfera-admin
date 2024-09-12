@@ -32,10 +32,11 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
                     </main>
                 </div>
             </div>
+
             <Modal isOpen={isOpenModal} onClose={toggleModal}>
                 <div className="w-54 sm:w-64 md:w-96 lg:w-[40rem] flex flex-col gap-3 items-center justify-center">
                     <IoIosLogOut color='#16423C' size={100} />
-                    <p className='text-2xl text-center text-black-2'>Siz aniq bu tizimdan chiqmoqchimisz</p>
+                    <p className='text-2xl text-center text-black-2'>Siz aniq tizimdan chiqmoqchimisz?</p>
                     <div className='flex gap-3'>
                         <ShinyButton
                             text='Orqaga'
