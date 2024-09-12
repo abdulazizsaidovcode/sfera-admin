@@ -1,6 +1,6 @@
 import {useEffect, useRef} from 'react';
 import {LuLayoutDashboard} from 'react-icons/lu';
-import {NavLink, useLocation} from 'react-router-dom';
+import {NavLink, useLocation, useNavigate} from 'react-router-dom';
 import {IoIosLogOut} from 'react-icons/io';
 import ShinyButton from '@/components/magicui/shiny-button';
 import logo from '@/assets/images/Sfer 1.png';
@@ -36,6 +36,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen, isOpenModal, setIsOpenModal}: Sid
     const sidebar = useRef<any>(null);
     const admin_role = sessionStorage.getItem('admin_roles');
     const {quizData, onlineData, eduData} = sideData
+    const navigate = useNavigate()
 
     useEffect(() => {
         const clickHandler = ({target}: MouseEvent) => {
@@ -118,12 +119,20 @@ const Sidebar = ({sidebarOpen, setSidebarOpen, isOpenModal, setIsOpenModal}: Sid
                                 ))}
                             </li>
                         </ul>
-                        <ShinyButton
-                            onClick={toggleModal}
-                            icon={<IoIosLogOut size={25}/>}
-                            text='Logout'
-                            className='bg-blue-400'
-                        />
+                        {admin_role && (
+                            <div className={`absolute bottom-10 w-60`}>
+                                <ShinyButton
+                                    onClick={() => {
+                                        toggleModal()
+                                        navigate('/auth/login')
+                                        sessionStorage.removeItem('admin_roles')
+                                    }}
+                                    icon={<IoIosLogOut size={25}/>}
+                                    text='Chiqish'
+                                    className='bg-darkGreen w-full'
+                                />
+                            </div>
+                        )}
                     </div>
                 </nav>
             </div>

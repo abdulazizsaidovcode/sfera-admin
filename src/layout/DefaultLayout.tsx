@@ -14,7 +14,7 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({children}) => {
 
     return (
         <div className="bg-[#fff] text-black">
-            <div className="flex min-h-screen overflow-hidden">
+            <div className="flex h-screen overflow-hidden">
                 {isVisibleSidebar && <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>}
                 <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
                     {isVisibleSidebar && <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>}
