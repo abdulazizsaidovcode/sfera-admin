@@ -84,7 +84,7 @@ const Header = (props: {
                 </div>
 
                 {isOpen && (
-                    <div className="absolute right-90 top-8">
+                    <div className="absolute right-20 xsm:right-60 sm:right-90 top-8">
                         <Dock magnification={60} distance={50} className={`bg-black/20`}>
                             <DockIcon className="bg-black/40">
                                 <MdCastForEducation
