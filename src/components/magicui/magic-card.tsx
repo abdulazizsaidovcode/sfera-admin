@@ -4,6 +4,7 @@ import React, { useCallback, useEffect } from "react";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 import { cn } from "@/lib/utils";
+import {BorderBeam} from "@/components/magicui/border-beam.tsx";
 
 export interface MagicCardProps extends React.HTMLAttributes<HTMLDivElement> {
   gradientSize?: number;
@@ -49,6 +50,7 @@ export function MagicCard({
         className,
       )}
     >
+      <BorderBeam size={200} duration={10} delay={2} colorFrom={`#16423C`}/>
       <div className="relative z-10">{children}</div>
       <motion.div
         className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"

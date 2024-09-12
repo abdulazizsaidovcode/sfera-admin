@@ -1,15 +1,16 @@
 import {BentoCard, BentoGrid} from "@/components/magicui/bento-grid.tsx";
-import {features, lineChartData} from "@/helpers/constanta.tsx";
+import {features} from "@/helpers/constanta.tsx";
 import CardDataStats from "@/components/custom/cards/statistic-card.tsx";
 import {BiCategory} from "react-icons/bi";
 import {FaCircleQuestion} from "react-icons/fa6";
 import {PiArrowsOutCardinal} from "react-icons/pi";
 import {FaUsers} from "react-icons/fa";
-import ChartLine from "@/components/custom/chart/line-chart.tsx";
+import DotPattern from "@/components/magicui/dot-pattern.tsx";
 
 const SiteRole = () => {
     return (
         <>
+            <DotPattern />
             <BentoGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {features.map((feature) => (
                     <BentoCard key={feature.name} {...feature} />
@@ -40,14 +41,6 @@ const SiteRole = () => {
                         <FaUsers className={`text-2xl`}/>
                     </div>
                 </CardDataStats>
-            </div>
-            <div className={`mt-10`}>
-                <ChartLine
-                    title={lineChartData.title}
-                    seriesTitle={lineChartData.seriesTitle}
-                    category={lineChartData.category}
-                    seriesData={lineChartData.seriesData}
-                />
             </div>
         </>
     );

@@ -6,6 +6,7 @@ import {FaLayerGroup, FaUsers} from "react-icons/fa";
 import {IoNotifications} from "react-icons/io5";
 import {BiCategory} from "react-icons/bi";
 import {FaCircleQuestion} from "react-icons/fa6";
+import {IThead} from "@/components/custom/tables/table.tsx";
 
 // admin role tanlash uchun card data
 export const features = [
@@ -67,6 +68,23 @@ export const sideData = {
         {title: 'Kurslar', icon: <SiCoursera size={20}/>, path: '/edu/course'},
     ],
 };
+
+// dashboard thead data
+export const dashboardThead: IThead[] = [
+    {id: 5, name: 'T/r'},
+    {id: 1, name: 'thead 1'},
+    {id: 2, name: 'thead 2'},
+    {id: 3, name: 'thead 3'},
+    {id: 4, name: 'thead 4'}
+];
+
+// dashboard tbody vaqtinchlaik data
+export const dashboardTbody = [
+    {id: 1, tr: '1', thead1: 'Row 1 Data 1', thead2: 'Row 1 Data 2', thead3: 'Row 1 Data 3', thead4: 'Row 1 Data 4'},
+    {id: 2, tr: '2', thead1: 'Row 2 Data 1', thead2: 'Row 2 Data 2', thead3: 'Row 2 Data 3', thead4: 'Row 2 Data 4'},
+    {id: 3, tr: '3', thead1: 'Row 3 Data 1', thead2: 'Row 3 Data 2', thead3: 'Row 3 Data 3', thead4: 'Row 3 Data 4'},
+    {id: 4, tr: '4', thead1: 'Row 4 Data 1', thead2: 'Row 4 Data 2', thead3: 'Row 4 Data 3', thead4: 'Row 4 Data 4'}
+];
 
 // dashboard sts local vaqtinchalik data
 export const statisticData = [
