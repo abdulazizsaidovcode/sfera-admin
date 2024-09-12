@@ -32,6 +32,30 @@ const Dashboard = () => {
                         <FaUsers className={`text-2xl`}/>
                     </div>
                 </CardDataStats>
+                <CardDataStats title="Жами фойдаланувчилар" total={`${340}`}>
+                    <div
+                        className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
+                        <FaUsers className={`text-2xl`}/>
+                    </div>
+                </CardDataStats>
+                <CardDataStats title="Жами фойдаланувчилар" total={`${340}`}>
+                    <div
+                        className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
+                        <FaUsers className={`text-2xl`}/>
+                    </div>
+                </CardDataStats>
+                <CardDataStats title="Жами фойдаланувчилар" total={`${340}`}>
+                    <div
+                        className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
+                        <FaUsers className={`text-2xl`}/>
+                    </div>
+                </CardDataStats>
+                <CardDataStats title="Жами фойдаланувчилар" total={`${340}`}>
+                    <div
+                        className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
+                        <FaUsers className={`text-2xl`}/>
+                    </div>
+                </CardDataStats>
             </div>
         </>
     );
