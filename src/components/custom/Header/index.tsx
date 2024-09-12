@@ -14,11 +14,14 @@ const Header = (props: {
     setSidebarOpen: (arg0: boolean) => void;
 }) => {
     const navigate = useNavigate();
+    const role = sessionStorage.getItem('admin_roles')
     const [isOpen, setIsOpen] = useState(false);
     const openMenu = () => setIsOpen(true)
     const closeMenu = () => setIsOpen(false)
     return (
-        <header className="sticky top-0 z-999 flex w-full bg-lighterGreen drop-shadow-1">
+        <header className="sticky top-0 z-999 flex w-full bg-lighterGreen drop-shadow-1" onClick={() => {
+            if (isOpen) closeMenu()
+        }}>
             <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
                 <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
                     <button
@@ -64,14 +67,16 @@ const Header = (props: {
                 </div>
                 <div className="hidden sm:block"></div>
                 <div className="flex items-center gap-4">
-                    <RxDashboard
-                        size={26}
-                        className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer ${isOpen && 'opacity-70'}`}
-                        onClick={() => {
-                            openMenu()
-                            if (isOpen) closeMenu()
-                        }}
-                    />
+                    {role && (
+                        <RxDashboard
+                            size={26}
+                            className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer ${isOpen && 'opacity-70'}`}
+                            onClick={() => {
+                                if (isOpen) closeMenu()
+                                else openMenu()
+                            }}
+                        />
+                    )}
                     <IoNotifications
                         size={26}
                         className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer`}
