@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
 import {Link} from "react-router-dom";
-import {BorderBeam} from "@/components/magicui/border-beam.tsx";
 import Meteors from "@/components/magicui/meteors.tsx";
 
 export const HoverEffect = ({
@@ -70,7 +69,7 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "rounded-3xl h-full w-full px-2 overflow-hidden bg-white border border-black/20 duration-200 group-hover:border-lighterGreen relative z-20",
+        "rounded-3xl h-full w-full px-2 overflow-hidden bg-white border border-veryPaleGreen duration-200 group-hover:border-lighterGreen relative z-20",
         className
       )}
     >
