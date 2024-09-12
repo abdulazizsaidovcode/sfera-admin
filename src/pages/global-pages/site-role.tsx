@@ -1,5 +1,5 @@
 import {BentoCard, BentoGrid} from "@/components/magicui/bento-grid.tsx";
-import {features} from "@/helpers/constanta.tsx";
+import {features, lineChartData} from "@/helpers/constanta.tsx";
 import CardDataStats from "@/components/custom/cards/statistic-card.tsx";
 import {BiCategory} from "react-icons/bi";
 import {FaCircleQuestion} from "react-icons/fa6";
@@ -43,10 +43,10 @@ const SiteRole = () => {
             </div>
             <div className={`mt-10`}>
                 <ChartLine
-                    title={`Haftalik malumot`}
-                    seriesTitle={`Kunlik malumot`}
-                    category={['Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba', 'Yakshanba']}
-                    seriesData={[648, 65, 15, 56, 864, 657, 98]}
+                    title={lineChartData.title}
+                    seriesTitle={lineChartData.seriesTitle}
+                    category={lineChartData.category}
+                    seriesData={lineChartData.seriesData}
                 />
             </div>
         </>
