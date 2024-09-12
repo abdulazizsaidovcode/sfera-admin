@@ -1,14 +1,14 @@
 import {ApexOptions} from 'apexcharts';
 import ReactApexChart from 'react-apexcharts';
 
-const ChartLine = () => {
+const ChartLine = ({title, category, seriesTitle, seriesData}:{title:string, category:string[], seriesTitle:string, seriesData:number[]}) => {
     const options: ApexOptions = {
         legend: {
             show: false,
             position: 'top',
             horizontalAlign: 'left'
         },
-        colors: ['#3C50E0', '#80CAEE'],
+        colors: ['#16423C', '#C4DAD2'],
         chart: {
             fontFamily: 'Satoshi, sans-serif',
             height: 335,
@@ -78,7 +78,7 @@ const ChartLine = () => {
         },
         xaxis: {
             type: 'category',
-            categories: ['Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba', 'Yakshanba'],
+            categories: category,
             axisBorder: {
                 show: false
             },
@@ -100,8 +100,8 @@ const ChartLine = () => {
     const state = {
         series: [
             {
-                name: 'Haftalik malumot',
-                data: [648, 65, 15, 56, 864, 657, 98]
+                name: seriesTitle,
+                data: seriesData
             }
         ]
     }
@@ -117,7 +117,7 @@ const ChartLine = () => {
                              <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-primary"></span>
                         </span>
                         <div className="w-full">
-                            <p className="font-semibold text-primary">Haftalik malumot</p>
+                            <p className="font-semibold text-primary">{title}</p>
                         </div>
                     </div>
                 </div>

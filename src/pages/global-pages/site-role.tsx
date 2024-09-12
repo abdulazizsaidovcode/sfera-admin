@@ -42,7 +42,12 @@ const SiteRole = () => {
                 </CardDataStats>
             </div>
             <div className={`mt-10`}>
-                <ChartLine/>
+                <ChartLine
+                    title={`Haftalik malumot`}
+                    seriesTitle={`Kunlik malumot`}
+                    category={['Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba', 'Yakshanba']}
+                    seriesData={[648, 65, 15, 56, 864, 657, 98]}
+                />
             </div>
         </>
     );
