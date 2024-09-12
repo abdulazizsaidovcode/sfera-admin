@@ -49,6 +49,10 @@ export const sideData = {
     ],
     onlineData: [
         {title: 'Dashboard', icon: <LuLayoutDashboard size={20}/>, path: '/online/dashboard'},
+        {title: 'Users', icon: <PiStudentFill size={20}/>, path: '/online/users'},
+        {title: 'Group', icon: <FaLayerGroup size={20}/>, path: '/online/group'},
+        {title: 'Notification', icon: <IoNotifications size={20}/>, path: '/online/notification'},
+        {title: 'Courses', icon: <SiCoursera size={20}/>, path: '/online/course'},
     ],
     eduData: [
         {title: 'Dashboard', icon: <LuLayoutDashboard size={20}/>, path: '/edu/dashboard'},

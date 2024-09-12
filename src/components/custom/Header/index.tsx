@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {MdCastForEducation} from "react-icons/md";
 import {PiGlobeDuotone} from "react-icons/pi";
 import {SiQuizlet} from "react-icons/si";
+import {Dock, DockIcon} from "@/components/magicui/dock.tsx";
 
 const Header = (props: {
     sidebarOpen: string | boolean | undefined;
@@ -83,41 +84,39 @@ const Header = (props: {
                 </div>
 
                 {isOpen && (
-                    <div
-                        className="absolute right-70 top-18 w-80 bg-black text-white rounded-2xl shadow-lg shadow-graydark p-4 grid grid-cols-3 gap-4 z-999">
-                        <div
-                            className="flex flex-col items-center hover:opacity-70 duration-300 cursor-pointer"
-                            onClick={() => {
-                                sessionStorage.setItem('admin_roles', 'ADMIN_EDU')
-                                navigate('/edu/dashboard')
-                                closeMenu()
-                            }}
-                        >
-                            <MdCastForEducation className="h-10 w-10"/>
-                            <span className="text-xs mt-2">Sfera Edu</span>
-                        </div>
-                        <div
-                            className="flex flex-col items-center hover:opacity-70 duration-300 cursor-pointer"
-                            onClick={() => {
-                                sessionStorage.setItem('admin_roles', 'ADMIN_ONLINE')
-                                navigate('/online/dashboard')
-                                closeMenu()
-                            }}
-                        >
-                            <PiGlobeDuotone className="h-10 w-10"/>
-                            <span className="text-xs mt-2">Sfera Online</span>
-                        </div>
-                        <div
-                            className="flex flex-col items-center hover:opacity-70 duration-300 cursor-pointer"
-                            onClick={() => {
-                                sessionStorage.setItem('admin_roles', 'ADMIN_QUIZ')
-                                navigate('/quiz/dashboard')
-                                closeMenu()
-                            }}
-                        >
-                            <SiQuizlet className="h-10 w-10"/>
-                            <span className="text-xs mt-2">Sfera Quiz</span>
-                        </div>
+                    <div className="absolute right-90 top-8">
+                        <Dock magnification={60} distance={50} className={`bg-black/20`}>
+                            <DockIcon className="bg-black/40">
+                                <MdCastForEducation
+                                    onClick={() => {
+                                        sessionStorage.setItem('admin_roles', 'ADMIN_EDU')
+                                        navigate('/edu/dashboard')
+                                        closeMenu()
+                                    }}
+                                    className="h-6 w-6 text-whiten"
+                                />
+                            </DockIcon>
+                            <DockIcon className="bg-black/40">
+                                <PiGlobeDuotone
+                                    className="h-6 w-6 text-whiten"
+                                    onClick={() => {
+                                        sessionStorage.setItem('admin_roles', 'ADMIN_ONLINE')
+                                        navigate('/online/dashboard')
+                                        closeMenu()
+                                    }}
+                                />
+                            </DockIcon>
+                            <DockIcon className="bg-black/40">
+                                <SiQuizlet
+                                    className="h-6 w-6 text-whiten"
+                                    onClick={() => {
+                                        sessionStorage.setItem('admin_roles', 'ADMIN_QUIZ')
+                                        navigate('/quiz/dashboard')
+                                        closeMenu()
+                                    }}
+                                />
+                            </DockIcon>
+                        </Dock>
                     </div>
                 )}
             </div>
