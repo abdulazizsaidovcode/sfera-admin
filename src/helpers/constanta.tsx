@@ -1,11 +1,9 @@
 import {LuLayoutDashboard} from "react-icons/lu";
-import {PiArrowsOutCardinal, PiGlobeDuotone, PiStudentFill} from "react-icons/pi";
+import {PiGlobeDuotone, PiStudentFill} from "react-icons/pi";
 import {MdCastForEducation, MdOutlineCategory} from "react-icons/md";
 import {SiCoursera, SiQuizlet, SiTestcafe} from "react-icons/si";
-import {FaLayerGroup, FaUsers} from "react-icons/fa";
+import {FaLayerGroup} from "react-icons/fa";
 import {IoNotifications} from "react-icons/io5";
-import {BiCategory} from "react-icons/bi";
-import {FaCircleQuestion} from "react-icons/fa6";
 import {IThead} from "@/components/custom/tables/table.tsx";
 
 import images from '@/assets/images/img.avif'
@@ -77,7 +75,6 @@ export const dashboardThead: IThead[] = [
     {id: 1, name: 'thead 1'},
     {id: 2, name: 'thead 2'},
     {id: 3, name: 'thead 3'},
-    {id: 4, name: 'thead 4'}
 ];
 
 // dashboard tbody vaqtinchalik data
@@ -87,18 +84,6 @@ export const dashboardTbody = [
     {id: 3, tr: '3', thead1: 'Row 3 Data 1', thead2: 'Row 3 Data 2', thead3: 'Row 3 Data 3', thead4: 'Row 3 Data 4'},
     {id: 4, tr: '4', thead1: 'Row 4 Data 1', thead2: 'Row 4 Data 2', thead3: 'Row 4 Data 3', thead4: 'Row 4 Data 4'}
 ];
-
-// dashboard sts local vaqtinchalik data
-export const statisticData = [
-    {name: 'Statistic 1', count: 100, icon: <BiCategory className={`text-2xl`}/>},
-    {name: 'Statistic 2', count: 150, icon: <FaCircleQuestion className={`text-2xl`}/>},
-    {name: 'Statistic 3', count: 153, icon: <PiArrowsOutCardinal className={`text-2xl`}/>},
-    {name: 'Statistic 4', count: 1185, icon: <FaUsers className={`text-2xl`}/>},
-    {name: 'Statistic 5', count: 56, icon: <BiCategory className={`text-2xl`}/>},
-    {name: 'Statistic 6', count: 49, icon: <FaCircleQuestion className={`text-2xl`}/>},
-    {name: 'Statistic 7', count: 26, icon: <PiArrowsOutCardinal className={`text-2xl`}/>},
-    {name: 'Statistic 8', count: 168, icon: <FaUsers className={`text-2xl`}/>},
-]
 
 // dashboard line chart vaqtinchalik data
 export const lineChartData = {
