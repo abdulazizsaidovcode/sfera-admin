@@ -3,13 +3,30 @@ import ShinyButton from '@/components/magicui/shiny-button';
 import {BorderBeam} from "@/components/magicui/border-beam.tsx";
 import Meteors from "@/components/magicui/meteors.tsx";
 import {useNavigate} from "react-router-dom";
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {formatedNumber, validateText} from "@/helpers/functions/common-functions.tsx";
+import {authLogin, usePost} from "@/helpers/api.tsx";
+import toast from "react-hot-toast";
+import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 
 function Login() {
     const navigate = useNavigate();
     const [phoneNumber, setPhoneNumber] = useState('+998 ')
     const [password, setPassword] = useState('')
+    const {loading, response, postData} = usePost(
+        authLogin,
+        {phoneNumber: formatedNumber(phoneNumber), password: validateText(password)}
+    );
+
+    useEffect(() => {
+        if (response) {
+            sessionStorage.setItem('token', response.token)
+            sessionStorage.setItem('role', response.role)
+            toast.success('Tizimga muvaffaqiyatli kirdingiz')
+            navigate('/admin/site-role')
+            consoleClear()
+        }
+    }, [response]);
 
     const formatPhoneNumber = (value: string) => {
         if (!value.startsWith('+998 ')) {
@@ -35,11 +52,6 @@ function Login() {
         setPhoneNumber(formatted);
     };
 
-    console.log('login data: ',{
-        number: formatedNumber(phoneNumber),
-        password: validateText(password)
-    })
-
     return (
         <>
             <DotPattern/>
@@ -54,7 +66,7 @@ function Login() {
                             delay={2}
                             borderWidth={2}
                             colorFrom={`#ffaa40`}
-                                    colorTo={`#b36efd`}
+                            colorTo={`#b36efd`}
                         />
                         <Meteors number={50}/>
                         <div className="p-2 space-y-4 md:space-y-6 sm:p-8 relative z-999">
@@ -84,9 +96,12 @@ function Login() {
                                     />
                                 </div>
                                 <ShinyButton
-                                    text='Tizimga kirish'
-                                    className='bg-lighterGreen w-full'
-                                    onClick={() => navigate('/admin/site-role')}/>
+                                    text={loading ? 'Yuklanmoqda...' : 'Tizimga kirish'}
+                                    className={`bg-lighterGreen w-full ${loading && 'cursor-not-allowed opacity-50'}`}
+                                    onClick={() => {
+                                        if (validateText(password) && formatedNumber(phoneNumber)) !loading && postData()
+                                        else toast.error('Ma\'lumotlar tuliqligini tekshiring')
+                                    }}/>
                             </div>
                         </div>
                     </div>

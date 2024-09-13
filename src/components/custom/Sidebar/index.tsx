@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react';
-import { LuLayoutDashboard } from 'react-icons/lu';
-import { NavLink, useLocation } from 'react-router-dom';
-import { IoIosLogOut } from 'react-icons/io';
+import {useEffect, useRef} from 'react';
+import {LuLayoutDashboard} from 'react-icons/lu';
+import {NavLink, useLocation} from 'react-router-dom';
+import {IoIosLogOut} from 'react-icons/io';
 import ShinyButton from '@/components/magicui/shiny-button';
 import logo from '@/assets/images/Sfer 1.png';
-import { sideData } from "@/helpers/constanta.tsx";
+import {sideData} from "@/helpers/constanta.tsx";
 import BlurFade from "@/components/magicui/blur-fade.tsx";
 
 interface SidebarProps {
@@ -13,7 +13,7 @@ interface SidebarProps {
     toggleModal: () => void;
 }
 
-const MenuItem = ({ title, to, pathname, icon }: { pathname: string, icon: any, title: string, to: string }) => {
+const MenuItem = ({title, to, pathname, icon}: { pathname: string, icon: any, title: string, to: string }) => {
     return (
         <NavLink className={''} to={to}>
             <div
@@ -29,15 +29,15 @@ const MenuItem = ({ title, to, pathname, icon }: { pathname: string, icon: any, 
     );
 };
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen, toggleModal }: SidebarProps) => {
+const Sidebar = ({sidebarOpen, setSidebarOpen, toggleModal}: SidebarProps) => {
     const location = useLocation();
     const trigger = useRef<any>(null);
     const sidebar = useRef<any>(null);
     const admin_role = sessionStorage.getItem('admin_roles');
-    const { quizData, onlineData, eduData } = sideData
+    const {quizData, onlineData, eduData} = sideData
 
     useEffect(() => {
-        const clickHandler = ({ target }: MouseEvent) => {
+        const clickHandler = ({target}: MouseEvent) => {
             if (!sidebar.current || !trigger.current) return;
             if (
                 !sidebarOpen ||
@@ -51,7 +51,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, toggleModal }: SidebarProps) => 
     });
 
     useEffect(() => {
-        const keyHandler = ({ keyCode }: KeyboardEvent) => {
+        const keyHandler = ({keyCode}: KeyboardEvent) => {
             if (!sidebarOpen || keyCode !== 27) return;
             setSidebarOpen(false);
         };
@@ -63,11 +63,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, toggleModal }: SidebarProps) => 
         <aside
             ref={sidebar}
             className={`absolute left-0 top-0 z-99 flex h-screen w-72.5 flex-col overflow-y-hidden bg-lighterGreen shadow-4 duration-300 ease-linear lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-                }`}
+            }`}
         >
             <div className="flex justify-start items-center gap-2 px-6 pb-5.5 lg:pb-6.5">
                 <NavLink to="#" className={'hidden lg:inline'}>
-                    <img src={logo} alt="Sfera" className='w-46 pt-4 flex justify-center items-center' />
+                    <img src={logo} alt="Sfera" className='w-46 pt-4 flex justify-center items-center'/>
                 </NavLink>
             </div>
             <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
@@ -77,7 +77,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, toggleModal }: SidebarProps) => 
                             <li>
                                 {!admin_role && <MenuItem
                                     title='Site role'
-                                    icon={<LuLayoutDashboard size={20} />}
+                                    icon={<LuLayoutDashboard size={20}/>}
                                     pathname={location.pathname}
                                     to='/admin/site-role'
                                 />}
@@ -113,18 +113,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, toggleModal }: SidebarProps) => 
                                 ))}
                             </li>
                         </ul>
-                        {admin_role && (
-                            <div className={`absolute bottom-10 w-60`}>
-                                <ShinyButton
-                                    onClick={() => {
-                                        toggleModal()
-                                    }}
-                                    icon={<IoIosLogOut size={25} />}
-                                    text='Chiqish'
-                                    className='bg-darkGreen w-full'
-                                />
-                            </div>
-                        )}
+                        <div className={`absolute bottom-10 w-60`}>
+                            <ShinyButton
+                                onClick={() => {
+                                    toggleModal()
+                                }}
+                                icon={<IoIosLogOut size={25}/>}
+                                text='Chiqish'
+                                className='bg-darkGreen w-full'
+                            />
+                        </div>
                     </div>
                 </nav>
             </div>

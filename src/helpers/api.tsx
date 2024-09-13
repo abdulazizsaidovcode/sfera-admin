@@ -1,30 +1,64 @@
-import axios from 'axios';
-import {config} from "@/helpers/token.tsx";
+import axios, {AxiosRequestConfig} from 'axios';
+import {toastMessage} from "@/helpers/functions/toastMessage.tsx";
+import {useMutation} from "react-query";
 
-const api = axios.create({
-    baseURL: 'http://142.93.106.195:8080',
-    headers: {
-        'Content-Type': 'application/json',
-        ...config.headers
-    },
-});
+export const baseURL: string = 'http://142.93.106.195:8080/'
 
-export const getData = async (endpoint: string) => {
-    const response = await api.get(endpoint);
-    return response.data;
-};
+// =============LOGIN=============
+export const authLogin: string = `${baseURL}auth/login`
 
-export const postData = async (endpoint: string, data: any) => {
-    const response = await api.post(endpoint, data);
-    return response.data;
-};
 
-export const putData = async (endpoint: string, data: any) => {
-    const response = await api.put(endpoint, data);
-    return response.data;
-};
 
-export const deleteData = async (endpoint: string) => {
-    const response = await api.delete(endpoint);
-    return response.data;
+
+// =============react query global function post u/n==================
+export interface UsePostResponse<T> {
+    loading: boolean;
+    error: any;
+    response: any;
+    postData: () => void;
+}
+
+export function usePost<T>(url: string, data: T, config?: any): UsePostResponse<T> {
+    const mutation = useMutation({
+        mutationFn: async () => {
+            const res = await axios.post(url, data, config ? config : {});
+            if (res.data.error) toastMessage(res.data.error.code, res.data.error.message);
+            return res.data.data;
+        },
+        onError: (error: any) => {
+            console.log(error)
+        },
+    });
+
+    return {
+        loading: mutation.status === 'loading',
+        error: mutation.error,
+        response: mutation.data,
+        postData: mutation.mutateAsync,
+    };
+}
+
+
+// ========================ruchnoy global function========================
+export const apiRequest = async (
+    url: string,
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    body?: any,
+    headers: Record<string, string> = {'Content-Type': 'application/json'}
+) => {
+    const config: AxiosRequestConfig = {
+        url,
+        method,
+        headers,
+        data: body ? body : undefined,
+    };
+
+    try {
+        const response = await axios(config);
+        console.log(response)
+
+        return response.data;
+    } catch (error) {
+        console.error('API request failed:', error);
+    }
 };

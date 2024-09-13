@@ -2,6 +2,8 @@ import {Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import DefaultLayout from './layout/DefaultLayout'
 import {routes} from "@/helpers/routes.tsx";
 import {useEffect} from "react";
+import {setConfig} from "@/helpers/token.tsx";
+import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 
 // local admin roles
 // ADMIN_EDU, ADMIN_QUIZ, ADMIN_ONLINE
@@ -13,6 +15,7 @@ function App() {
     const admin_role = sessionStorage.getItem('admin_roles');
 
     useEffect(() => {
+        setConfig()
         window.scrollTo(0, 0);
         const refresh = sessionStorage.getItem('refreshes');
 
@@ -31,6 +34,10 @@ function App() {
 
         if (!tokens && !pathname.startsWith('/auth')) navigate('/auth/login');
         if (!tokens && pathname.startsWith('/auth')) sessionStorage.removeItem('refreshes');
+
+        setTimeout(() => {
+            consoleClear()
+        }, 10000)
     }, [tokens, pathname, navigate]);
 
     return (

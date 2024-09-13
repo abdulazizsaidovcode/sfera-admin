@@ -4,7 +4,6 @@ export const formatedNumber = (phoneNumber: string) => {
     const phonePattern = /^(?:\+998|998)\d{9}$/;
 
     if (phonePattern.test(cleaned)) return cleaned;
-    else console.log("Raqam O'zbekiston formatiga mos emas!");
 };
 
 // inputga html kodlarini kiritishni taqiqlaydi

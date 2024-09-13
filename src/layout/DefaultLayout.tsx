@@ -47,7 +47,7 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
                             text='Chiqish'
                             className='bg-darkGreen'
                             onClick={() => {
-                                sessionStorage.removeItem('admin_roles')
+                                sessionStorage.clear()
                                 navigate('/auth/login');
                                 toggleModal()
                             }}
