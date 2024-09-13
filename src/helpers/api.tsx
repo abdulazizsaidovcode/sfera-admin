@@ -3,6 +3,8 @@ import {toastMessage} from "@/helpers/functions/toastMessage.tsx";
 import {useMutation} from "react-query";
 import toast from "react-hot-toast";
 
+// Expandable Cards => notification variant cart ||| Floating Dock => dock ga xam variant
+
 export const baseURL: string = 'http://142.93.106.195:8080/'
 
 // =============LOGIN=============

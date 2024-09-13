@@ -1,7 +1,15 @@
 import {ApexOptions} from 'apexcharts';
 import ReactApexChart from 'react-apexcharts';
 
-const ChartLine = ({title, category, seriesTitle, seriesData}:{title:string, category:string[], seriesTitle:string, seriesData:number[]}) => {
+const ChartLine = ({title, category, seriesTitle, seriesData, type, maxSize, height}: {
+    title: string,
+    category: string[],
+    seriesTitle: string,
+    seriesData: number[] | string[],
+    type?: "line" | "area" | "bar"
+    maxSize?: number,
+    height?: number
+}) => {
     const options: ApexOptions = {
         legend: {
             show: false,
@@ -93,7 +101,7 @@ const ChartLine = ({title, category, seriesTitle, seriesData}:{title:string, cat
                 }
             },
             min: 0,
-            max: 1000
+            max: maxSize ? maxSize : 100
         }
     };
 
@@ -129,8 +137,8 @@ const ChartLine = ({title, category, seriesTitle, seriesData}:{title:string, cat
                     <ReactApexChart
                         options={options}
                         series={state.series}
-                        type="area"
-                        height={350}
+                        type={type ? type : 'area'}
+                        height={height ? height : 350}
                     />
                 </div>
             </div>
