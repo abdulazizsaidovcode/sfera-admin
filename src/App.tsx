@@ -1,11 +1,38 @@
-import {Route, Routes} from 'react-router-dom'
+import {Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import DefaultLayout from './layout/DefaultLayout'
 import {routes} from "@/helpers/routes.tsx";
+import {useEffect} from "react";
 
 // local admin roles
 // ADMIN_EDU, ADMIN_QUIZ, ADMIN_ONLINE
 
 function App() {
+    const navigate = useNavigate();
+    const {pathname} = useLocation()
+    const tokens = sessionStorage.getItem('token');
+    const admin_role = sessionStorage.getItem('admin_roles');
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        const refresh = sessionStorage.getItem('refreshes');
+
+        if (!tokens) {
+            sessionStorage.removeItem('refreshes');
+            if (!pathname.startsWith('/auth')) navigate('/auth/login');
+        } else if (!refresh) sessionStorage.setItem('refreshes', 'true');
+
+        if (pathname === '/') {
+            if (!tokens) navigate('/auth/login');
+            else if (tokens && !admin_role) navigate('/admin/site-role');
+            else if (tokens && admin_role === 'ADMIN_ONLINE') navigate('/online/dashboard');
+            else if (tokens && admin_role === 'ADMIN_QUIZ') navigate('/quiz/dashboard');
+            else if (tokens && admin_role === 'ADMIN_EDU') navigate('/edu/dashboard');
+        }
+
+        if (!tokens && !pathname.startsWith('/auth')) navigate('/auth/login');
+        if (!tokens && pathname.startsWith('/auth')) sessionStorage.removeItem('refreshes');
+    }, [tokens, pathname, navigate]);
+
     return (
         <DefaultLayout>
             <Routes>
