@@ -5,7 +5,7 @@ import Meteors from "@/components/magicui/meteors.tsx";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from 'react';
 import {formatedNumber, validateText} from "@/helpers/functions/common-functions.tsx";
-import {authLogin, usePost} from "@/helpers/api.tsx";
+import {authLogin, useGlobalRequest} from "@/helpers/api.tsx";
 import toast from "react-hot-toast";
 import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 
@@ -13,8 +13,9 @@ function Login() {
     const navigate = useNavigate();
     const [phoneNumber, setPhoneNumber] = useState('+998 ')
     const [password, setPassword] = useState('')
-    const {loading, response, postData} = usePost(
+    const {loading, response, globalDataFunc} = useGlobalRequest(
         authLogin,
+        'POST',
         {phoneNumber: formatedNumber(phoneNumber), password: validateText(password)}
     );
 
@@ -99,7 +100,7 @@ function Login() {
                                     text={loading ? 'Yuklanmoqda...' : 'Tizimga kirish'}
                                     className={`bg-lighterGreen w-full ${loading && 'cursor-not-allowed opacity-50'}`}
                                     onClick={() => {
-                                        if (validateText(password) && formatedNumber(phoneNumber)) !loading && postData()
+                                        if (validateText(password) && formatedNumber(phoneNumber)) !loading && globalDataFunc()
                                         else toast.error('Ma\'lumotlar tuliqligini tekshiring')
                                     }}/>
                             </div>
