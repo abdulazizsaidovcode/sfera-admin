@@ -6,11 +6,12 @@ import {FaCircleQuestion} from "react-icons/fa6";
 import {PiArrowsOutCardinal} from "react-icons/pi";
 import {FaUsers} from "react-icons/fa";
 import DotPattern from "@/components/magicui/dot-pattern.tsx";
-import {siteRoleCardSts, useGlobalRequest} from "@/helpers/api.tsx";
+import {siteRoleCardSts} from "@/helpers/api.tsx";
 import {config} from "@/helpers/token.tsx";
 import {useEffect, useState} from "react";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import LineChart from "@/components/custom/chart/line-chart.tsx";
+import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 
 const SiteRole = () => {
     const {loading, response, globalDataFunc} = useGlobalRequest(siteRoleCardSts, `GET`, '', config)

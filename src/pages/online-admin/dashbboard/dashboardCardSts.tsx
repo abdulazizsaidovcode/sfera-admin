@@ -40,6 +40,15 @@ const OnlineSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
                     <BiCategory className={`text-2xl`}/>
                 </div>
             </CardDataStats>
+            <CardDataStats
+                title={`Umumiy o'qituvchilar soni`}
+                total={dashboardCardSts ? dashboardCardSts.teacherCount : 0}
+            >
+                <div
+                    className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
+                    <BiCategory className={`text-2xl`}/>
+                </div>
+            </CardDataStats>
         </div>
     );
 };

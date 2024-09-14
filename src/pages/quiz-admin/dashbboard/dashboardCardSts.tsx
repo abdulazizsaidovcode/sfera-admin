@@ -2,14 +2,6 @@ import CardDataStats from "@/components/custom/cards/statistic-card.tsx";
 import {BiCategory} from "react-icons/bi";
 
 const QuizSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
-    // badResultsCount
-    // categoryCount
-    // goodResultsCount
-    // questionCount
-    // resultCount
-    // superResultsCount
-    // todayResultsCount
-    // userCount
     return (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
             <CardDataStats
@@ -23,7 +15,7 @@ const QuizSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
             </CardDataStats>
             <CardDataStats
                 title={`Umumiy guruhlar soni`}
-                total={dashboardCardSts ? dashboardCardSts.groupCount : 0}
+                total={dashboardCardSts ? dashboardCardSts.goodResultsCount : 0}
             >
                 <div
                     className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
@@ -32,7 +24,7 @@ const QuizSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
             </CardDataStats>
             <CardDataStats
                 title={`Umumiy studentlar soni`}
-                total={dashboardCardSts ? dashboardCardSts.studentCount : 0}
+                total={dashboardCardSts ? dashboardCardSts.badResultsCount : 0}
             >
                 <div
                     className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
@@ -41,7 +33,43 @@ const QuizSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
             </CardDataStats>
             <CardDataStats
                 title={`Umumiy o'qituvchilar soni`}
-                total={dashboardCardSts ? dashboardCardSts.teacherCount : 0}
+                total={dashboardCardSts ? dashboardCardSts.questionCount : 0}
+            >
+                <div
+                    className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
+                    <BiCategory className={`text-2xl`}/>
+                </div>
+            </CardDataStats>
+            <CardDataStats
+                title={`Umumiy o'qituvchilar soni`}
+                total={dashboardCardSts ? dashboardCardSts.resultCount : 0}
+            >
+                <div
+                    className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
+                    <BiCategory className={`text-2xl`}/>
+                </div>
+            </CardDataStats>
+            <CardDataStats
+                title={`Umumiy o'qituvchilar soni`}
+                total={dashboardCardSts ? dashboardCardSts.superResultsCount : 0}
+            >
+                <div
+                    className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
+                    <BiCategory className={`text-2xl`}/>
+                </div>
+            </CardDataStats>
+            <CardDataStats
+                title={`Umumiy o'qituvchilar soni`}
+                total={dashboardCardSts ? dashboardCardSts.todayResultsCount : 0}
+            >
+                <div
+                    className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
+                    <BiCategory className={`text-2xl`}/>
+                </div>
+            </CardDataStats>
+            <CardDataStats
+                title={`Umumiy o'qituvchilar soni`}
+                total={dashboardCardSts ? dashboardCardSts.userCount : 0}
             >
                 <div
                     className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">

@@ -1,7 +1,7 @@
 import {dashboardTbody, dashboardThead, lineChartData} from "@/helpers/constanta.tsx";
 import ChartLine from "@/components/custom/chart/line-chart.tsx";
 import Tables from "@/components/custom/tables/table.tsx";
-import {eduAdminSts, eduAdminTopGroup, quizAdminSts, useGlobalRequest} from "@/helpers/api.tsx";
+import {eduAdminSts, eduAdminTopGroup, quizAdminSts} from "@/helpers/api.tsx";
 import {config} from "@/helpers/token.tsx";
 import {useEffect} from "react";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
@@ -9,6 +9,7 @@ import dashboardStore from "@/helpers/state-management/dashboardStore.tsx";
 import EduSts from "@/pages/edu-admin/dashbboard/dashboardCardSts.tsx";
 import QuizSts from "@/pages/quiz-admin/dashbboard/dashboardCardSts.tsx";
 import OnlineSts from "@/pages/online-admin/dashbboard/dashboardCardSts.tsx";
+import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 
 const Dashboard = () => {
     const admin_role = sessionStorage.getItem('admin_roles');
@@ -45,8 +46,6 @@ const Dashboard = () => {
         else if (role === 'ADMIN_QUIZ') return <QuizSts dashboardCardSts={dashboardCardSts}/>
         else if (role === 'ADMIN_ONLINE') return <OnlineSts dashboardCardSts={dashboardCardSts}/>
     }
-
-    console.log(dashboardCardSts)
 
     return (
         <>

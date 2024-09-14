@@ -5,9 +5,10 @@ import Meteors from "@/components/magicui/meteors.tsx";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from 'react';
 import {formatedNumber, validateText} from "@/helpers/functions/common-functions.tsx";
-import {authLogin, useGlobalRequest} from "@/helpers/api.tsx";
+import {authLogin} from "@/helpers/api.tsx";
 import toast from "react-hot-toast";
 import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
+import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 
 function Login() {
     const navigate = useNavigate();
