@@ -18,6 +18,7 @@ export const eduAdminTopTeacher: string = `${baseURL}statistic/top/Teacher`
 export const eduAdminTopStudent: string = `${baseURL}statistic/top/Student`
 export const eduAdminCategoryStsYear: string = `${baseURL}statistic/categoryYearly`
 export const eduAdminCategoryStsPercentage: string = `${baseURL}statistic/categoryPercentage`
+export const quizAdminSts: string = `${baseURL}statistic/countAll-quiz`
 
 
 // =============react query global function==================

@@ -5,7 +5,7 @@ import {MagicCard} from "@/components/magicui/magic-card.tsx";
 
 interface CardDataStatsProps {
     title: string;
-    total: string;
+    total: string|number;
     children: ReactNode;
 }
 

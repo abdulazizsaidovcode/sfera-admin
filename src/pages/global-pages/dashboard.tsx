@@ -1,21 +1,52 @@
-import CardDataStats from "@/components/custom/cards/statistic-card.tsx";
 import {dashboardTbody, dashboardThead, lineChartData} from "@/helpers/constanta.tsx";
 import ChartLine from "@/components/custom/chart/line-chart.tsx";
 import Tables from "@/components/custom/tables/table.tsx";
-import {eduAdminSts, eduAdminTopGroup, useGlobalRequest} from "@/helpers/api.tsx";
+import {eduAdminSts, eduAdminTopGroup, quizAdminSts, useGlobalRequest} from "@/helpers/api.tsx";
 import {config} from "@/helpers/token.tsx";
 import {useEffect} from "react";
-import {BiCategory} from "react-icons/bi";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
+import dashboardStore from "@/helpers/state-management/dashboardStore.tsx";
+import EduSts from "@/pages/edu-admin/dashbboard/dashboardCardSts.tsx";
+import QuizSts from "@/pages/quiz-admin/dashbboard/dashboardCardSts.tsx";
+import OnlineSts from "@/pages/online-admin/dashbboard/dashboardCardSts.tsx";
 
 const Dashboard = () => {
+    const admin_role = sessionStorage.getItem('admin_roles');
+    const {setDashboardCardSts, dashboardCardSts} = dashboardStore()
     const eduAdminStsGet = useGlobalRequest(eduAdminSts, 'GET', '', config)
     const eduAdminTopGroupGet = useGlobalRequest(eduAdminTopGroup, 'GET', '', config)
+    const quizAdminStsGet = useGlobalRequest(quizAdminSts, 'GET', '', config)
 
     useEffect(() => {
-        eduAdminStsGet.globalDataFunc()
-        eduAdminTopGroupGet.globalDataFunc()
+        if (admin_role === 'ADMIN_EDU') {
+            eduAdminStsGet.globalDataFunc()
+            eduAdminTopGroupGet.globalDataFunc()
+        } else if (admin_role === 'ADMIN_QUIZ') {
+            quizAdminStsGet.globalDataFunc()
+        }
     }, []);
+
+    useEffect(() => {
+        if (admin_role === 'ADMIN_EDU') {
+            eduAdminStsGet.globalDataFunc()
+            eduAdminTopGroupGet.globalDataFunc()
+        } else if (admin_role === 'ADMIN_QUIZ') {
+            quizAdminStsGet.globalDataFunc()
+        }
+    }, [admin_role]);
+
+    useEffect(() => {
+        if (admin_role === 'ADMIN_EDU') setDashboardCardSts(eduAdminStsGet.response)
+        if (admin_role === 'ADMIN_QUIZ') setDashboardCardSts(quizAdminStsGet.response)
+    }, [eduAdminStsGet.response, quizAdminStsGet.response]);
+
+    const roleDashboardSts = (role: string) => {
+        if (role === 'ADMIN_EDU') return <EduSts dashboardCardSts={dashboardCardSts}/>
+        else if (role === 'ADMIN_QUIZ') return <QuizSts dashboardCardSts={dashboardCardSts}/>
+        else if (role === 'ADMIN_ONLINE') return <OnlineSts dashboardCardSts={dashboardCardSts}/>
+    }
+
+    console.log(dashboardCardSts)
 
     return (
         <>
@@ -24,42 +55,7 @@ const Dashboard = () => {
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
                     {[...Array(4)].map((_, index) => <Skeleton key={index}/>)}
                 </div>
-            ) : (
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-                    <CardDataStats
-                        title={`Umumiy categoriyalar soni`}
-                        total={eduAdminStsGet.response ? eduAdminStsGet.response.categoryCount : 0}
-                    >
-                        <div className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
-                            <BiCategory className={`text-2xl`}/>
-                        </div>
-                    </CardDataStats>
-                    <CardDataStats
-                        title={`Umumiy guruhlar soni`}
-                        total={eduAdminStsGet.response ? eduAdminStsGet.response.groupCount : 0}
-                    >
-                        <div className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
-                            <BiCategory className={`text-2xl`}/>
-                        </div>
-                    </CardDataStats>
-                    <CardDataStats
-                        title={`Umumiy studentlar soni`}
-                        total={eduAdminStsGet.response ? eduAdminStsGet.response.studentCount : 0}
-                    >
-                        <div className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
-                            <BiCategory className={`text-2xl`}/>
-                        </div>
-                    </CardDataStats>
-                    <CardDataStats
-                        title={`Umumiy o'qituvchilar soni`}
-                        total={eduAdminStsGet.response ? eduAdminStsGet.response.teacherCount : 0}
-                    >
-                        <div className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
-                            <BiCategory className={`text-2xl`}/>
-                        </div>
-                    </CardDataStats>
-                </div>
-            )}
+            ) : admin_role && roleDashboardSts(admin_role)}
 
             <div className={`mt-10`}>
                 <ChartLine
