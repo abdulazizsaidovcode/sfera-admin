@@ -48,3 +48,22 @@ h1 {
     background-color: #f9f9f9;
   }
 }
+
+input {
+  outline: none;
+  /* Removes the default outline */
+  transition: border 0.3s ease;
+  /* Adds smooth transition for the border */
+}
+
+/* Focus state */
+input:focus {
+  /* border-color: #fff; */
+  outline: 1px solid #6A9C89;
+  background-color: #f1f9f5;
+}
+
+select:focus {
+  outline: 1px solid #6A9C89;
+  background-color: #f1f9f5;
+}
