@@ -5,7 +5,7 @@ const QuizSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
     return (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
             <CardDataStats
-                title={`Umumiy categoriyalar soni`}
+                title={`Categoriyalar soni`}
                 total={dashboardCardSts ? dashboardCardSts.categoryCount : 0}
             >
                 <div
@@ -14,7 +14,7 @@ const QuizSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
                 </div>
             </CardDataStats>
             <CardDataStats
-                title={`Umumiy guruhlar soni`}
+                title={`Yaxshi natijalar soni`}
                 total={dashboardCardSts ? dashboardCardSts.goodResultsCount : 0}
             >
                 <div
@@ -23,7 +23,7 @@ const QuizSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
                 </div>
             </CardDataStats>
             <CardDataStats
-                title={`Umumiy studentlar soni`}
+                title={`Yomon natijalar soni`}
                 total={dashboardCardSts ? dashboardCardSts.badResultsCount : 0}
             >
                 <div
@@ -32,7 +32,7 @@ const QuizSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
                 </div>
             </CardDataStats>
             <CardDataStats
-                title={`Umumiy o'qituvchilar soni`}
+                title={`Savollar soni`}
                 total={dashboardCardSts ? dashboardCardSts.questionCount : 0}
             >
                 <div
@@ -41,7 +41,7 @@ const QuizSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
                 </div>
             </CardDataStats>
             <CardDataStats
-                title={`Umumiy o'qituvchilar soni`}
+                title={`Umumiy natijalar soni`}
                 total={dashboardCardSts ? dashboardCardSts.resultCount : 0}
             >
                 <div
@@ -50,7 +50,7 @@ const QuizSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
                 </div>
             </CardDataStats>
             <CardDataStats
-                title={`Umumiy o'qituvchilar soni`}
+                title={`Super natijalar soni`}
                 total={dashboardCardSts ? dashboardCardSts.superResultsCount : 0}
             >
                 <div
@@ -59,7 +59,7 @@ const QuizSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
                 </div>
             </CardDataStats>
             <CardDataStats
-                title={`Umumiy o'qituvchilar soni`}
+                title={`Bugungi natijalar soni`}
                 total={dashboardCardSts ? dashboardCardSts.todayResultsCount : 0}
             >
                 <div
@@ -68,7 +68,7 @@ const QuizSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
                 </div>
             </CardDataStats>
             <CardDataStats
-                title={`Umumiy o'qituvchilar soni`}
+                title={`Umumiy foydalanuvchilar soni`}
                 total={dashboardCardSts ? dashboardCardSts.userCount : 0}
             >
                 <div

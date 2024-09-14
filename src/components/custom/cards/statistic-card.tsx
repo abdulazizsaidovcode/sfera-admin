@@ -28,7 +28,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = (
                 <div>
                     <span className="text-sm font-medium">{title}</span>
                     <h4 className="text-title-md font-bold text-black dark:text-white">
-                        <NumberGenerate value={+total}/>
+                        {+total === 0 ? 0 : <NumberGenerate value={+total}/>}
                     </h4>
                 </div>
             </div>
