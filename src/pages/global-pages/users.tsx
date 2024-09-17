@@ -7,7 +7,6 @@ import { config } from "@/helpers/token";
 import { useEffect, useState } from "react";
 import { FaPen } from "react-icons/fa";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards";
-import { AdminGroup } from "@/helpers/api";
 
 const Users = () => {
 
