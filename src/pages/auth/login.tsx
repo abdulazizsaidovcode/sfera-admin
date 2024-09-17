@@ -82,7 +82,7 @@ function Login() {
                                         type="tel"
                                         value={phoneNumber}
                                         onChange={handlePhoneNumberChange}
-                                        className="login__input bg-white border border-[#087E43] text-gray-900 rounded-lg focus:ring-[#087E43] focus:border-[#087E43] block w-full p-2.5"
+                                        className="bg-white border border-[#087E43] text-gray-900 rounded-lg focus:ring-[#087E43] focus:border-[#087E43] block w-full p-2.5"
                                         placeholder="Telefon raqamingizmi kiriting..."
                                     />
                                 </div>
@@ -94,7 +94,7 @@ function Login() {
                                         value={password}
                                         onChange={e => setPassword(e.target.value)}
                                         placeholder="Parolni kiriting..."
-                                        className="login__input bg-white border border-[#087E43] text-gray-900 rounded-lg focus:ring-[#087E43] focus:border-[#087E43] block w-full p-2.5"
+                                        className="bg-white border border-[#087E43] text-gray-900 rounded-lg focus:ring-[#087E43] focus:border-[#087E43] block w-full p-2.5"
                                     />
                                 </div>
                                 <ShinyButton

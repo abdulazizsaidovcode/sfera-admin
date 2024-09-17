@@ -63,14 +63,14 @@ const Users = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         type={`search`}
-                        className="login__input bg-white border border-lighterGreen text-gray-900 rounded-lg  block w-full p-2.5"
+                        className="bg-white border border-lighterGreen text-gray-900 rounded-lg  block w-full p-2.5"
                         placeholder="ismi bo'yicha"
                     />
                     <input
                         type="search"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="login__input bg-white border border-lighterGreen text-gray-900 rounded-lg  block w-full p-2.5"
+                        className="bg-white border border-lighterGreen text-gray-900 rounded-lg  block w-full p-2.5"
                         placeholder="telifon raqam bo'yicha"
                     />
                     <select

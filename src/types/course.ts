@@ -1,9 +1,11 @@
 export interface Courses {
-    courseData: null | CoursesList[] | CoursesClientCrudVal;
+    courseData: null | CoursesList[];
     setCourseData: (val: null | CoursesList[]) => void;
-    crudValue: null | CoursesClientCrudVal;
+    crudValue: null | CoursesClientCrudVal | CoursesList;
     setCrudValue: (val: null | CoursesClientCrudVal | CoursesList) => void;
     crudValueDef: CoursesClientCrudVal;
+    editOrDeleteStatus: string
+    setEditOrDeleteStatus: (val: string) => void
 }
 
 export interface CoursesClientCrudVal {

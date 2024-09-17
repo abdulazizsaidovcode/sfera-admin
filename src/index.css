@@ -29,11 +29,6 @@ h1 {
   line-height: 1.1;
 }
 
-.login__input:focus,
-.login__input:focus-visible {
-  outline: #2a87fa solid 1px;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

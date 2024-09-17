@@ -7,14 +7,16 @@ const courseStore = create<Courses>((set) => ({
     crudValueDef: {
         name: '',
         description: '',
-        fileId: null
+        fileId: 0
     },
     crudValue: {
         name: '',
         description: '',
-        fileId: null
+        fileId: 0
     },
     setCrudValue: (val: null | CoursesList | CoursesClientCrudVal) => set({crudValue: val}),
+    editOrDeleteStatus: '',
+    setEditOrDeleteStatus: (val: string) => set({editOrDeleteStatus: val}),
 }));
 
 export default courseStore;

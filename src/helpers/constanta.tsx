@@ -6,8 +6,6 @@ import {FaLayerGroup} from "react-icons/fa";
 import {IoNotifications} from "react-icons/io5";
 import {IThead} from "@/components/custom/tables/table.tsx";
 
-import images from '@/assets/images/img.avif'
-
 // ==============ADMIN ROLE TANLASH UCHUN SITE CARD DATA==============
 export const features = [
     {
@@ -93,22 +91,6 @@ export const lineChartData = {
     category: ['Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba', 'Yakshanba'],
     seriesData: [166, 189, 145, 567, 864, 657, 987]
 }
-
-// course card data vaqtinchalik
-export const courseDatas = [
-    {title: 'front', imgUrl: images, desc: 'A card perspective effect, hover over the card to elevate card elements.'},
-    {title: 'back', imgUrl: images, desc: 'A card perspective effect, hover over the card to elevate card elements.'},
-    {
-        title: '3 ds max',
-        imgUrl: images,
-        desc: 'A card perspective effect, hover over the card to elevate card elements.'
-    },
-    {
-        title: 'foundation',
-        imgUrl: images,
-        desc: 'A card perspective effect, hover over the card to elevate card elements.'
-    }
-];
 
 // notification card data vaqtinchalik
 export const notificationData = [
