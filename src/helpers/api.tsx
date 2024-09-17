@@ -17,4 +17,13 @@ export const eduAdminTopStudent: string = `${baseURL}statistic/top/Student`
 export const eduAdminCategoryStsYear: string = `${baseURL}statistic/categoryYearly`
 export const eduAdminCategoryStsPercentage: string = `${baseURL}statistic/categoryPercentage`
 export const quizAdminSts: string = `${baseURL}statistic/countAll-quiz`
+export const quizAdminWeeklySts: string = `${baseURL}statistic/weekly-statistic`
+export const quizAdminPercentageSts: string = `${baseURL}statistic/percentage-resultStatus`
+export const onlineAdminSts: string = `${baseURL}statistic/getOnlineCount`
+
+//================IMG CONTROLLER======================
+export const imgUploadPost: string = `${baseURL}file/upload`;
+export const imgUpdate: string = `${baseURL}file/update/`;
+export const imgGet: string = `${baseURL}file/files/`;
+export const imgDelete: string = `${baseURL}file/delete/`;
 export const quizAdminUsers: string = `${baseURL}user/searchUser?page=0&size=10`

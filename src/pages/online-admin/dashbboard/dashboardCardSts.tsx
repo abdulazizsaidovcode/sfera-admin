@@ -1,5 +1,7 @@
 import CardDataStats from "@/components/custom/cards/statistic-card.tsx";
-import {BiCategory} from "react-icons/bi";
+import {MdCategory, MdOutlinePlayLesson} from "react-icons/md";
+import {VscFileSubmodule} from "react-icons/vsc";
+import {PiStudentFill} from "react-icons/pi";
 
 const OnlineSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
     return (
@@ -10,16 +12,25 @@ const OnlineSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
             >
                 <div
                     className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
-                    <BiCategory className={`text-2xl`}/>
+                    <MdCategory className={`text-2xl`}/>
                 </div>
             </CardDataStats>
             <CardDataStats
-                title={`Umumiy guruhlar soni`}
-                total={dashboardCardSts ? dashboardCardSts.groupCount : 0}
+                title={`Umumiy modullar soni`}
+                total={dashboardCardSts ? dashboardCardSts.moduleCount : 0}
             >
                 <div
                     className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
-                    <BiCategory className={`text-2xl`}/>
+                    <VscFileSubmodule className={`text-2xl`}/>
+                </div>
+            </CardDataStats>
+            <CardDataStats
+                title={`Umumiy lessonlar soni`}
+                total={dashboardCardSts ? dashboardCardSts.lessonCount : 0}
+            >
+                <div
+                    className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
+                    <MdOutlinePlayLesson className={`text-2xl`}/>
                 </div>
             </CardDataStats>
             <CardDataStats
@@ -28,25 +39,7 @@ const OnlineSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
             >
                 <div
                     className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
-                    <BiCategory className={`text-2xl`}/>
-                </div>
-            </CardDataStats>
-            <CardDataStats
-                title={`Umumiy o'qituvchilar soni`}
-                total={dashboardCardSts ? dashboardCardSts.teacherCount : 0}
-            >
-                <div
-                    className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
-                    <BiCategory className={`text-2xl`}/>
-                </div>
-            </CardDataStats>
-            <CardDataStats
-                title={`Umumiy o'qituvchilar soni`}
-                total={dashboardCardSts ? dashboardCardSts.teacherCount : 0}
-            >
-                <div
-                    className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
-                    <BiCategory className={`text-2xl`}/>
+                    <PiStudentFill className={`text-2xl`}/>
                 </div>
             </CardDataStats>
         </div>

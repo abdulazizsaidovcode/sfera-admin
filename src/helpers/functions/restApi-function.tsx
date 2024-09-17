@@ -36,7 +36,10 @@ export function useGlobalRequest<T>(
                 default:
                     return toast.error('Method xaltolik yuz berdi!');
             }
-            if (res.data.error) toastMessage(res.data.error.code, res.data.error.message);
+            if (res.data.error) {
+                if (method !== 'GET') toastMessage(res.data.error.code, res.data.error.message);
+                else return ''
+            }
             return res.data.data;
         },
         onError: (error: any) => console.log(error)

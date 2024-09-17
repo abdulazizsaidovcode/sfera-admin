@@ -1,5 +1,8 @@
 import CardDataStats from "@/components/custom/cards/statistic-card.tsx";
-import {BiCategory} from "react-icons/bi";
+import {MdCategory} from "react-icons/md";
+import {FaPeopleGroup} from "react-icons/fa6";
+import {FaLayerGroup} from "react-icons/fa";
+import {PiStudentBold} from "react-icons/pi";
 
 const EduSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
     return (
@@ -10,7 +13,7 @@ const EduSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
             >
                 <div
                     className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
-                    <BiCategory className={`text-2xl`}/>
+                    <MdCategory className={`text-2xl`}/>
                 </div>
             </CardDataStats>
             <CardDataStats
@@ -19,7 +22,7 @@ const EduSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
             >
                 <div
                     className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
-                    <BiCategory className={`text-2xl`}/>
+                    <FaLayerGroup className={`text-2xl`}/>
                 </div>
             </CardDataStats>
             <CardDataStats
@@ -28,7 +31,7 @@ const EduSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
             >
                 <div
                     className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
-                    <BiCategory className={`text-2xl`}/>
+                    <PiStudentBold className={`text-2xl`}/>
                 </div>
             </CardDataStats>
             <CardDataStats
@@ -37,7 +40,7 @@ const EduSts = ({dashboardCardSts}: { dashboardCardSts: any }) => {
             >
                 <div
                     className="fill-primary dark:fill-white w-14 h-14 rounded-full flex justify-center items-center">
-                    <BiCategory className={`text-2xl`}/>
+                    <FaPeopleGroup className={`text-2xl`}/>
                 </div>
             </CardDataStats>
         </div>
