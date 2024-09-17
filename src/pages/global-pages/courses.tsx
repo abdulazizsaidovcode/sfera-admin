@@ -9,7 +9,7 @@ import courseStore from "@/helpers/state-management/coursesStore.tsx";
 import globalStore from "@/helpers/state-management/globalStore.tsx";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
-import {categoryAdd, categoryList, categoryOneEditDeleteUrl, imgGet} from "@/helpers/api.tsx";
+import {categoryAdd, categoryDelete, categoryList, categoryUpdate, imgGet} from "@/helpers/api.tsx";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import images from '@/assets/images/img.avif'
 import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
@@ -38,8 +38,8 @@ const Courses = () => {
     }
     const categoryListDataGet = useGlobalRequest(urls(categoryList), 'GET', '', config);
     const categoryDataAdd = useGlobalRequest(urls(categoryAdd), 'POST', crudValue, config);
-    const categoryDataDelete = useGlobalRequest(`${categoryOneEditDeleteUrl}${crudValue?.id}`, 'DELETE', '', config);
-    const categoryDataEdit = useGlobalRequest(`${categoryOneEditDeleteUrl}${crudValue?.id}`, 'PUT', {
+    const categoryDataDelete = useGlobalRequest(`${categoryDelete}${crudValue?.id}`, 'DELETE', '', config);
+    const categoryDataEdit = useGlobalRequest(`${categoryUpdate}${crudValue?.id}`, 'PUT', {
         name: crudValue?.name,
         description: crudValue?.description,
         fileId: crudValue?.fileId ? crudValue.fileId : 0,

@@ -30,4 +30,6 @@ export const quizAdminUsers: string = `${baseURL}user/searchUser?page=0&size=10`
 //================CATEGORY CONTROLLER==================
 export const categoryList: string = `${baseURL}category/list?categoryEnum=`
 export const categoryAdd: string = `${baseURL}category/save/category?categoryEnum=`
-export const categoryOneEditDeleteUrl: string = `${baseURL}category/`
+export const categoryUpdate: string = `${baseURL}category/update/`
+export const categoryDelete: string = `${baseURL}category/delete/`
+export const categoryGetOne: string = `${baseURL}category/get-one/`
