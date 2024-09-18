@@ -47,6 +47,7 @@ const Dashboard = () => {
             eduAdminTopStudentGet.globalDataFunc()
         } else if (admin_role === 'ADMIN_QUIZ') {
             quizAdminStsGet.globalDataFunc()
+            quizAdminWeeklyStsGet.globalDataFunc()
         } else if (admin_role === 'ADMIN_ONLINE') {
             onlineAdminStsGet.globalDataFunc()
         }
@@ -60,6 +61,7 @@ const Dashboard = () => {
             eduAdminTopStudentGet.globalDataFunc()
         } else if (admin_role === 'ADMIN_QUIZ') {
             quizAdminStsGet.globalDataFunc()
+            quizAdminWeeklyStsGet.globalDataFunc()
         } else if (admin_role === 'ADMIN_ONLINE') {
             onlineAdminStsGet.globalDataFunc()
         }
@@ -88,59 +90,101 @@ const Dashboard = () => {
 
             {/*==================LINE CHART===================*/}
             <div className={`mt-10`}>
-                <ChartLine
-                    title={lineChartData.title}
-                    seriesTitle={lineChartData.seriesTitle}
-                    category={lineChartData.category}
-                    seriesData={lineChartData.seriesData}
-                    maxSize={1000}
-                />
+                {quizAdminWeeklyStsGet.loading ? <Skeleton/> : quizAdminWeeklyStsGet.response ? (
+                    <ChartLine
+                        title={`Haftalik statistika (?)`}
+                        seriesTitle={quizAdminWeeklyStsGet.response.map((item: any) => item.weekDay)}
+                        category={quizAdminWeeklyStsGet.response.map((item: any) => item.weekDay)}
+                        seriesData={quizAdminWeeklyStsGet.response.map((item: any) => item.count)}
+                    />
+                ) : ''}
             </div>
 
             {/*==================TOP TABLES STS===================*/}
-            <div className={`mt-10 grid grid-cols-1 lg:grid-cols-2 gap-5`}>
-                <div className={`rounded-sm bg-white`}>
-                    <h3 className={`mb-2 font-semibold`}>Top guruhlar</h3>
-                    {eduAdminTopGroupGet.loading ? <Skeleton/> : (
-                        <Tables thead={topGroupEdu}>
-                            {eduAdminTopGroupGet.response ? eduAdminTopGroupGet.response.map((sts: any, idx: number) => (
-                                <tr key={sts.id} className={`hover:bg-whiteGreen duration-100`}>
-                                    <td className="border-b border-[#eee] p-5">
+            {admin_role === 'ADMIN_EDU' && (<>
+                <div className={`mt-10 grid grid-cols-1 lg:grid-cols-2 gap-5`}>
+                    <div className={`rounded-sm bg-white`}>
+                        <h3 className={`mb-2 font-semibold`}>Top guruhlar</h3>
+                        {eduAdminTopGroupGet.loading ? <Skeleton/> : (
+                            <Tables thead={topGroupEdu}>
+                                {eduAdminTopGroupGet.response ? eduAdminTopGroupGet.response.map((sts: any, idx: number) => (
+                                    <tr key={sts.id} className={`hover:bg-whiteGreen duration-100`}>
+                                        <td className="border-b border-[#eee] p-5">
+                                            <p className="text-black">
+                                                {idx + 1}
+                                            </p>
+                                        </td>
+                                        <td className="border-b border-[#eee] p-5">
+                                            <p className="text-black">
+                                                {sts.groupName}
+                                            </p>
+                                        </td>
+                                        <td className="border-b border-[#eee] p-5">
+                                            <p className="text-black">
+                                                {sts.studentCount}
+                                            </p>
+                                        </td>
+                                        <td className="border-b border-[#eee] p-5">
+                                            <p className="text-black">
+                                                {sts.scoreMonth}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                )) : <tr className={`hover:bg-whiteGreen duration-100`}>
+                                    <td className="border-b border-[#eee] p-5 text-center"
+                                        colSpan={topGroupEdu.length}>
                                         <p className="text-black">
-                                            {idx + 1}
+                                            Top guruhlar mavjud emas.
                                         </p>
                                     </td>
-                                    <td className="border-b border-[#eee] p-5">
+                                </tr>}
+                            </Tables>
+                        )}
+                    </div>
+                    <div className={`rounded-sm bg-white`}>
+                        <h3 className={`mb-2 font-semibold`}>Top o'qituvchilar</h3>
+                        {eduAdminTopTeacherGet.loading ? <Skeleton/> : (
+                            <Tables thead={topTeacherEdu}>
+                                {eduAdminTopTeacherGet.response ? eduAdminTopTeacherGet.response.map((sts: any, idx: number) => (
+                                    <tr key={sts.id} className={`hover:bg-whiteGreen duration-100`}>
+                                        <td className="border-b border-[#eee] p-5">
+                                            <p className="text-black">
+                                                {idx + 1}
+                                            </p>
+                                        </td>
+                                        <td className="border-b border-[#eee] p-5">
+                                            <p className="text-black">
+                                                {sts.fullName}
+                                            </p>
+                                        </td>
+                                        <td className="border-b border-[#eee] p-5">
+                                            <p className="text-black">
+                                                {sts.phoneNumber}
+                                            </p>
+                                        </td>
+                                        <td className="border-b border-[#eee] p-5">
+                                            <p className="text-black">
+                                                {sts.scoreMonth}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                )) : <tr className={`hover:bg-whiteGreen duration-100`}>
+                                    <td className="border-b border-[#eee] p-5 text-center"
+                                        colSpan={topTeacherEdu.length}>
                                         <p className="text-black">
-                                            {sts.groupName}
+                                            Top o'qituvchilar mavjud emas.
                                         </p>
                                     </td>
-                                    <td className="border-b border-[#eee] p-5">
-                                        <p className="text-black">
-                                            {sts.studentCount}
-                                        </p>
-                                    </td>
-                                    <td className="border-b border-[#eee] p-5">
-                                        <p className="text-black">
-                                            {sts.scoreMonth}
-                                        </p>
-                                    </td>
-                                </tr>
-                            )) : <tr className={`hover:bg-whiteGreen duration-100`}>
-                                <td className="border-b border-[#eee] p-5 text-center" colSpan={topGroupEdu.length}>
-                                    <p className="text-black">
-                                        Top guruhlar mavjud emas.
-                                    </p>
-                                </td>
-                            </tr>}
-                        </Tables>
-                    )}
+                                </tr>}
+                            </Tables>
+                        )}
+                    </div>
                 </div>
-                <div className={`rounded-sm bg-white`}>
-                    <h3 className={`mb-2 font-semibold`}>Top o'qituvchilar</h3>
-                    {eduAdminTopTeacherGet.loading ? <Skeleton/> : (
-                        <Tables thead={topTeacherEdu}>
-                            {eduAdminTopTeacherGet.response ? eduAdminTopTeacherGet.response.map((sts: any, idx: number) => (
+                <div className={`mt-10 grid grid-cols-1`}>
+                    <h3 className={`mb-2 font-semibold`}>Top studentlar</h3>
+                    {eduAdminTopStudentGet.loading ? <Skeleton/> : (
+                        <Tables thead={topStudentEdu}>
+                            {eduAdminTopStudentGet.response ? eduAdminTopStudentGet.response.map((sts: any, idx: number) => (
                                 <tr key={sts.id} className={`hover:bg-whiteGreen duration-100`}>
                                     <td className="border-b border-[#eee] p-5">
                                         <p className="text-black">
@@ -154,7 +198,7 @@ const Dashboard = () => {
                                     </td>
                                     <td className="border-b border-[#eee] p-5">
                                         <p className="text-black">
-                                            {sts.phoneNumber}
+                                            {/*{sts.GroupName}*/}
                                         </p>
                                     </td>
                                     <td className="border-b border-[#eee] p-5">
@@ -164,53 +208,17 @@ const Dashboard = () => {
                                     </td>
                                 </tr>
                             )) : <tr className={`hover:bg-whiteGreen duration-100`}>
-                                <td className="border-b border-[#eee] p-5 text-center" colSpan={topTeacherEdu.length}>
+                                <td className="border-b border-[#eee] p-5 text-center"
+                                    colSpan={topStudentEdu.length}>
                                     <p className="text-black">
-                                        Top o'qituvchilar mavjud emas.
+                                        Top studentlar mavjud emas.
                                     </p>
                                 </td>
                             </tr>}
                         </Tables>
                     )}
                 </div>
-            </div>
-            <div className={`mt-10 grid grid-cols-1`}>
-                <h3 className={`mb-2 font-semibold`}>Top studentlar</h3>
-                {eduAdminTopStudentGet.loading ? <Skeleton/> : (
-                    <Tables thead={topStudentEdu}>
-                        {eduAdminTopStudentGet.response ? eduAdminTopStudentGet.response.map((sts: any, idx: number) => (
-                            <tr key={sts.id} className={`hover:bg-whiteGreen duration-100`}>
-                                <td className="border-b border-[#eee] p-5">
-                                    <p className="text-black">
-                                        {idx + 1}
-                                    </p>
-                                </td>
-                                <td className="border-b border-[#eee] p-5">
-                                    <p className="text-black">
-                                        {sts.fullName}
-                                    </p>
-                                </td>
-                                <td className="border-b border-[#eee] p-5">
-                                    <p className="text-black">
-                                        {/*{sts.GroupName}*/}
-                                    </p>
-                                </td>
-                                <td className="border-b border-[#eee] p-5">
-                                    <p className="text-black">
-                                        {sts.scoreMonth}
-                                    </p>
-                                </td>
-                            </tr>
-                        )) : <tr className={`hover:bg-whiteGreen duration-100`}>
-                            <td className="border-b border-[#eee] p-5 text-center" colSpan={topStudentEdu.length}>
-                                <p className="text-black">
-                                    Top studentlar mavjud emas.
-                                </p>
-                            </td>
-                        </tr>}
-                    </Tables>
-                )}
-            </div>
+            </>)}
         </>
     );
 };

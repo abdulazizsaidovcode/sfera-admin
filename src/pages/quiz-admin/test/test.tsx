@@ -77,18 +77,23 @@ const Tests = () => {
             closeModal()
             toast.success('Savol muvaffaqiyatli qushildi')
         }
+    }, [testDataAdd.response]);
+
+    useEffect(() => {
         if (testDataEdit.response) {
             globalDataFunc()
             closeModal()
             toast.success('Savol muvaffaqiyatli taxrirlandi')
         }
+    }, [testDataEdit.response]);
+
+    useEffect(() => {
         if (testDataDelete.response) {
             globalDataFunc()
             closeModal()
             toast.success('Savol muvaffaqiyatli o\'chirildi')
         }
-        consoleClear()
-    }, [testDataAdd.response, testDataEdit.response, testDataDelete.response]);
+    }, [testDataDelete.response]);
 
     const handleChange = (name: string, value: string | any) => setCrudTest({...crudTest, [name]: value});
 
@@ -121,7 +126,7 @@ const Tests = () => {
                     className={`w-full lg:max-w-[60%] flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}
                 >
                     <Input
-                        className={`w-full bg-transparent rounded-[10px] h-11`}
+                        className={`w-full bg-transparent h-11`}
                         placeholder="Test nomi bo'yicha qidirish..."
                         onChange={(val) => setTestName(val.target.value)}
                         allowClear
@@ -129,7 +134,7 @@ const Tests = () => {
                     {admin_role === 'ADMIN_QUIZ' && (
                         <Select
                             placeholder={`Yo'nalish buyicha qidirish`}
-                            className={`w-full bg-transparent rounded-[10px] h-11`}
+                            className={`w-full bg-transparent h-11`}
                             onChange={(value) => setCategoryFilter(value)}
                             allowClear
                         >
@@ -200,7 +205,7 @@ const Tests = () => {
                             }
                         </div>
                     )}
-                    <div className={`flex justify-end items-center gap-5`}>
+                    <div className={`flex justify-end items-center gap-5 mt-5`}>
                         <ShinyButton
                             text={`Orqaga`}
                             className={`bg-darkGreen`}

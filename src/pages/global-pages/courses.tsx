@@ -108,6 +108,7 @@ const Courses = () => {
                     className={`w-full lg:max-w-[60%] flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}>
                     <input
                         type={`search`}
+                        disabled
                         className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5"
                         placeholder={`${admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalishlar' : 'Kurslar'} nomi bo'yicha qidirish...`}
                     />
