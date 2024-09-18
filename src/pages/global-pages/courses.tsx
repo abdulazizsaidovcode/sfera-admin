@@ -81,8 +81,10 @@ const Courses = () => {
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => {
         setIsModalOpen(false);
-        setEditOrDeleteStatus('');
-        setCrudValue(crudValueDef);
+        setTimeout(() => {
+            setEditOrDeleteStatus('');
+            setCrudValue(crudValueDef);
+        }, .5)
     };
 
     const handleInputChange = (name: string, value: string) => setCrudValue({...crudValue, [name]: value})
@@ -136,7 +138,7 @@ const Courses = () => {
                     <form className={`mt-5`} onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()}>
                         {editOrDeleteStatus !== 'DELETE' ? (<>
                             <div className="mb-4 mt-5 flex justify-center">
-                                <ImgUpload/>
+                                <ImgUpload imgID={crudValue?.fileId ? crudValue.fileId : ''}/>
                             </div>
                             <div className="mb-4">
                                 <label className="block text-gray-700 mb-2">
