@@ -4,12 +4,16 @@ import CheckboxMain from "@/components/custom/checkbox/checkbox.tsx";
 import testStore from "@/helpers/state-management/testStore.tsx";
 
 const TestCrudCheck = ({defQues}: { defQues?: any }) => {
-    const {setOptionDto} = testStore();
+    const {setOptionDto, optionDto} = testStore();
     const [questions, setQuestions] = useState([{answer: '', isCorrect: false}]);
 
     useEffect(() => {
         setOptionDto(questions);
     }, [questions]);
+
+    useEffect(() => {
+        optionDto && setQuestions(optionDto);
+    }, [optionDto]);
 
     useEffect(() => {
         if (defQues) {

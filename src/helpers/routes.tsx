@@ -57,6 +57,13 @@ export const routes = [
         </>
     },
     {
+        path: '/online/test',
+        element: <>
+            <PageTitle title="Online | Test"/>
+            <Tests/>
+        </>
+    },
+    {
         path: '/online/users',
         element: <>
             <PageTitle title="Online platform | Users"/>

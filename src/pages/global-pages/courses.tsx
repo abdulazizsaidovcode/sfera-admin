@@ -84,7 +84,7 @@ const Courses = () => {
         setTimeout(() => {
             setEditOrDeleteStatus('');
             setCrudValue(crudValueDef);
-        }, .5)
+        }, 500)
     };
 
     const handleInputChange = (name: string, value: string) => setCrudValue({...crudValue, [name]: value})

@@ -12,6 +12,8 @@ export interface TestList {
     categoryId: number | null
     lessonId: number | null
     optionDto: OptionsDto[] | null
+    lessonName: string
+    categoryName: string
 }
 
 export interface OptionsDto {

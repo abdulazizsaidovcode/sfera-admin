@@ -6,6 +6,8 @@ import {FaLayerGroup} from "react-icons/fa";
 import {IoNotifications} from "react-icons/io5";
 import {IThead} from "@/components/custom/tables/table.tsx";
 
+const admin_role = sessionStorage.getItem("admin_roles");
+
 // ==============ADMIN ROLE TANLASH UCHUN SITE CARD DATA==============
 export const features = [
     {
@@ -53,6 +55,7 @@ export const sideData = {
     ],
     onlineData: [
         {title: 'Boshqaruv paneli', icon: <LuLayoutDashboard size={20}/>, path: '/online/dashboard'},
+        {title: 'Test', icon: <SiTestcafe size={20}/>, path: '/online/test'},
         {title: 'Foydalanuvchilar', icon: <PiStudentFill size={20}/>, path: '/online/users'},
         {title: 'Guruhlar', icon: <FaLayerGroup size={20}/>, path: '/online/group'},
         {title: 'Bildirishnoma', icon: <IoNotifications size={20}/>, path: '/online/notification'},
@@ -168,8 +171,8 @@ export const userTableHead: IThead[] = [
 ]
 
 export const testThead: IThead[] = [
-    {id: 4, name: 'ID'},
+    // {id: 4, name: 'ID'},
     {id: 1, name: 'Savol nomi'},
-    {id: 2, name: `Yo'nalish nomi`},
+    {id: 2, name: `${admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish nomi' : 'Lesson nomi'}`},
     {id: 3, name: 'Xarakat'},
 ];
