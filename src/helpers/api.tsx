@@ -25,7 +25,7 @@ export const imgGet: string = `${baseURL}file/files/`;
 export const imgDelete: string = `${baseURL}file/delete/`;
 
 // ==================USERS====================
-export const quizAdminUsers: string = `${baseURL}user/searchUser?page=0&size=10`
+export const allUsers: string = `${baseURL}user/searchUser`
 
 //================CATEGORY CONTROLLER==================
 export const categoryList: string = `${baseURL}category/list?categoryEnum=`
@@ -37,3 +37,9 @@ export const categoryGetOne: string = `${baseURL}category/get-one/`
 // ==============QUESTION CONTROLLER====================
 export const questionAllGetPage: string = `${baseURL}question/filter`
 export const questionCrud: string = `${baseURL}question`
+
+// ==============NOTIFICATION CONTROLLER====================
+
+// ==============GROUP CONTROLLER====================
+export const groupList: string = `${baseURL}group/list`
+export const groupCrud: string = `${baseURL}group` // edit, delete, add, oneGet

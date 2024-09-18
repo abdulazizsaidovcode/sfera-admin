@@ -166,7 +166,8 @@ export const userTableHead: IThead[] = [
     {id: 1, name: 'ID'},
     {id: 2, name: 'Ismi'},
     {id: 3, name: 'Familiyasi'},
-    {id: 5, name: 'Holati'},
+    {id: 5, name: 'Telefon raqami'},
+    {id: 7, name: 'Roli'},
     {id: 6, name: 'Xarakat'},
 ]
 
