@@ -1,22 +1,24 @@
 import Breadcrumb from "@/components/custom/breadcrumb/Breadcrumb.tsx";
 import Tables from "@/components/custom/tables/table.tsx";
-import {testThead} from "@/helpers/constanta.tsx";
 import ShinyButton from "@/components/magicui/shiny-button.tsx";
+import Modal from "@/components/custom/modal/modal.tsx";
+import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
+import testStore from "@/helpers/state-management/testStore.tsx";
+import TestCrudCheck from "@/pages/quiz-admin/test/components/test-crud-check.tsx";
+import toast from "react-hot-toast";
+import courseStore from "@/helpers/state-management/coursesStore.tsx";
+import {testThead} from "@/helpers/constanta.tsx";
 import {MdOutlineAddCircle} from "react-icons/md";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
 import {categoryList, questionAllGetPage, questionCrud} from "@/helpers/api.tsx";
 import {useEffect, useState} from "react";
-import {OptionsDto, TestList} from "@/types/test.ts";
-import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
+import {TestList} from "@/types/test.ts";
 import {FaEdit} from "react-icons/fa";
 import {RiDeleteBin7Fill} from "react-icons/ri";
-import Modal from "@/components/custom/modal/modal.tsx";
-import courseStore from "@/helpers/state-management/coursesStore.tsx";
-import testStore from "@/helpers/state-management/testStore.tsx";
-import TestCrudCheck from "@/pages/quiz-admin/test/components/test-crud-check.tsx";
-import toast from "react-hot-toast";
 import {CoursesList} from "@/types/course.ts";
+import {Input, Pagination, Select} from 'antd';
+import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 
 const defVal = {
     name: '',
@@ -32,23 +34,28 @@ const Tests = () => {
     const {editOrDeleteStatus, setEditOrDeleteStatus} = courseStore()
     const {crudTest, setCrudTest, optionDto, setOptionDto} = testStore()
     const [isModal, setIsModal] = useState(false);
+    const [page, setPage] = useState<number>(0);
+    const [categoryFilter, setCategoryFilter] = useState<string>('');
+    const [testName, setTestName] = useState<string>('');
 
     // ============SERVER REQUEST=============
     const getTestUrl = () => {
-        return `${questionAllGetPage}?page=0&size=10`;
+        const queryParams: string = [
+            testName ? `questionName=${testName}` : '',
+            categoryFilter ? `categoryId=${categoryFilter}` : ''
+        ].filter(Boolean).join('&');
+
+        return `${questionAllGetPage}?${queryParams ? `${queryParams}&` : ''}page=${page}&size=10`;
     }
     const categoryLists = useGlobalRequest(`${categoryList}QUIZ`, 'GET', '', config)
     const {loading, globalDataFunc, response} = useGlobalRequest(getTestUrl(), 'GET', '', config)
-    const testDataAdd = useGlobalRequest(questionCrud, 'POST', {
-        name: crudTest?.name,
-        categoryId: admin_role === 'ADMIN_QUIZ' ? crudTest?.categoryId : 0,
-        lessonId: admin_role === 'ADMIN_ONLINE' ? crudTest?.lessonId : 0,
-        optionDto: optionDto
-    }, config)
+    const testDataAdd = useGlobalRequest(`${questionCrud}?categoryId=${admin_role === 'ADMIN_QUIZ' ? crudTest?.categoryId : 0}&lessonId=${admin_role === 'ADMIN_ONLINE' ? crudTest?.lessonId : 0}`,
+        'POST', {
+            name: crudTest?.name,
+            optionDto: optionDto
+        }, config)
     const testDataEdit = useGlobalRequest(`${questionCrud}/${crudTest?.id}`, 'PUT', {
         name: crudTest?.name,
-        categoryId: admin_role === 'ADMIN_QUIZ' ? crudTest?.categoryId : 0,
-        lessonId: admin_role === 'ADMIN_ONLINE' ? crudTest?.lessonId : 0,
         optionDto: optionDto
     }, config)
     const testDataDelete = useGlobalRequest(`${questionCrud}/${crudTest?.id}`, 'DELETE', '', config)
@@ -56,7 +63,32 @@ const Tests = () => {
     useEffect(() => {
         globalDataFunc()
         categoryLists.globalDataFunc()
+        consoleClear()
     }, []);
+
+    useEffect(() => {
+        globalDataFunc()
+        consoleClear()
+    }, [page, categoryFilter, testName]);
+
+    useEffect(() => {
+        if (testDataAdd.response) {
+            globalDataFunc()
+            closeModal()
+            toast.success('Savol muvaffaqiyatli qushildi')
+        }
+        if (testDataEdit.response) {
+            globalDataFunc()
+            closeModal()
+            toast.success('Savol muvaffaqiyatli taxrirlandi')
+        }
+        if (testDataDelete.response) {
+            globalDataFunc()
+            closeModal()
+            toast.success('Savol muvaffaqiyatli o\'chirildi')
+        }
+        consoleClear()
+    }, [testDataAdd.response, testDataEdit.response, testDataDelete.response]);
 
     const handleChange = (name: string, value: string | any) => setCrudTest({...crudTest, [name]: value});
 
@@ -86,17 +118,26 @@ const Tests = () => {
                     }}
                 />
                 <div
-                    className={`w-full lg:max-w-[60%] flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}>
-                    <input
-                        type={`search`}
-                        className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5"
-                        placeholder="Test nomi bo'yicha qidirish"
+                    className={`w-full lg:max-w-[60%] flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}
+                >
+                    <Input
+                        className={`w-full bg-transparent rounded-[10px] h-11`}
+                        placeholder="Test nomi bo'yicha qidirish..."
+                        onChange={(val) => setTestName(val.target.value)}
+                        allowClear
                     />
-                    <input
-                        type={`search`}
-                        className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5"
-                        placeholder="Yo'nalish bo'yicha qidirish..."
-                    />
+                    {admin_role === 'ADMIN_QUIZ' && (
+                        <Select
+                            placeholder={`Yo'nalish buyicha qidirish`}
+                            className={`w-full bg-transparent rounded-[10px] h-11`}
+                            onChange={(value) => setCategoryFilter(value)}
+                            allowClear
+                        >
+                            {categoryLists.response && categoryLists.response.map((item: any) => (
+                                <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
+                            ))}
+                        </Select>
+                    )}
                 </div>
             </div>
 
@@ -112,8 +153,15 @@ const Tests = () => {
                             else if (admin_role === 'ADMIN_ONLINE' && quiz.lessonId && quiz.lessonName) return TBody(quiz, idx, openModal, setEditOrDeleteStatus, setCrudTest)
                         }) : NotFoundList()}
                     </Tables>
-
                 )}
+                <Pagination
+                    showSizeChanger={false}
+                    responsive={true}
+                    defaultCurrent={1}
+                    total={response ? response.totalElements : 0}
+                    onChange={(page: number) => setPage(page - 1)}
+                    rootClassName={`mt-8 mb-5`}
+                />
             </div>
 
             <Modal onClose={closeModal} isOpen={isModal}>
@@ -131,17 +179,19 @@ const Tests = () => {
                                 placeholder="Savolni kiriting..."
                                 className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5"
                             />
-                            <select
-                                onChange={(e) => handleChange(`categoryId`, +e.target.value)}
-                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
-                            >
-                                <option disabled selected>
-                                    Yo'nalishni tanlang
-                                </option>
-                                {categoryLists.response && categoryLists.response.map((item: CoursesList) => (
-                                    <option value={item.id}>{item.name}</option>
-                                ))}
-                            </select>
+                            {editOrDeleteStatus === 'POST' && (
+                                <select
+                                    onChange={(e) => handleChange(`categoryId`, +e.target.value)}
+                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
+                                >
+                                    <option disabled selected>
+                                        Yo'nalishni tanlang
+                                    </option>
+                                    {categoryLists.response && categoryLists.response.map((item: CoursesList) => (
+                                        <option value={item.id}>{item.name}</option>
+                                    ))}
+                                </select>
+                            )}
                             <p className={`text-center mt-4`}>
                                 {editOrDeleteStatus === 'EDIT' && 'Variantlarni uzgartirishingiz mumkin!!!'}
                             </p>
