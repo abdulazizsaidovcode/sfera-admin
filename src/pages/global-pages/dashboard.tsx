@@ -1,4 +1,4 @@
-import {lineChartData, topGroupEdu, topStudentEdu, topTeacherEdu} from "@/helpers/constanta.tsx";
+import {topGroupEdu, topStudentEdu, topTeacherEdu} from "@/helpers/constanta.tsx";
 import ChartLine from "@/components/custom/chart/line-chart.tsx";
 import Tables from "@/components/custom/tables/table.tsx";
 import {
@@ -32,39 +32,36 @@ const Dashboard = () => {
     const eduAdminTopStudentGet = useGlobalRequest(eduAdminTopStudent, 'GET', '', config)
     const eduAdminCategoryStsYearGet = useGlobalRequest(eduAdminCategoryStsYear, 'GET', '', config)
     const eduAdminCategoryStsPercentageGet = useGlobalRequest(eduAdminCategoryStsPercentage, 'GET', '', config)
+    const getEduFunc = () => {
+        eduAdminStsGet.globalDataFunc()
+        eduAdminTopGroupGet.globalDataFunc()
+        eduAdminTopTeacherGet.globalDataFunc()
+        eduAdminTopStudentGet.globalDataFunc()
+    }
 
     const quizAdminStsGet = useGlobalRequest(quizAdminSts, 'GET', '', config)
     const quizAdminWeeklyStsGet = useGlobalRequest(quizAdminWeeklySts, 'GET', '', config)
     const quizAdminPercentageStsGet = useGlobalRequest(quizAdminPercentageSts, 'GET', '', config)
+    const getQUizFunc = () => {
+        quizAdminStsGet.globalDataFunc()
+        quizAdminWeeklyStsGet.globalDataFunc()
+    }
 
     const onlineAdminStsGet = useGlobalRequest(onlineAdminSts, 'GET', '', config)
+    const getOnlineFunc = () => {
+        onlineAdminStsGet.globalDataFunc()
+    }
 
     useEffect(() => {
-        if (admin_role === 'ADMIN_EDU') {
-            eduAdminStsGet.globalDataFunc()
-            eduAdminTopGroupGet.globalDataFunc()
-            eduAdminTopTeacherGet.globalDataFunc()
-            eduAdminTopStudentGet.globalDataFunc()
-        } else if (admin_role === 'ADMIN_QUIZ') {
-            quizAdminStsGet.globalDataFunc()
-            quizAdminWeeklyStsGet.globalDataFunc()
-        } else if (admin_role === 'ADMIN_ONLINE') {
-            onlineAdminStsGet.globalDataFunc()
-        }
+        if (admin_role === 'ADMIN_EDU') getEduFunc()
+        else if (admin_role === 'ADMIN_QUIZ') getQUizFunc()
+        else if (admin_role === 'ADMIN_ONLINE') getOnlineFunc()
     }, []);
 
     useEffect(() => {
-        if (admin_role === 'ADMIN_EDU') {
-            eduAdminStsGet.globalDataFunc()
-            eduAdminTopGroupGet.globalDataFunc()
-            eduAdminTopTeacherGet.globalDataFunc()
-            eduAdminTopStudentGet.globalDataFunc()
-        } else if (admin_role === 'ADMIN_QUIZ') {
-            quizAdminStsGet.globalDataFunc()
-            quizAdminWeeklyStsGet.globalDataFunc()
-        } else if (admin_role === 'ADMIN_ONLINE') {
-            onlineAdminStsGet.globalDataFunc()
-        }
+        if (admin_role === 'ADMIN_EDU') getEduFunc()
+        else if (admin_role === 'ADMIN_QUIZ') getQUizFunc()
+        else if (admin_role === 'ADMIN_ONLINE') getOnlineFunc()
     }, [admin_role]);
 
     useEffect(() => {
