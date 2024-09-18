@@ -166,3 +166,10 @@ export const userTableHead: IThead[] = [
     {id: 5, name: 'Holati'},
     {id: 6, name: 'Xarakat'},
 ]
+
+export const testThead: IThead[] = [
+    {id: 4, name: 'ID'},
+    {id: 1, name: 'Savol nomi'},
+    {id: 2, name: `Yo'nalish nomi`},
+    {id: 3, name: 'Xarakat'},
+];

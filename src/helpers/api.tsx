@@ -33,3 +33,7 @@ export const categoryAdd: string = `${baseURL}category/save/category?categoryEnu
 export const categoryUpdate: string = `${baseURL}category/update/`
 export const categoryDelete: string = `${baseURL}category/delete/`
 export const categoryGetOne: string = `${baseURL}category/get-one/`
+
+// ==============QUESTION CONTROLLER====================
+export const questionAllGetPage: string = `${baseURL}question/filter`
+export const questionCrud: string = `${baseURL}question`
