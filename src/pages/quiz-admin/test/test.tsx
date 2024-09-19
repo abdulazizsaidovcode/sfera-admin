@@ -126,7 +126,7 @@ const Tests = () => {
                     className={`w-full lg:max-w-[60%] flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}
                 >
                     <Input
-                        className={`w-full bg-transparent h-11`}
+                        className={`w-full bg-transparent h-11 custom-input`}
                         placeholder="Test nomi bo'yicha qidirish..."
                         onChange={(val) => setTestName(val.target.value)}
                         allowClear
@@ -134,7 +134,7 @@ const Tests = () => {
                     {admin_role === 'ADMIN_QUIZ' && (
                         <Select
                             placeholder={`Yo'nalish buyicha qidirish`}
-                            className={`w-full bg-transparent h-11`}
+                            className={`w-full bg-transparent h-11 custom-select`}
                             onChange={(value) => setCategoryFilter(value)}
                             allowClear
                         >

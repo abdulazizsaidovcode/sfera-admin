@@ -64,14 +64,14 @@ const Users = () => {
             {/*===================SEARCH===================*/}
             <div className={`w-full flex justify-between items-center flex-wrap xl:flex-nowrap gap-5 mt-10`}>
                 <Input
-                    className={`w-full bg-transparent h-11`}
+                    className={`w-full bg-transparent h-11 custom-input`}
                     placeholder="F.I.O qidirish..."
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     allowClear
                 />
                 <Input
-                    className={`w-full bg-transparent h-11`}
+                    className={`w-full bg-transparent h-11 custom-input`}
                     placeholder="Telifon raqam bo'yicha..."
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -79,7 +79,7 @@ const Users = () => {
                 />
                 <Select
                     placeholder={`Roli bo'yicha`}
-                    className={`w-full bg-transparent h-11`}
+                    className={`w-full bg-transparent h-11 custom-select`}
                     value={role}
                     onChange={(e) => setRole(e)}
                     allowClear
@@ -90,7 +90,7 @@ const Users = () => {
                 </Select>
                 <Select
                     placeholder={`Guruh bo'yicha`}
-                    className={`w-full bg-transparent h-11`}
+                    className={`w-full bg-transparent h-11 custom-select`}
                     value={group}
                     onChange={(e) => setGroup(e)}
                     allowClear
@@ -101,7 +101,7 @@ const Users = () => {
                 </Select>
                 <Select
                     placeholder={`O'qituvchi tanlash`}
-                    className={`w-full bg-transparent h-11`}
+                    className={`w-full bg-transparent h-11 custom-select`}
                     value={teacher}
                     onChange={(e) => setTeacher(e)}
                     allowClear
