@@ -164,6 +164,7 @@ export const topStudentEdu: IThead[] = [
 // user tables head data
 export const userTableHead: IThead[] = [
     {id: 1, name: 'ID'},
+    {id: 7, name: 'Rasm'},
     {id: 2, name: 'Ismi'},
     {id: 3, name: 'Familiyasi'},
     {id: 5, name: 'Telefon raqami'},
