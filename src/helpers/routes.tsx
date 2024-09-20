@@ -1,20 +1,20 @@
 import PageTitle from "@/components/custom/Header/PageTitle.tsx";
-import {Courses, Dashboard, Login, SiteRole, Users, Groups, Notifications, Tests, Rate, Module} from "@/pages";
+import { Courses, Dashboard, Login, SiteRole, Users, Groups, Notifications, Tests, Rate, Module, CategoryDetails } from "@/pages";
 
 export const routes = [
     // ====================GLOBAL ROUTE===================
     {
         path: '/admin/site-role',
         element: <>
-            <PageTitle title="Admin | Site Role"/>
-            <SiteRole/>
+            <PageTitle title="Admin | Site Role" />
+            <SiteRole />
         </>
     },
     {
         path: '/auth/login',
         element: <>
-            <PageTitle title="Admin | Login"/>
-            <Login/>
+            <PageTitle title="Admin | Login" />
+            <Login />
         </>
     },
 
@@ -22,50 +22,50 @@ export const routes = [
     {
         path: '/quiz/dashboard',
         element: <>
-            <PageTitle title="Quiz | Dashboard"/>
-            <Dashboard/>
+            <PageTitle title="Quiz | Dashboard" />
+            <Dashboard />
         </>
     },
     {
         path: '/quiz/category',
         element: <>
-            <PageTitle title="Quiz | Courses"/>
-            <Courses/>
+            <PageTitle title="Quiz | Courses" />
+            <Courses />
         </>
     },
     {
         path: '/quiz/category/:id',
         element: <>
-            <PageTitle title="Quiz | Courses details"/>
-            <Notifications/>
+            <PageTitle title="Quiz | Courses details" />
+            <CategoryDetails />
         </>
     },
     {
         path: '/quiz/test',
         element: <>
-            <PageTitle title="Quiz | Test"/>
-            <Tests/>
+            <PageTitle title="Quiz | Test" />
+            <Tests />
         </>
     },
     {
         path: '/quiz/users',
         element: <>
-            <PageTitle title="Quiz | Users"/>
-            <Users/>
+            <PageTitle title="Quiz | Users" />
+            <Users />
         </>
     },
     {
         path: '/quiz/notification',
         element: <>
-            <PageTitle title="Quiz | Notification"/>
-            <Notifications/>
+            <PageTitle title="Quiz | Notification" />
+            <Notifications />
         </>
     },
     {
         path: '/quiz/result',
         element: <>
-            <PageTitle title="Quiz | Result"/>
-            <Notifications/>
+            <PageTitle title="Quiz | Result" />
+            <Notifications />
         </>
     },
 
@@ -73,43 +73,43 @@ export const routes = [
     {
         path: '/online/dashboard',
         element: <>
-            <PageTitle title="Online platform | Dashboard"/>
-            <Dashboard/>
+            <PageTitle title="Online platform | Dashboard" />
+            <Dashboard />
         </>
     },
     {
         path: '/online/test',
         element: <>
-            <PageTitle title="Online platform | Test"/>
-            <Tests/>
+            <PageTitle title="Online platform | Test" />
+            <Tests />
         </>
     },
     {
         path: '/online/users',
         element: <>
-            <PageTitle title="Online platform | Users"/>
-            <Users/>
+            <PageTitle title="Online platform | Users" />
+            <Users />
         </>
     },
     {
         path: '/online/notification',
         element: <>
-            <PageTitle title="Online platform | Notification"/>
-            <Notifications/>
+            <PageTitle title="Online platform | Notification" />
+            <Notifications />
         </>
     },
     {
         path: '/online/course',
         element: <>
-            <PageTitle title="Online platform | Courses"/>
-            <Courses/>
+            <PageTitle title="Online platform | Courses" />
+            <Courses />
         </>
     },
     {
         path: '/online/module',
         element: <>
-            <PageTitle title="Online platform | Module"/>
-            <Module/>
+            <PageTitle title="Online platform | Module" />
+            <Module />
         </>
     },
 
@@ -117,50 +117,50 @@ export const routes = [
     {
         path: '/edu/dashboard',
         element: <>
-            <PageTitle title="Education | Dashboard"/>
-            <Dashboard/>
+            <PageTitle title="Education | Dashboard" />
+            <Dashboard />
         </>
     },
     {
         path: '/edu/users',
         element: <>
-            <PageTitle title="Education | Users"/>
-            <Users/>
+            <PageTitle title="Education | Users" />
+            <Users />
         </>
     },
     {
         path: '/edu/group',
         element: <>
-            <PageTitle title="Education | Groups"/>
-            <Groups/>
+            <PageTitle title="Education | Groups" />
+            <Groups />
         </>
     },
     {
         path: '/edu/notification',
         element: <>
-            <PageTitle title="Education | Notification"/>
-            <Notifications/>
+            <PageTitle title="Education | Notification" />
+            <Notifications />
         </>
     },
     {
         path: '/edu/course',
         element: <>
-            <PageTitle title="Education | Courses"/>
-            <Courses/>
+            <PageTitle title="Education | Courses" />
+            <Courses />
         </>
     },
     {
         path: '/edu/module',
         element: <>
-            <PageTitle title="Education | Module"/>
-            <Module/>
+            <PageTitle title="Education | Module" />
+            <Module />
         </>
     },
     {
         path: '/edu/rate',
         element: <>
-            <PageTitle title="Education | Rate"/>
-            <Rate/>
+            <PageTitle title="Education | Rate" />
+            <Rate />
         </>
     },
 ]
