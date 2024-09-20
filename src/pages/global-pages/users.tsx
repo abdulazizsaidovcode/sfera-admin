@@ -80,7 +80,7 @@ const Users = () => {
     const userDelete = useGlobalRequest(`${userDeleted}${crudValue.userId}`, 'DELETE', '', config);
     const userGroupUpdate = useGlobalRequest(`${userGroupEdit}${crudValue.userId}/${updateGroupId}`, 'PUT', '', config);
     const userGroupUpdateUser = useGlobalRequest(`${userGroupEditUser}${crudValue.userId}/${updateGroupId}`, 'PUT', '', config);
-    const userRoleEdit = useGlobalRequest(`${userRoleUpdate}${crudValue.userId}?role=${updateGroupId}`, 'POST', '', config);
+    const userRoleEdit = useGlobalRequest(`${userRoleUpdate}${crudValue.userId}`, 'POST', '', config);
 
     useEffect(() => {
         users.globalDataFunc()
@@ -125,7 +125,7 @@ const Users = () => {
             toast.success('O\'zgarishlar muvaffaqiyatli saqlandi')
         }
         consoleClear()
-    }, [userAdd.response, userEdit.response, userDelete.response, userGroupUpdate.response, userRoleEdit.response,userGroupUpdateUser.response]);
+    }, [userAdd.response, userEdit.response, userDelete.response, userGroupUpdate.response, userRoleEdit.response, userGroupUpdateUser.response]);
 
     const userRole = (role: string) => {
         if (role === 'ROLE_STUDENT') return 'O\'quvchi';
@@ -165,9 +165,11 @@ const Users = () => {
             </div>,
             key: '2',
             onClick: () => {
-                openModal()
-                setEditOrDeleteStatus('ROLE_EDIT')
-                setCrudValue(user)
+                if (user.role === 'ROLE_STUDENT' || user.role === 'ROLE_USER') {
+                    openModal()
+                    setEditOrDeleteStatus('ROLE_EDIT')
+                    setCrudValue(user)
+                } else toast.error('Bu foydalanuvchini rolini uzgartira olmaysiz')
             }
         },
         {
@@ -391,16 +393,17 @@ const Users = () => {
                                 </select>
                             )}
                             {editOrDeleteStatus === 'ROLE_EDIT' && (
-                                <select
-                                    onChange={(e) => setUpdateGroupId(e.target.value)}
-                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 mt-7 mb-4"
-                                >
-                                    <option disabled selected>Rolni tanlang</option>
-                                    <option value={`ROLE_ADMIN`}>Admin qilish</option>
-                                    <option value={`ROLE_TEACHER`}>Teacher qilish</option>
-                                    <option value={`ROLE_STUDENT`}>Student qilish</option>
-                                    <option value={`ROLE_USER`}>Boshqa foydalanuvchi</option>
-                                </select>
+                                <p className={`my-5 text-center`}>Foydalanuvchini rolini o'qituvchi qilib uzgartirmoqchimisiz</p>
+                                // <select
+                                //     onChange={(e) => setUpdateGroupId(e.target.value)}
+                                //     className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 mt-7 mb-4"
+                                // >
+                                //     <option disabled selected>Rolni tanlang</option>
+                                //     <option value={`ROLE_ADMIN`}>Admin qilish</option>
+                                //     <option value={`ROLE_TEACHER`}>Teacher qilish</option>
+                                //     <option value={`ROLE_STUDENT`}>Student qilish</option>
+                                //     <option value={`ROLE_USER`}>Boshqa foydalanuvchi</option>
+                                // </select>
                             )}
                             {(editOrDeleteStatus === 'ADD' || editOrDeleteStatus === 'EDIT') && (<>
                                 <div className="mb-4">

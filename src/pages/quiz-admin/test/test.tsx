@@ -154,8 +154,9 @@ const Tests = () => {
                 </div> : (
                     <Tables thead={testThead}>
                         {response ? response.body.map((quiz: TestList, idx: number) => {
-                            if (admin_role === 'ADMIN_QUIZ' && quiz.categoryId && quiz.categoryName) return TBody(quiz, idx, openModal, setEditOrDeleteStatus, setCrudTest)
-                            else if (admin_role === 'ADMIN_ONLINE' && quiz.lessonId && quiz.lessonName) return TBody(quiz, idx, openModal, setEditOrDeleteStatus, setCrudTest)
+                            return TBody(quiz, idx, openModal, setEditOrDeleteStatus, setCrudTest)
+                            // if (admin_role === 'ADMIN_QUIZ' && quiz.categoryId && quiz.categoryName) return TBody(quiz, idx, openModal, setEditOrDeleteStatus, setCrudTest)
+                            // else if (admin_role === 'ADMIN_ONLINE' && quiz.lessonId && quiz.lessonName) return TBody(quiz, idx, openModal, setEditOrDeleteStatus, setCrudTest)
                         }) : NotFoundList()}
                     </Tables>
                 )}
