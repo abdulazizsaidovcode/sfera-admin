@@ -1,6 +1,6 @@
 import {LuLayoutDashboard} from "react-icons/lu";
 import {PiGlobeDuotone, PiStudentFill} from "react-icons/pi";
-import {MdCastForEducation, MdOutlineCategory} from "react-icons/md";
+import {MdCastForEducation, MdOutlineCategory, MdPlayLesson} from "react-icons/md";
 import {SiCoursera, SiQuizlet, SiTestcafe} from "react-icons/si";
 import {FaCompress, FaLayerGroup} from "react-icons/fa";
 import {IoNotifications} from "react-icons/io5";
@@ -61,7 +61,7 @@ export const sideData = {
         {title: 'Boshqaruv paneli', icon: <LuLayoutDashboard size={20}/>, path: '/online/dashboard'},
         {title: 'Kurslar', icon: <SiCoursera size={20}/>, path: '/online/course'},
         {title: 'Module', icon: <VscFileSubmodule size={20}/>, path: '/online/module'},
-        {title: 'Darslar', icon: <VscFileSubmodule size={20}/>, path: '/online/lesson'},
+        {title: 'Darslar', icon: <MdPlayLesson size={20}/>, path: '/online/lesson'},
         {title: 'Test', icon: <SiTestcafe size={20}/>, path: '/online/test'},
         {title: 'Foydalanuvchilar', icon: <PiStudentFill size={20}/>, path: '/online/users'},
         {title: 'Bildirishnoma', icon: <IoNotifications size={20}/>, path: '/online/notification'},
@@ -70,7 +70,7 @@ export const sideData = {
         {title: 'Boshqaruv paneli', icon: <LuLayoutDashboard size={20}/>, path: '/edu/dashboard'},
         {title: 'Kurslar', icon: <SiCoursera size={20}/>, path: '/edu/course'},
         {title: 'Module', icon: <VscFileSubmodule size={20}/>, path: '/edu/module'},
-        {title: 'Darslar', icon: <VscFileSubmodule size={20}/>, path: '/edu/lesson'},
+        {title: 'Darslar', icon: <MdPlayLesson size={20}/>, path: '/edu/lesson'},
         {title: 'Guruhlar', icon: <FaLayerGroup size={20}/>, path: '/edu/group'},
         {title: 'Foydalanuvchilar', icon: <PiStudentFill size={20}/>, path: '/edu/users'},
         {title: 'Baholar', icon: <TbHeartRateMonitor size={20}/>, path: '/edu/rate'},
@@ -146,4 +146,14 @@ export const lessonThead: IThead[] = [
     {id: 2, name: 'Vedio linki'},
     {id: 3, name: 'Vedio davomiyligi'},
     {id: 4, name: 'Foydalanuvchi aktivligi'},
+];
+
+export const lessonPageThead: IThead[] = [
+    {id: 5, name: 'ID'},
+    {id: 1, name: 'Dars nomi'},
+    {id: 6, name: 'Tavsifi'},
+    {id: 2, name: 'Vedio linki'},
+    {id: 3, name: 'Vedio davomiyligi'},
+    {id: 4, name: 'Foydalanuvchi aktivligi'},
+    {id: 7, name: 'Harakat'},
 ];
