@@ -44,6 +44,30 @@ h1 {
     }
 }
 
+/* Scrollbarning umumiy kengligini belgilash */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+/* Scrollbar ichidagi trekining rangi */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Scrollbarning tugmasi (thumb) */
+::-webkit-scrollbar-thumb {
+    background-color: rgb(33, 65, 33);
+    border-radius: 10px;
+}
+
+/* Hover qilganda scroll tugmasi o'zgaradi */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+    cursor: pointer;
+}
+
+
 input {
     outline: none;
     transition: border 0.3s ease;

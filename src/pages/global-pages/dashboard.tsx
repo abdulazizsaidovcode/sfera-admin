@@ -1,4 +1,4 @@
-import {topGroupEdu, topStudentEdu, topTeacherEdu} from "@/helpers/constanta.tsx";
+import { topGroupEdu, topStudentEdu, topTeacherEdu } from "@/helpers/constanta.tsx";
 import ChartLine from "@/components/custom/chart/line-chart.tsx";
 import Tables from "@/components/custom/tables/table.tsx";
 import {
@@ -13,18 +13,19 @@ import {
     quizAdminWeeklySts,
     onlineAdminSts,
 } from "@/helpers/api.tsx";
-import {config} from "@/helpers/token.tsx";
-import {useEffect} from "react";
+import { config } from "@/helpers/token.tsx";
+import { useEffect } from "react";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import dashboardStore from "@/helpers/state-management/dashboardStore.tsx";
 import EduSts from "@/pages/edu-admin/dashbboard/dashboardCardSts.tsx";
 import QuizSts from "@/pages/quiz-admin/dashbboard/dashboardCardSts.tsx";
 import OnlineSts from "@/pages/online-admin/dashbboard/dashboardCardSts.tsx";
-import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
+import { useGlobalRequest } from "@/helpers/functions/restApi-function.tsx";
+import PieChart from "@/components/custom/chart/pie-chart";
 
 const Dashboard = () => {
     const admin_role = sessionStorage.getItem('admin_roles');
-    const {setDashboardCardSts, dashboardCardSts} = dashboardStore()
+    const { setDashboardCardSts, dashboardCardSts } = dashboardStore()
 
     const eduAdminStsGet = useGlobalRequest(eduAdminSts, 'GET', '', config)
     const eduAdminTopGroupGet = useGlobalRequest(eduAdminTopGroup, 'GET', '', config)
@@ -37,6 +38,8 @@ const Dashboard = () => {
         eduAdminTopGroupGet.globalDataFunc()
         eduAdminTopTeacherGet.globalDataFunc()
         eduAdminTopStudentGet.globalDataFunc()
+        eduAdminCategoryStsYearGet.globalDataFunc()
+        eduAdminCategoryStsPercentageGet.globalDataFunc()
     }
 
     const quizAdminStsGet = useGlobalRequest(quizAdminSts, 'GET', '', config)
@@ -45,6 +48,7 @@ const Dashboard = () => {
     const getQUizFunc = () => {
         quizAdminStsGet.globalDataFunc()
         quizAdminWeeklyStsGet.globalDataFunc()
+        quizAdminPercentageStsGet.globalDataFunc()
     }
 
     const onlineAdminStsGet = useGlobalRequest(onlineAdminSts, 'GET', '', config)
@@ -74,25 +78,28 @@ const Dashboard = () => {
         if (role === 'ADMIN_EDU') return <>
             {eduAdminStsGet.loading ? (
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-                    {[...Array(4)].map((_, index) => <Skeleton key={index}/>)}
+                    {[...Array(4)].map((_, index) => <Skeleton key={index} />)}
                 </div>
-            ) : <EduSts dashboardCardSts={dashboardCardSts}/>}
+            ) : <EduSts dashboardCardSts={dashboardCardSts} />}
         </>
         else if (role === 'ADMIN_QUIZ') return <>
             {quizAdminStsGet.loading ? (
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-                    {[...Array(4)].map((_, index) => <Skeleton key={index}/>)}
+                    {[...Array(4)].map((_, index) => <Skeleton key={index} />)}
                 </div>
-            ) : <QuizSts dashboardCardSts={dashboardCardSts}/>}
+            ) : <QuizSts dashboardCardSts={dashboardCardSts} />}
         </>
         else if (role === 'ADMIN_ONLINE') return <>
             {onlineAdminStsGet.loading ? (
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-                    {[...Array(4)].map((_, index) => <Skeleton key={index}/>)}
+                    {[...Array(4)].map((_, index) => <Skeleton key={index} />)}
                 </div>
-            ) : <OnlineSts dashboardCardSts={dashboardCardSts}/>}
+            ) : <OnlineSts dashboardCardSts={dashboardCardSts} />}
         </>
     }
+
+    console.log('quizAdminPercentageStsGet', quizAdminPercentageStsGet.response, quizAdminPercentageStsGet.error);
+
 
     return (
         <>
@@ -101,14 +108,14 @@ const Dashboard = () => {
 
             {/*==================LINE CHART===================*/}
             <div className={`mt-10`}>
-                {quizAdminWeeklyStsGet.loading ? <Skeleton/> : quizAdminWeeklyStsGet.response ? (
+                {quizAdminWeeklyStsGet.loading ? <Skeleton /> : quizAdminWeeklyStsGet.response && (
                     <ChartLine
                         title={`Haftalik statistika (?)`}
                         seriesTitle={quizAdminWeeklyStsGet.response.map((item: any) => item.weekDay)}
                         category={quizAdminWeeklyStsGet.response.map((item: any) => item.weekDay)}
                         seriesData={quizAdminWeeklyStsGet.response.map((item: any) => item.count)}
                     />
-                ) : ''}
+                )}
             </div>
 
             {/*==================TOP TABLES STS===================*/}
@@ -116,7 +123,7 @@ const Dashboard = () => {
                 <div className={`mt-10 grid grid-cols-1 lg:grid-cols-2 gap-5`}>
                     <div className={`rounded-sm bg-white`}>
                         <h3 className={`mb-2 font-semibold`}>Top guruhlar</h3>
-                        {eduAdminTopGroupGet.loading ? <Skeleton/> : (
+                        {eduAdminTopGroupGet.loading ? <Skeleton /> : (
                             <Tables thead={topGroupEdu}>
                                 {eduAdminTopGroupGet.response ? eduAdminTopGroupGet.response.map((sts: any, idx: number) => (
                                     <tr key={sts.id} className={`hover:bg-whiteGreen duration-100`}>
@@ -154,7 +161,7 @@ const Dashboard = () => {
                     </div>
                     <div className={`rounded-sm bg-white`}>
                         <h3 className={`mb-2 font-semibold`}>Top o'qituvchilar</h3>
-                        {eduAdminTopTeacherGet.loading ? <Skeleton/> : (
+                        {eduAdminTopTeacherGet.loading ? <Skeleton /> : (
                             <Tables thead={topTeacherEdu}>
                                 {eduAdminTopTeacherGet.response ? eduAdminTopTeacherGet.response.map((sts: any, idx: number) => (
                                     <tr key={sts.id} className={`hover:bg-whiteGreen duration-100`}>
@@ -193,7 +200,7 @@ const Dashboard = () => {
                 </div>
                 <div className={`mt-10 grid grid-cols-1`}>
                     <h3 className={`mb-2 font-semibold`}>Top studentlar</h3>
-                    {eduAdminTopStudentGet.loading ? <Skeleton/> : (
+                    {eduAdminTopStudentGet.loading ? <Skeleton /> : (
                         <Tables thead={topStudentEdu}>
                             {eduAdminTopStudentGet.response ? eduAdminTopStudentGet.response.map((sts: any, idx: number) => (
                                 <tr key={sts.id} className={`hover:bg-whiteGreen duration-100`}>
@@ -229,7 +236,28 @@ const Dashboard = () => {
                         </Tables>
                     )}
                 </div>
+                <div className="mt-10 grid grid-cols-2 gap-10">
+                    {eduAdminCategoryStsPercentageGet.loading ? <Skeleton /> : eduAdminCategoryStsPercentageGet.response && (
+                        <PieChart
+                            names={eduAdminCategoryStsPercentageGet.response.map((item: any) => item.categoryName)}
+                            values={eduAdminCategoryStsPercentageGet.response.map((item: any) => item.percentage)}
+                        />
+                    )}
+                    {eduAdminCategoryStsYearGet.loading ? <Skeleton /> : eduAdminCategoryStsYearGet.response && (
+                        <PieChart
+                            names={eduAdminCategoryStsYearGet.response.map((item: any) => item.categoryName)}
+                            values={eduAdminCategoryStsYearGet.response.map((item: any) => item.percentage)}
+                        />
+                    )}
+                </div>
             </>)}
+            {admin_role === 'ADMIN_QUIZ' &&
+                quizAdminPercentageStsGet.loading ? <Skeleton /> : quizAdminPercentageStsGet.response && (
+                    <PieChart
+                        names={quizAdminPercentageStsGet.response.map((item: any) => item.categoryName)}
+                        values={quizAdminPercentageStsGet.response.map((item: any) => item.percentage)}
+                    />
+                )}
         </>
     );
 };
