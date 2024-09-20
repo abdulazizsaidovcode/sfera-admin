@@ -7,9 +7,10 @@ import Meteors from '@/components/magicui/meteors';
 interface PieChartProps {
     names: string[];
     values: number[];
+    title: string
 }
 
-const PieChart: React.FC<PieChartProps> = ({ names, values }) => {
+const PieChart: React.FC<PieChartProps> = ({ names, values, title }) => {
 
     const hasValidData = values.some(value => value > 0);
     const defaultNames = ['Ma\'lumot mavjud emas'];
@@ -59,6 +60,7 @@ const PieChart: React.FC<PieChartProps> = ({ names, values }) => {
 
     return (
         <div className='bg-white relative overflow-hidden rounded-xl border-[1px] border-[#000]'>
+            <p className='text-2xl p-2'>{title}</p>
             <BorderBeam
                 size={500}
                 duration={10}

@@ -236,17 +236,20 @@ const Dashboard = () => {
                         </Tables>
                     )}
                 </div>
-                <div className="mt-10 grid grid-cols-2 gap-10">
+                <div className="mt-10 flex flex-col gap-10">
                     {eduAdminCategoryStsPercentageGet.loading ? <Skeleton /> : eduAdminCategoryStsPercentageGet.response && (
                         <PieChart
+                            title="Oylik kategoriyalar foizi"
                             names={eduAdminCategoryStsPercentageGet.response.map((item: any) => item.categoryName)}
                             values={eduAdminCategoryStsPercentageGet.response.map((item: any) => item.percentage)}
                         />
                     )}
                     {eduAdminCategoryStsYearGet.loading ? <Skeleton /> : eduAdminCategoryStsYearGet.response && (
-                        <PieChart
-                            names={eduAdminCategoryStsYearGet.response.map((item: any) => item.categoryName)}
-                            values={eduAdminCategoryStsYearGet.response.map((item: any) => item.percentage)}
+                        <ChartLine
+                            title={`Yillik statistika (?)`}
+                            seriesTitle={eduAdminCategoryStsYearGet.response.map((item: any) => item.month)}
+                            category={eduAdminCategoryStsYearGet.response.map((item: any) => item.categoryName)}
+                            seriesData={eduAdminCategoryStsYearGet.response.map((item: any) => item.totalScore)}
                         />
                     )}
                 </div>
@@ -254,6 +257,7 @@ const Dashboard = () => {
             {admin_role === 'ADMIN_QUIZ' &&
                 quizAdminPercentageStsGet.loading ? <Skeleton /> : quizAdminPercentageStsGet.response && (
                     <PieChart
+                        title=""
                         names={quizAdminPercentageStsGet.response.map((item: any) => item.status)}
                         values={quizAdminPercentageStsGet.response.map((item: any) => item.percentage)}
                     />
