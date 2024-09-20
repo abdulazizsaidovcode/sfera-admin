@@ -13,7 +13,7 @@ import {
     groupList, imgGet,
     userCreate,
     userDeleted,
-    userGroupEdit,
+    userGroupEdit, userGroupEditUser,
     userRoleUpdate,
     userUpdate
 } from "@/helpers/api.tsx";
@@ -26,6 +26,7 @@ import ImgUpload from "@/components/custom/imagesData/img-upload.tsx";
 import toast from "react-hot-toast";
 import globalStore from "@/helpers/state-management/globalStore.tsx";
 import images from '@/assets/images/user.jpg'
+import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 
 const crudValueDef = {
     firstName: '',
@@ -78,6 +79,7 @@ const Users = () => {
     }, config);
     const userDelete = useGlobalRequest(`${userDeleted}${crudValue.userId}`, 'DELETE', '', config);
     const userGroupUpdate = useGlobalRequest(`${userGroupEdit}${crudValue.userId}/${updateGroupId}`, 'PUT', '', config);
+    const userGroupUpdateUser = useGlobalRequest(`${userGroupEditUser}${crudValue.userId}/${updateGroupId}`, 'PUT', '', config);
     const userRoleEdit = useGlobalRequest(`${userRoleUpdate}${crudValue.userId}?role=${updateGroupId}`, 'POST', '', config);
 
     useEffect(() => {
@@ -117,7 +119,13 @@ const Users = () => {
             closeModal()
             toast.success('Foydalanuvchi roli muvaffaqiyatli o\'zgartirildi')
         }
-    }, [userAdd.response, userEdit.response, userDelete.response, userGroupUpdate.response, userRoleEdit.response]);
+        if (userGroupUpdateUser.response) {
+            users.globalDataFunc()
+            closeModal()
+            toast.success('O\'zgarishlar muvaffaqiyatli saqlandi')
+        }
+        consoleClear()
+    }, [userAdd.response, userEdit.response, userDelete.response, userGroupUpdate.response, userRoleEdit.response,userGroupUpdateUser.response]);
 
     const userRole = (role: string) => {
         if (role === 'ROLE_STUDENT') return 'O\'quvchi';
@@ -164,17 +172,32 @@ const Users = () => {
         },
         {
             // edu da
-            label: <div className={`flex justify-center gap-3 ${admin_role !== 'ADMIN_EDU' && 'hidden'}`}>
+            label: <div className={`flex items-center gap-3 ${admin_role !== 'ADMIN_EDU' && 'hidden'}`}>
                 <MdOutlineGroupAdd className="text-xl text-blue-300 cursor-pointer duration-300"/>
-                <p>Guruhni o'zgartirish yoki qo'shish</p>
+                <p>Guruhni o'zgartirish</p>
             </div>,
             key: '3',
             onClick: () => {
-                if (admin_role === 'ADMIN_EDU') {
+                if (admin_role === 'ADMIN_EDU' && user.role === 'ROLE_STUDENT') {
                     openModal()
                     setEditOrDeleteStatus('UserGroupAdd')
                     setCrudValue(user)
-                } else console.log('')
+                } else toast.error('Bu foydalanuvchini guruhi yuq buni guruhini almashtira olmaysiz')
+            }
+        },
+        {
+            // edu da
+            label: <div className={`flex items-center gap-3 ${admin_role !== 'ADMIN_EDU' && 'hidden'}`}>
+                <MdOutlineGroupAdd className="text-xl text-blue-300 cursor-pointer duration-300"/>
+                <p>Guruhga qo'shish</p>
+            </div>,
+            key: '4',
+            onClick: () => {
+                if (admin_role === 'ADMIN_EDU' && user.role === 'ROLE_USER') {
+                    openModal()
+                    setEditOrDeleteStatus('UserGroupEdit')
+                    setCrudValue(user)
+                } else toast.error('Faqat guruhi yuq foydalanuvchilarni guruhga qushish mumkin')
             }
         },
     ];
@@ -354,7 +377,7 @@ const Users = () => {
                                     ))}
                                 </select>
                             )}
-                            {editOrDeleteStatus === 'UserGroupAdd' && (
+                            {(editOrDeleteStatus === 'UserGroupAdd' || editOrDeleteStatus === 'UserGroupEdit') && (
                                 <select
                                     onChange={(e) => setUpdateGroupId(e.target.value)}
                                     className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 mt-7 mb-4"
@@ -470,6 +493,15 @@ const Users = () => {
                                     className={`bg-darkGreen ${userGroupUpdate.loading && 'cursor-not-allowed opacity-60'}`}
                                     onClick={() => {
                                         if (!userGroupUpdate.loading) userGroupUpdate.globalDataFunc()
+                                    }}
+                                />
+                            )}
+                            {editOrDeleteStatus === 'UserGroupEdit' && (
+                                <ShinyButton
+                                    text={userGroupUpdateUser.loading ? 'Yuklanmoqda...' : 'Saqlash'}
+                                    className={`bg-darkGreen ${userGroupUpdateUser.loading && 'cursor-not-allowed opacity-60'}`}
+                                    onClick={() => {
+                                        if (!userGroupUpdateUser.loading) userGroupUpdateUser.globalDataFunc()
                                     }}
                                 />
                             )}

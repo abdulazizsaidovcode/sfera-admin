@@ -29,6 +29,7 @@ export const allUsers: string = `${baseURL}user/searchUser`
 export const userCreate: string = `${baseURL}auth/admin/save-user`
 export const userUpdate: string = `${baseURL}user/update/admin/`
 export const userGroupEdit: string = `${baseURL}user/updateStudentGroup/`
+export const userGroupEditUser: string = `${baseURL}user/addStudentGroup/`
 export const userDeleted: string = `${baseURL}user/deleteUser/`
 export const userRoleUpdate: string = `${baseURL}user/update/role/`
 

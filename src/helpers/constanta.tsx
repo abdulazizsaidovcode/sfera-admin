@@ -55,18 +55,19 @@ export const sideData = {
     ],
     onlineData: [
         {title: 'Boshqaruv paneli', icon: <LuLayoutDashboard size={20}/>, path: '/online/dashboard'},
+        {title: 'Kurslar', icon: <SiCoursera size={20}/>, path: '/online/course'},
         {title: 'Test', icon: <SiTestcafe size={20}/>, path: '/online/test'},
         {title: 'Foydalanuvchilar', icon: <PiStudentFill size={20}/>, path: '/online/users'},
-        {title: 'Guruhlar', icon: <FaLayerGroup size={20}/>, path: '/online/group'},
+        // {title: 'Guruhlar', icon: <FaLayerGroup size={20}/>, path: '/online/group'},
         {title: 'Bildirishnoma', icon: <IoNotifications size={20}/>, path: '/online/notification'},
-        {title: 'Kurslar', icon: <SiCoursera size={20}/>, path: '/online/course'},
     ],
     eduData: [
         {title: 'Boshqaruv paneli', icon: <LuLayoutDashboard size={20}/>, path: '/edu/dashboard'},
-        {title: 'Foydalanuvchilar', icon: <PiStudentFill size={20}/>, path: '/edu/users'},
-        {title: 'Guruhlar', icon: <FaLayerGroup size={20}/>, path: '/edu/group'},
-        {title: 'Bildirishnoma', icon: <IoNotifications size={20}/>, path: '/edu/notification'},
         {title: 'Kurslar', icon: <SiCoursera size={20}/>, path: '/edu/course'},
+        {title: 'Guruhlar', icon: <FaLayerGroup size={20}/>, path: '/edu/group'},
+        // {title: 'Lesson', icon: <SiCoursera size={20}/>, path: '/edu/lesson'},
+        {title: 'Foydalanuvchilar', icon: <PiStudentFill size={20}/>, path: '/edu/users'},
+        {title: 'Bildirishnoma', icon: <IoNotifications size={20}/>, path: '/edu/notification'},
     ],
 };
 
@@ -177,4 +178,13 @@ export const testThead: IThead[] = [
     {id: 1, name: 'Savol nomi'},
     {id: 2, name: `${admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish nomi' : 'Lesson nomi'}`},
     {id: 3, name: 'Xarakat'},
+];
+
+export const groupThead: IThead[] = [
+    {id: 5, name: 'ID'},
+    {id: 1, name: 'Guruh nomi'},
+    {id: 2, name: 'O\'qituvchi'},
+    {id: 3, name: 'Ochilgan sanasi'},
+    {id: 4, name: 'Activligi'},
+    {id: 6, name: 'Harakatlar'},
 ];

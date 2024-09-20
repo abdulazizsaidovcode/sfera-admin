@@ -71,19 +71,33 @@ const Dashboard = () => {
     }, [eduAdminStsGet.response, quizAdminStsGet.response, onlineAdminStsGet.response]);
 
     const roleDashboardSts = (role: string) => {
-        if (role === 'ADMIN_EDU') return <EduSts dashboardCardSts={dashboardCardSts}/>
-        else if (role === 'ADMIN_QUIZ') return <QuizSts dashboardCardSts={dashboardCardSts}/>
-        else if (role === 'ADMIN_ONLINE') return <OnlineSts dashboardCardSts={dashboardCardSts}/>
+        if (role === 'ADMIN_EDU') return <>
+            {eduAdminStsGet.loading ? (
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+                    {[...Array(4)].map((_, index) => <Skeleton key={index}/>)}
+                </div>
+            ) : <EduSts dashboardCardSts={dashboardCardSts}/>}
+        </>
+        else if (role === 'ADMIN_QUIZ') return <>
+            {quizAdminStsGet.loading ? (
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+                    {[...Array(4)].map((_, index) => <Skeleton key={index}/>)}
+                </div>
+            ) : <QuizSts dashboardCardSts={dashboardCardSts}/>}
+        </>
+        else if (role === 'ADMIN_ONLINE') return <>
+            {onlineAdminStsGet.loading ? (
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+                    {[...Array(4)].map((_, index) => <Skeleton key={index}/>)}
+                </div>
+            ) : <OnlineSts dashboardCardSts={dashboardCardSts}/>}
+        </>
     }
 
     return (
         <>
             {/*==================STS CARD================*/}
-            {eduAdminStsGet.loading ? (
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-                    {[...Array(4)].map((_, index) => <Skeleton key={index}/>)}
-                </div>
-            ) : admin_role && roleDashboardSts(admin_role)}
+            {admin_role && roleDashboardSts(admin_role)}
 
             {/*==================LINE CHART===================*/}
             <div className={`mt-10`}>

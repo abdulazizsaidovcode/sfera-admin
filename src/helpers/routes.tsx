@@ -70,13 +70,13 @@ export const routes = [
             <Users/>
         </>
     },
-    {
-        path: '/online/group',
-        element: <>
-            <PageTitle title="Online platform | Groups"/>
-            <Groups/>
-        </>
-    },
+    // {
+    //     path: '/online/group',
+    //     element: <>
+    //         <PageTitle title="Online platform | Groups"/>
+    //         <Groups/>
+    //     </>
+    // },
     {
         path: '/online/notification',
         element: <>
@@ -128,4 +128,11 @@ export const routes = [
             <Courses/>
         </>
     },
+    // {
+    //     path: '/edu/lesson',
+    //     element: <>
+    //         <PageTitle title="Edu | Lesson"/>
+    //         <Tests/>
+    //     </>
+    // },
 ]

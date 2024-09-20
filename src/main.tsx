@@ -16,6 +16,11 @@ createRoot(document.getElementById('root')!).render(
                 <Toaster
                     position="bottom-right"
                     reverseOrder={true}
+                    toastOptions={{
+                        style: {
+                            zIndex: 10000,
+                        },
+                    }}
                 />
             </QueryClientProvider>
         </Router>
