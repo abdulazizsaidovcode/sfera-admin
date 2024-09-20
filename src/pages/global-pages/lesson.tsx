@@ -24,7 +24,7 @@ const defVal = {
     name: '',
     description: '',
     videoLink: '',
-    videoTime: null,
+    videoTime: '',
     moduleId: 0,
     fileId: 0
 }
@@ -105,8 +105,6 @@ const Lesson = () => {
             setImgUpload(null)
         }, 500)
     };
-
-    console.log(crudLesson)
 
     return (
         <>
@@ -266,6 +264,7 @@ const Lesson = () => {
                                 className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mt-7"
                             />
                             <input
+                                type={`number`}
                                 value={crudLesson.videoTime}
                                 onChange={(e) => handleChange('videoTime', e.target.value)}
                                 placeholder="Vedioni davomiyligini kiriting"

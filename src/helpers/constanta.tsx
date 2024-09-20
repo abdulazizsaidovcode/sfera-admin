@@ -2,7 +2,7 @@ import {LuLayoutDashboard} from "react-icons/lu";
 import {PiGlobeDuotone, PiStudentFill} from "react-icons/pi";
 import {MdCastForEducation, MdOutlineCategory, MdPlayLesson} from "react-icons/md";
 import {SiCoursera, SiQuizlet, SiTestcafe} from "react-icons/si";
-import {FaCompress, FaLayerGroup} from "react-icons/fa";
+import {FaLayerGroup} from "react-icons/fa";
 import {IoNotifications} from "react-icons/io5";
 import {IThead} from "@/components/custom/tables/table.tsx";
 import {TbHeartRateMonitor} from "react-icons/tb";
@@ -54,7 +54,7 @@ export const sideData = {
         {title: 'Yo\'nalishlar', icon: <MdOutlineCategory size={20}/>, path: '/quiz/category'},
         {title: 'Test', icon: <SiTestcafe size={20}/>, path: '/quiz/test'},
         {title: 'Foydalanuvchilar', icon: <PiStudentFill size={20}/>, path: '/quiz/users'},
-        {title: 'Natijalar', icon: <FaCompress size={20}/>, path: '/quiz/result'},
+        // {title: 'Natijalar', icon: <FaCompress size={20}/>, path: '/quiz/result'},
         {title: 'Bildirishnoma', icon: <IoNotifications size={20}/>, path: '/quiz/notification'},
     ],
     onlineData: [

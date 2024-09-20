@@ -74,13 +74,13 @@ export const routes = [
             <Notifications/>
         </>
     },
-    {
-        path: '/quiz/result',
-        element: <>
-            <PageTitle title="Quiz | Result"/>
-            <Notifications/>
-        </>
-    },
+    // {
+    //     path: '/quiz/result',
+    //     element: <>
+    //         <PageTitle title="Quiz | Result"/>
+    //         <Notifications/>
+    //     </>
+    // },
 
     // ====================ONLINE ROUTE==================
     {

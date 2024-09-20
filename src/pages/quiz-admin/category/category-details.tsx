@@ -11,6 +11,7 @@ import ShinyButton from '@/components/magicui/shiny-button'
 import toast from 'react-hot-toast'
 import { MdKeyboardBackspace } from 'react-icons/md'
 import { Popover } from 'antd'
+import Breadcrumb from "@/components/custom/breadcrumb/Breadcrumb.tsx";
 
 const CategoryDetails: React.FC = () => {
     const { id } = useParams();
@@ -39,6 +40,7 @@ const CategoryDetails: React.FC = () => {
 
     return (
         <div>
+            <Breadcrumb pageName={`Yo'nalishlar`} subPage={`Yo'nalish detail`} />
             <Popover title="Orqaga qaytish" overlayStyle={{ textAlign: 'center' }}>
                 <MdKeyboardBackspace
                     className={`text-3xl hover:cursor-pointer hover:text-primary duration-300 mb-5`}
