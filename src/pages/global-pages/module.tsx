@@ -140,7 +140,7 @@ const Module = () => {
                         <div className={`w-full`}>
                             <Card>
                                 <CardTitle>{moduleItems.name}</CardTitle>
-                                <CardDescription className={`flex justify-between items-center`}>
+                                <CardDescription className={`flex justify-between items-center gap-5`}>
                                     {`Darslar soni: ${moduleItems.lessonCount}`}
                                     <p className={`flex items-center gap-5`}>
                                         <FaEdit

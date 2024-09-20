@@ -11,7 +11,8 @@ import {
     Rate,
     Module,
     CategoryDetails,
-    Lesson
+    Lesson,
+    Task
 } from "@/pages";
 
 export const routes = [
@@ -132,6 +133,13 @@ export const routes = [
             <Lesson/>
         </>
     },
+    {
+        path: '/online/task/:id',
+        element: <>
+            <PageTitle title="Online platform | Task"/>
+            <Task/>
+        </>
+    },
 
     // =====================EDU ROUTE==================
     {
@@ -188,6 +196,13 @@ export const routes = [
         element: <>
             <PageTitle title="Education | Lesson"/>
             <Lesson/>
+        </>
+    },
+    {
+        path: '/edu/task/:id',
+        element: <>
+            <PageTitle title="Education | Task"/>
+            <Task/>
         </>
     },
 ]

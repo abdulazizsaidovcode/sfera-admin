@@ -9,7 +9,7 @@ import {useEffect, useState} from "react";
 import {categoryList, lessonCrud, lessonPageList, moduleCategoryId} from "@/helpers/api.tsx";
 import ShinyButton from "@/components/magicui/shiny-button.tsx";
 import {MdOutlineAddCircle} from "react-icons/md";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Checkbox from "@/components/custom/checkbox/checkbox.tsx";
 import {FaEdit} from "react-icons/fa";
 import {AiFillDelete} from "react-icons/ai";
@@ -19,6 +19,7 @@ import courseStore from "@/helpers/state-management/coursesStore.tsx";
 import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 import ImgUpload from "@/components/custom/imagesData/img-upload.tsx";
 import globalStore from "@/helpers/state-management/globalStore.tsx";
+import {BiShowAlt} from "react-icons/bi";
 
 const defVal = {
     name: '',
@@ -30,6 +31,7 @@ const defVal = {
 }
 
 const Lesson = () => {
+    const navigate = useNavigate()
     const [page, setPage] = useState<number>(0);
     const [name, setName] = useState<string>('');
     const [moduleId, setModuleId] = useState<string | null>(null);
@@ -211,6 +213,10 @@ const Lesson = () => {
                                             setEditOrDeleteStatus('DELETE')
                                             setCrudLesson(lesson)
                                         }}
+                                    />
+                                    <BiShowAlt
+                                        className={`text-2xl hover:cursor-pointer hover:text-darkGreen duration-300`}
+                                        onClick={() => navigate(`/edu/task/${lesson.id}`)}
                                     />
                                 </td>
                             </tr>

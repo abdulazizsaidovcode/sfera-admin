@@ -10,6 +10,7 @@ export {default as Groups} from './global-pages/group.tsx'
 export {default as Notifications} from './global-pages/notifications.tsx'
 export {default as Module} from './global-pages/module.tsx'
 export {default as Lesson} from './global-pages/lesson.tsx'
+export {default as Task} from './global-pages/task.tsx'
 
 // ========EDUCATION=======
 export {default as Rate} from './edu-admin/rate/rate.tsx'
