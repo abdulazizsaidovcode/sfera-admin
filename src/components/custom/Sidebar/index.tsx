@@ -15,7 +15,7 @@ interface SidebarProps {
 
 const MenuItem = ({title, to, pathname, icon}: { pathname: string, icon: any, title: string, to: string }) => {
     return (
-        <NavLink className={''} to={to}>
+        <NavLink to={to}>
             <div
                 className={`py-3 px-4 my-3 ${pathname === to
                     ? 'bg-darkGreen group relative shadow flex items-center gap-2.5 font-medium text-white duration-300 ease-in-out cursor-pointer border-none rounded-lg'

@@ -5,14 +5,17 @@ import {FaEdit} from "react-icons/fa";
 import {MdDelete} from "react-icons/md";
 import courseStore from "@/helpers/state-management/coursesStore.tsx";
 import {CoursesClientCrudVal, CoursesList} from "@/types/course.ts";
+import {useNavigate} from "react-router-dom";
 
 export function CourseCard({imgUrl, title, desc, openModal, fullData}: {
     imgUrl: any,
     title: string,
     desc: string,
     openModal?: () => void,
-    fullData?: CoursesList | CoursesClientCrudVal
+    fullData?: CoursesList | CoursesClientCrudVal | any
 }) {
+    const navigate = useNavigate()
+    const admin_role = sessionStorage.getItem('admin_roles');
     const {setEditOrDeleteStatus, setCrudValue} = courseStore()
     return (
         <CardContainer className="inter-var">
@@ -21,16 +24,28 @@ export function CourseCard({imgUrl, title, desc, openModal, fullData}: {
             >
                 <BorderBeam size={200} duration={10} delay={2} colorFrom={`#16423C`}/>
                 <CardItem translateZ="60" className="w-full">
-                    <img
-                        src={imgUrl}
-                        className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
-                        alt="thumbnail"
-                    />
+                    <span
+                        className={`hover:cursor-pointer`}
+                        onClick={() => {
+                            if (admin_role === 'ADMIN_QUIZ') navigate(`/quiz/category/${fullData.id}`)
+                        }}
+                    >
+                        <img
+                            src={imgUrl}
+                            className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
+                            alt="thumbnail"
+                        />
+                    </span>
                 </CardItem>
                 <CardItem
                     translateZ="50"
                     className="text-xl font-bold text-neutral-600 mt-5"
-                >{title}</CardItem>
+                ><p
+                    className={`hover:cursor-pointer hover:text-lighterGreen duration-300`}
+                    onClick={() => {
+                        if (admin_role === 'ADMIN_QUIZ') navigate(`/quiz/category/${fullData.id}`)
+                    }}
+                >{title}</p></CardItem>
                 <CardItem
                     as="p"
                     translateZ="60"

@@ -58,6 +58,22 @@ export const rateSts: string = `${baseURL}rate/groupByYearly`
 // ==============NOTIFICATION CONTROLLER====================
 export const notificationSend: string = `${baseURL}notification/send/all-users`
 
+// ==============RESULT CONTROLLER====================
+export const resultResId: string = `${baseURL}result/`
+export const resultUserId: string = `${baseURL}result/user/`
+export const resultCount: string = `${baseURL}result/countAll`
+
+// ==============MODULE CONTROLLER====================
+export const moduleCrud: string = `${baseURL}module`
+export const moduleCategoryId: string = `${baseURL}module/byCategory/` //categoryga tegishli hamma module ni get qilish
+
+// ==============LESSON CONTROLLER====================
+export const lessonPageList: string = `${baseURL}lesson/search`
+export const lessonCrud: string = `${baseURL}lesson`
+
+// ==============TASK CONTROLLER====================
+export const taskCrud: string = `${baseURL}task/`
+export const taskLessonId: string = `${baseURL}task/getTaskByLesson/` //lessonga tegishli hamma module ni get qilish
 
 // qilinishi kerak bulganlar
 // edu uchun rate page qilihs kk.
@@ -65,7 +81,3 @@ export const notificationSend: string = `${baseURL}notification/send/all-users`
 // quiz uchun category setting page va detail qilsm uchun bitta yul yani page
 // group page faqat eduda
 // module page buladi va unda modullar va lessonlar qushiladi va lessinga task belgilanadi
-// ==============TASK CONTROLLER====================
-// ==============MODULE CONTROLLER====================
-// ==============LESSON CONTROLLER====================
-// ==============RESULT CONTROLLER====================

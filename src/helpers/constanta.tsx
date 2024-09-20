@@ -168,3 +168,12 @@ export const groupThead: IThead[] = [
     {id: 4, name: 'Activligi'},
     {id: 6, name: 'Harakatlar'},
 ];
+
+export const rateThead: IThead[] = [
+    {id: 5, name: 'ID'},
+    {id: 1, name: 'Tuliq ismi'},
+    {id: 6, name: 'Guruh nomi'},
+    {id: 2, name: 'Kurs nomi'},
+    {id: 3, name: 'To\'plagan bali'},
+    {id: 4, name: 'Reytingi'},
+];
