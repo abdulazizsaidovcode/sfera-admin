@@ -70,6 +70,7 @@ export const moduleCategoryId: string = `${baseURL}module/byCategory/` //categor
 // ==============LESSON CONTROLLER====================
 export const lessonPageList: string = `${baseURL}lesson/search`
 export const lessonCrud: string = `${baseURL}lesson`
+export const lessonModuleID: string = `${baseURL}lesson/list/edu/`
 
 // ==============TASK CONTROLLER====================
 export const taskCrud: string = `${baseURL}task/`

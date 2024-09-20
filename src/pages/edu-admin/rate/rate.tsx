@@ -7,7 +7,7 @@ import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
 import {RateLists} from "@/types/rate.ts";
 import {useEffect, useState} from "react";
-import {categoryList, groupList, rateList} from "@/helpers/api.tsx";
+import {categoryList, groupList, rateList, rateSts} from "@/helpers/api.tsx";
 // import LineChart from "@/components/custom/chart/line-chart.tsx";
 
 const Rate = () => {
@@ -27,6 +27,7 @@ const Rate = () => {
         return `${rateList}?${queryParams ? `${queryParams}&` : ''}page=${page}&size=10`;
     }
     const {loading, response, globalDataFunc} = useGlobalRequest(getTestUrl(), 'GET', '', config)
+    const rateStsGet = useGlobalRequest(rateSts, 'GET', '', config)
     const groupListGet = useGlobalRequest(groupList, 'GET', '', config)
     const categoryListGet = useGlobalRequest(`${categoryList}EDUCATION`, 'GET', '', config)
 

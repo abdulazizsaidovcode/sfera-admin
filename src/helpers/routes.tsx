@@ -1,5 +1,5 @@
 import PageTitle from "@/components/custom/Header/PageTitle.tsx";
-import {Courses, Dashboard, Login, SiteRole, Users, Groups, Notifications, Tests, Rate} from "@/pages";
+import {Courses, Dashboard, Login, SiteRole, Users, Groups, Notifications, Tests, Rate, Module} from "@/pages";
 
 export const routes = [
     // ====================GLOBAL ROUTE===================
@@ -109,7 +109,7 @@ export const routes = [
         path: '/online/module',
         element: <>
             <PageTitle title="Online platform | Module"/>
-            <Courses/>
+            <Module/>
         </>
     },
 
@@ -153,7 +153,7 @@ export const routes = [
         path: '/edu/module',
         element: <>
             <PageTitle title="Education | Module"/>
-            <Courses/>
+            <Module/>
         </>
     },
     {
