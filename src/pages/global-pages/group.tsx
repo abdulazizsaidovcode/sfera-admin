@@ -7,9 +7,9 @@ import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
 import {useEffect, useState} from "react";
 import {Input} from "antd";
-import {GroupCreate, GroupLists} from "@/types/group.ts";
+import {GroupLists} from "@/types/group.ts";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
-import {allUsers, categoryList, groupList} from "@/helpers/api.tsx";
+import {allUsers, categoryList, groupCrud, groupList} from "@/helpers/api.tsx";
 import {FaEdit} from "react-icons/fa";
 import {RiDeleteBin7Fill} from "react-icons/ri";
 import Checkbox from "@/components/custom/checkbox/checkbox.tsx";
@@ -18,6 +18,8 @@ import courseStore from "@/helpers/state-management/coursesStore.tsx";
 import groupStore from "@/helpers/state-management/groupStore.tsx";
 import {CoursesList} from "@/types/course.ts";
 import Modal from "@/components/custom/modal/modal.tsx";
+import toast from "react-hot-toast";
+import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 
 const odd: number[] = [1, 3, 5]
 const couple: number[] = [2, 4, 6]
@@ -26,12 +28,21 @@ const Groups = () => {
     const {editOrDeleteStatus, setEditOrDeleteStatus} = courseStore()
     const {crudGroup, setCrudGroup, defVal} = groupStore()
     const [isModal, setIsModal] = useState(false);
+    const requestData = {
+        name: crudGroup.name,
+        categoryId: crudGroup.categoryId,
+        daysWeekIds: crudGroup.daysWeekIds === 'TOQ' ? odd : couple,
+        teacherId: crudGroup.teacherId,
+        startDate: crudGroup.startDate,
+        startTime: crudGroup.startTime,
+        endTime: crudGroup.endTime
+    }
 
     // ===============REQUEST FUNCTION==================
     const {response, loading, globalDataFunc} = useGlobalRequest(groupList, 'GET', '', config)
-    const groupDataAdd = useGlobalRequest(``, 'POST', {}, config)
-    const groupDataEdit = useGlobalRequest(``, 'PUT', {}, config)
-    const groupDataDelete = useGlobalRequest(``, 'DELETE', '', config)
+    const groupDataAdd = useGlobalRequest(groupCrud, 'POST', requestData, config)
+    const groupDataEdit = useGlobalRequest(`${groupCrud}/${crudGroup.groupId}`, 'PUT', requestData, config)
+    const groupDataDelete = useGlobalRequest(`${groupCrud}/${crudGroup.groupId}`, 'DELETE', '', config)
     const categoryLists = useGlobalRequest(`${categoryList}EDUCATION`, 'GET', '', config)
     const teachersList = useGlobalRequest(`${allUsers}?role=ROLE_TEACHER&page=${0}&size=100`, 'GET', '', config);
 
@@ -40,6 +51,23 @@ const Groups = () => {
         categoryLists.globalDataFunc()
         teachersList.globalDataFunc()
     }, []);
+
+    useEffect(() => {
+        if (groupDataAdd.response) {
+            globalDataFunc()
+            toast.success('Guruh muvaffaqiyatli qushildi')
+            closeModal()
+        } else if (groupDataEdit.response) {
+            globalDataFunc()
+            toast.success('Guruh muvaffaqiyatli taxrirlandi')
+            closeModal()
+        } else if (groupDataDelete.response) {
+            globalDataFunc()
+            toast.success('Guruh muvaffaqiyatli o\'chirildi')
+            closeModal()
+        }
+        consoleClear()
+    }, [groupDataAdd.response, groupDataEdit.response, groupDataDelete.response]);
 
     const openModal = () => setIsModal(true);
     const closeModal = () => {
@@ -52,7 +80,9 @@ const Groups = () => {
 
     const handleChange = (name: string, value: string | any) => setCrudGroup({...crudGroup, [name]: value});
 
-    console.log(crudGroup)
+    const changeRegex = () => {
+        return crudGroup.name && crudGroup.teacherId && crudGroup.daysWeekIds && crudGroup.startTime && crudGroup.categoryId && crudGroup.endTime && crudGroup.startDate
+    }
 
     return (
         <>
@@ -168,10 +198,11 @@ const Groups = () => {
                                 className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5"
                             />
                             <select
+                                value={crudGroup.categoryId}
                                 onChange={(e) => handleChange(`categoryId`, +e.target.value)}
                                 className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
                             >
-                                <option disabled selected>
+                                <option disabled selected value={0}>
                                     Yo'nalishni tanlang
                                 </option>
                                 {categoryLists.response && categoryLists.response.map((item: CoursesList) => (
@@ -179,10 +210,11 @@ const Groups = () => {
                                 ))}
                             </select>
                             <select
+                                value={crudGroup.teacherId}
                                 onChange={(e) => handleChange(`teacherId`, +e.target.value)}
                                 className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
                             >
-                                <option disabled selected>
+                                <option disabled selected value={0}>
                                     O'qituvchini tanlang
                                 </option>
                                 {teachersList.response && teachersList.response.body.map((item: any) => (
@@ -190,10 +222,11 @@ const Groups = () => {
                                 ))}
                             </select>
                             <select
+                                value={crudGroup.daysWeekIds}
                                 onChange={(e) => handleChange(`daysWeekIds`, e.target.value)}
                                 className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 mt-7 mb-5"
                             >
-                                <option disabled selected>
+                                <option disabled selected value={``}>
                                     Hafta kunlarini tanlang
                                 </option>
                                 <option value={`TOQ`}>Toq kunlari: Dushanba, Chorshanba, Juma</option>
@@ -239,8 +272,8 @@ const Groups = () => {
                                 className={`bg-darkGreen ${groupDataAdd.loading && 'cursor-not-allowed opacity-60'}`}
                                 onClick={() => {
                                     if (!groupDataAdd.loading) {
-                                        // if (crudTest?.name) groupDataAdd.globalDataFunc()
-                                        // else toast.error('Ma\'lumotlar tuliqligini tekshirib kuring')
+                                        if (changeRegex()) groupDataAdd.globalDataFunc()
+                                        else toast.error('Ma\'lumotlar tuliqligini tekshirib kuring')
                                     }
                                 }}
                             />
@@ -251,8 +284,8 @@ const Groups = () => {
                                 className={`bg-darkGreen ${groupDataEdit.loading && 'cursor-not-allowed opacity-60'}`}
                                 onClick={() => {
                                     if (!groupDataEdit.loading) {
-                                        // if (crudTest?.name && crudTest?.optionDto) groupDataEdit.globalDataFunc()
-                                        // else toast.error('Ma\'lumotlar tuliqligini tekshirib kuring')
+                                        if (changeRegex()) groupDataEdit.globalDataFunc()
+                                        else toast.error('Ma\'lumotlar tuliqligini tekshirib kuring')
                                     }
                                 }}
                             />
