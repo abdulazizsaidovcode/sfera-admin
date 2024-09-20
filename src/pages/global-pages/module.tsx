@@ -3,15 +3,21 @@ import {Select} from "antd";
 import ShinyButton from "@/components/magicui/shiny-button.tsx";
 import {MdOutlineAddCircle} from "react-icons/md";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
-import {categoryList, moduleCategoryId, moduleCrud} from "@/helpers/api.tsx";
+import {categoryList, lessonModuleID, moduleCategoryId, moduleCrud} from "@/helpers/api.tsx";
 import {config} from "@/helpers/token.tsx";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
 import Modal from "@/components/custom/modal/modal.tsx";
 import courseStore from "@/helpers/state-management/coursesStore.tsx";
 import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
-import {HoverEffect} from "@/components/ui/card-hover-effect.tsx";
+import {Card, CardDescription, CardTitle, HoverEffect} from "@/components/ui/card-hover-effect.tsx";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
+import {FaEdit} from "react-icons/fa";
+import {AiFillDelete} from "react-icons/ai";
+import Tables from "@/components/custom/tables/table.tsx";
+import {lessonThead} from "@/helpers/constanta.tsx";
+import Checkbox from "@/components/custom/checkbox/checkbox.tsx";
+import {Link} from "react-router-dom";
 
 const defVal = {
     name: '',
@@ -22,6 +28,7 @@ const Module = () => {
     const {editOrDeleteStatus, setEditOrDeleteStatus} = courseStore()
     const [categoryFilter, setCategoryFilter] = useState<string>('');
     const [crudModule, setCrudModule] = useState<any>(defVal);
+    const [moduleItems, setModuleItems] = useState<any>(null);
     const [isModal, setIsModal] = useState(false);
     const requestData = {
         name: crudModule.name,
@@ -35,6 +42,7 @@ const Module = () => {
         globalDataFunc
     } = useGlobalRequest(`${moduleCategoryId}${categoryFilter}`, 'GET', '', config)
     const categoryLists = useGlobalRequest(`${categoryList}EDUCATION`, 'GET', '', config)
+    const moduleLessonGet = useGlobalRequest(`${lessonModuleID}${moduleItems?.moduleId}`, 'GET', '', config)
     const moduleAdd = useGlobalRequest(`${moduleCrud}`, 'POST', requestData, config)
     const moduleEdit = useGlobalRequest(`${moduleCrud}/${crudModule.moduleId}`, 'PUT', requestData, config)
     const moduleDelete = useGlobalRequest(`${moduleCrud}/${crudModule.moduleId}`, 'DELETE', '', config)
@@ -62,7 +70,12 @@ const Module = () => {
 
     useEffect(() => {
         if (categoryFilter) globalDataFunc()
+        setModuleItems(null)
     }, [categoryFilter]);
+
+    useEffect(() => {
+        if (moduleItems) moduleLessonGet.globalDataFunc()
+    }, [moduleItems]);
 
     const handleChange = (name: string, value: string) => setCrudModule({...crudModule, [name]: value});
 
@@ -115,12 +128,96 @@ const Module = () => {
                             link={`#`}
                             title={item.name}
                             description={`Darslar soni: ${item.lessonCount}`}
+                            onClick={() => setModuleItems(item)}
                         />
                     )) : <p>Ma'lumot topilmadi</p>}
                 </div>
-                <div className={`w-full`}>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum error
-                    molestiae quas ratione repudiandae. Consequatur cum fuga maiores nostrum repellendus.
+                <div className={`w-[80%]`}>
+                    {(response && !moduleItems) && (
+                        <p className={`text-center text-xl font-semibold`}>Modulni tanlang</p>
+                    )}
+                    {moduleItems && (<>
+                        <div className={`w-full`}>
+                            <Card>
+                                <CardTitle>{moduleItems.name}</CardTitle>
+                                <CardDescription className={`flex justify-between items-center`}>
+                                    {`Darslar soni: ${moduleItems.lessonCount}`}
+                                    <p className={`flex items-center gap-5`}>
+                                        <FaEdit
+                                            className={`text-xl hover:text-yellow-500 cursor-pointer duration-300`}
+                                            onClick={() => {
+                                                openModal()
+                                                setEditOrDeleteStatus('EDIT')
+                                                setCrudModule(moduleItems)
+                                            }}
+                                        />
+                                        <AiFillDelete
+                                            className={`text-xl hover:text-red-500 cursor-pointer duration-300`}
+                                            onClick={() => {
+                                                openModal()
+                                                setEditOrDeleteStatus('DELETE')
+                                                setCrudModule(moduleItems)
+                                            }}
+                                        />
+                                    </p>
+                                </CardDescription>
+                            </Card>
+
+                            <div className={`mt-6`}>
+                                {moduleLessonGet.loading ? <div className={`w-full grid grid-cols-1 gap-3`}>
+                                    <Skeleton/>
+                                    <Skeleton/>
+                                </div> : (
+                                    <Tables thead={lessonThead}>
+                                        {moduleLessonGet.response ? moduleLessonGet.response.map((m: any, idx: number) => (
+                                            <tr key={idx} className={`hover:bg-whiteGreen duration-100`}>
+                                                <td className="border-b border-[#eee] p-5">
+                                                    <p className="text-black">
+                                                        {idx + 1}
+                                                    </p>
+                                                </td>
+                                                <td className="border-b border-[#eee] p-5">
+                                                    <p className="text-black">
+                                                        {m.name}
+                                                    </p>
+                                                </td>
+                                                <td className="border-b border-[#eee] p-5">
+                                                    <p className="text-black">
+                                                        {m.description}
+                                                    </p>
+                                                </td>
+                                                <td className="border-b border-[#eee] p-5">
+                                                    <p className="text-black">
+                                                        <Link to={m.videoLink} target={`_blank`}>vedioni kurish</Link>
+                                                    </p>
+                                                </td>
+                                                <td className="border-b border-[#eee] p-5">
+                                                    <p className="text-black">
+                                                        {m.videoTime ? m.videoTime : '-'}
+                                                    </p>
+                                                </td>
+                                                <td className="border-b border-[#eee] p-5">
+                                                    <p className="text-black">
+                                                        <Checkbox
+                                                            setIsChecked={() => !m.userActive}
+                                                            isChecked={m.userActive} id={idx}
+                                                        />
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        )) : <tr className={`hover:bg-whiteGreen duration-100`}>
+                                            <td
+                                                className="border-b border-[#eee] p-5 text-black text-center"
+                                                colSpan={lessonThead.length}
+                                            >
+                                                Ma'lumot topilmadi
+                                            </td>
+                                        </tr>}
+                                    </Tables>
+                                )}
+                            </div>
+                        </div>
+                    </>)}
                 </div>
             </div>
 

@@ -6,7 +6,7 @@ export interface Group {
 
 export interface GroupLists {
     groupId: number
-    groupName: string
+    name: string
     teacherName: string
     categoryId: number
     startDate: string

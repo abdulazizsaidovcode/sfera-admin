@@ -127,7 +127,7 @@ const Groups = () => {
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
                                     <p className="text-black">
-                                        {sts.groupName}
+                                        {sts.name}
                                     </p>
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
