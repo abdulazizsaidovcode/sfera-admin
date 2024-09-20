@@ -34,6 +34,13 @@ export const routes = [
         </>
     },
     {
+        path: '/quiz/category/:id',
+        element: <>
+            <PageTitle title="Quiz | Courses details"/>
+            <Notifications/>
+        </>
+    },
+    {
         path: '/quiz/test',
         element: <>
             <PageTitle title="Quiz | Test"/>
@@ -45,6 +52,20 @@ export const routes = [
         element: <>
             <PageTitle title="Quiz | Users"/>
             <Users/>
+        </>
+    },
+    {
+        path: '/quiz/notification',
+        element: <>
+            <PageTitle title="Quiz | Notification"/>
+            <Notifications/>
+        </>
+    },
+    {
+        path: '/quiz/result',
+        element: <>
+            <PageTitle title="Quiz | Result"/>
+            <Notifications/>
         </>
     },
 
@@ -59,7 +80,7 @@ export const routes = [
     {
         path: '/online/test',
         element: <>
-            <PageTitle title="Online | Test"/>
+            <PageTitle title="Online platform | Test"/>
             <Tests/>
         </>
     },
@@ -70,13 +91,6 @@ export const routes = [
             <Users/>
         </>
     },
-    // {
-    //     path: '/online/group',
-    //     element: <>
-    //         <PageTitle title="Online platform | Groups"/>
-    //         <Groups/>
-    //     </>
-    // },
     {
         path: '/online/notification',
         element: <>
@@ -91,48 +105,62 @@ export const routes = [
             <Courses/>
         </>
     },
+    {
+        path: '/online/module',
+        element: <>
+            <PageTitle title="Online platform | Module"/>
+            <Courses/>
+        </>
+    },
 
     // =====================EDU ROUTE==================
     {
         path: '/edu/dashboard',
         element: <>
-            <PageTitle title="Edu | Dashboard"/>
+            <PageTitle title="Education | Dashboard"/>
             <Dashboard/>
         </>
     },
     {
         path: '/edu/users',
         element: <>
-            <PageTitle title="Edu | Users"/>
+            <PageTitle title="Education | Users"/>
             <Users/>
         </>
     },
     {
         path: '/edu/group',
         element: <>
-            <PageTitle title="Edu | Groups"/>
+            <PageTitle title="Education | Groups"/>
             <Groups/>
         </>
     },
     {
         path: '/edu/notification',
         element: <>
-            <PageTitle title="Edu | Notification"/>
+            <PageTitle title="Education | Notification"/>
             <Notifications/>
         </>
     },
     {
         path: '/edu/course',
         element: <>
-            <PageTitle title="Edu | Courses"/>
+            <PageTitle title="Education | Courses"/>
             <Courses/>
         </>
     },
-    // {
-    //     path: '/edu/lesson',
-    //     element: <>
-    //         <PageTitle title="Edu | Lesson"/>
-    //         <Tests/>
-    //     </>
-    // },
+    {
+        path: '/edu/module',
+        element: <>
+            <PageTitle title="Education | Module"/>
+            <Courses/>
+        </>
+    },
+    {
+        path: '/edu/rate',
+        element: <>
+            <PageTitle title="Education | Rate"/>
+            <Notifications/>
+        </>
+    },
 ]

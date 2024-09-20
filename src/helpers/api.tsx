@@ -40,12 +40,32 @@ export const categoryUpdate: string = `${baseURL}category/update/`
 export const categoryDelete: string = `${baseURL}category/delete/`
 export const categoryGetOne: string = `${baseURL}category/get-one/`
 
+// ==============CATEGORY QUIZ SETTINGS CONTROLLER====================
+export const quizCategorySettings: string = `${baseURL}quiz-category/settings`
+
 // ==============QUESTION CONTROLLER====================
 export const questionAllGetPage: string = `${baseURL}question/filter`
 export const questionCrud: string = `${baseURL}question`
 
-// ==============NOTIFICATION CONTROLLER====================
-
 // ==============GROUP CONTROLLER====================
 export const groupList: string = `${baseURL}group/list`
 export const groupCrud: string = `${baseURL}group` // edit, delete, add, oneGet
+
+// ==============RATE CONTROLLER====================
+export const rateList: string = `${baseURL}rate/studentsRate`
+export const rateSts: string = `${baseURL}rate/groupByYearly`
+
+// ==============NOTIFICATION CONTROLLER====================
+export const notificationSend: string = `${baseURL}notification/send/all-users`
+
+
+// qilinishi kerak bulganlar
+// edu uchun rate page qilihs kk.
+// notf faqat sent uchun xoxlaganidan
+// quiz uchun category setting page va detail qilsm uchun bitta yul yani page
+// group page faqat eduda
+// module page buladi va unda modullar va lessonlar qushiladi va lessinga task belgilanadi
+// ==============TASK CONTROLLER====================
+// ==============MODULE CONTROLLER====================
+// ==============LESSON CONTROLLER====================
+// ==============RESULT CONTROLLER====================
