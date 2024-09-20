@@ -39,7 +39,7 @@ const CategoryDetails: React.FC = () => {
 
     return (
         <div>
-            <Popover title="Орқага қайтиш" overlayStyle={{ textAlign: 'center' }}>
+            <Popover title="Orqaga qaytish" overlayStyle={{ textAlign: 'center' }}>
                 <MdKeyboardBackspace
                     className={`text-3xl hover:cursor-pointer hover:text-primary duration-300 mb-5`}
                     onClick={() => navigate(-1)}

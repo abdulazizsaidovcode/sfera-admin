@@ -254,7 +254,7 @@ const Dashboard = () => {
             {admin_role === 'ADMIN_QUIZ' &&
                 quizAdminPercentageStsGet.loading ? <Skeleton /> : quizAdminPercentageStsGet.response && (
                     <PieChart
-                        names={quizAdminPercentageStsGet.response.map((item: any) => item.categoryName)}
+                        names={quizAdminPercentageStsGet.response.map((item: any) => item.status)}
                         values={quizAdminPercentageStsGet.response.map((item: any) => item.percentage)}
                     />
                 )}
