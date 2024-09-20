@@ -81,7 +81,7 @@ const SiteRole = () => {
                 ) : (
                     (response && chartData) ? (
                         <LineChart
-                            title={`Foydalanuvchilar protsentlarda (%)`}
+                            title={`Foydalanuvchilar foizlarda (%)`}
                             category={['Boshqa foydalanuvchilar', 'Markaz o\'quvchilari', 'O\'qituvchilar']}
                             seriesTitle={`foizlarda (%)`}
                             seriesData={chartData}

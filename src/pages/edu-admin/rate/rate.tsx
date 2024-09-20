@@ -8,12 +8,14 @@ import {config} from "@/helpers/token.tsx";
 import {RateLists} from "@/types/rate.ts";
 import {useEffect, useState} from "react";
 import {categoryList, groupList, rateList} from "@/helpers/api.tsx";
+// import LineChart from "@/components/custom/chart/line-chart.tsx";
 
 const Rate = () => {
     const [page, setPage] = useState<number>(0);
     const [keyword, setKeyword] = useState<string>('');
     const [groupId, setGroupId] = useState<string>('');
     const [categoryId, setCategoryId] = useState<string>('');
+    // const [chartData, setChartData] = useState<null | any[]>(null)
 
     const getTestUrl = () => {
         const queryParams: string = [
@@ -41,6 +43,18 @@ const Rate = () => {
     return (
         <>
             <Breadcrumb pageName={`Baholar`}/>
+
+            {/*<div className={`mt-10`}>*/}
+            {/*    {loading ? <Skeleton/> : (response && chartData) ?*/}
+            {/*        <LineChart*/}
+            {/*            title={`Foydalanuvchilar foizlarda (%)`}*/}
+            {/*            category={['Boshqa foydalanuvchilar', 'Markaz o\'quvchilari', 'O\'qituvchilar']}*/}
+            {/*            seriesTitle={`foizlarda (%)`}*/}
+            {/*            seriesData={chartData}*/}
+            {/*            type={`bar`}*/}
+            {/*        /> : <p className={`text-center text-xl font-semibold`}>Ma'lumot topilmadi.</p>*/}
+            {/*    }*/}
+            {/*</div>*/}
 
             {/*=================SEARCH================*/}
             <div className={`w-full flex justify-between items-center flex-wrap xl:flex-nowrap gap-5 mt-10`}>
@@ -74,7 +88,7 @@ const Rate = () => {
 
             {/*======================BODY TABLE======================*/}
             <div className={`mt-6`}>
-                {loading ? <div className={`w-full grid grid-cols-1 gap-5`}>
+                {loading ? <div className={`w-full grid grid-cols-1 gap-3`}>
                     <Skeleton/>
                     <Skeleton/>
                 </div> : (

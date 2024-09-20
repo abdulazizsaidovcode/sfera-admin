@@ -1,6 +1,6 @@
 import {useState} from "react";
 import DropdownUser from './DropdownUser';
-import {IoNotifications} from "react-icons/io5";
+// import {IoNotifications} from "react-icons/io5";
 import {AiFillMessage} from "react-icons/ai";
 import {RxDashboard} from "react-icons/rx";
 import {useNavigate} from "react-router-dom";
@@ -12,6 +12,7 @@ import {Dock, DockIcon} from "@/components/magicui/dock.tsx";
 const Header = (props: {
     sidebarOpen: string | boolean | undefined;
     setSidebarOpen: (arg0: boolean) => void;
+    toggleNotificationModal: () => void
 }) => {
     const navigate = useNavigate();
     const role = sessionStorage.getItem('admin_roles')
@@ -77,13 +78,14 @@ const Header = (props: {
                             }}
                         />
                     )}
-                    <IoNotifications
-                        size={26}
-                        className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer`}
-                    />
+                    {/*<IoNotifications*/}
+                    {/*    size={26}*/}
+                    {/*    className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer`}*/}
+                    {/*/>*/}
                     <AiFillMessage
                         size={26}
                         className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer mr-4`}
+                        onClick={props.toggleNotificationModal}
                     />
                     <DropdownUser/>
                 </div>

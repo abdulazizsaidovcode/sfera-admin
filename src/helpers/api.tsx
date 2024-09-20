@@ -76,8 +76,6 @@ export const taskCrud: string = `${baseURL}task/`
 export const taskLessonId: string = `${baseURL}task/getTaskByLesson/` //lessonga tegishli hamma module ni get qilish
 
 // qilinishi kerak bulganlar
-// edu uchun rate page qilihs kk.
-// notf faqat sent uchun xoxlaganidan
 // quiz uchun category setting page va detail qilsm uchun bitta yul yani page
 // group page faqat eduda
 // module page buladi va unda modullar va lessonlar qushiladi va lessinga task belgilanadi
