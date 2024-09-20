@@ -255,7 +255,7 @@ const Users = () => {
                     allowClear
                 >
                     {groups.response && groups.response.map((grp: any, idx: any) => (
-                        <Select.Option key={idx} value={grp.groupId}>{grp.groupName}</Select.Option>
+                        <Select.Option key={idx} value={grp.id}>{grp.name}</Select.Option>
                     ))}
                 </Select>
                 <Select
@@ -375,7 +375,7 @@ const Users = () => {
                                         Guruhni tanlang
                                     </option>
                                     {groups.response && groups.response.map((item: any) => (
-                                        <option value={item.groupId} key={item.groupId}>{item.groupName}</option>
+                                        <option value={item.id} key={item.id}>{item.name}</option>
                                     ))}
                                 </select>
                             )}
@@ -388,7 +388,7 @@ const Users = () => {
                                         Guruhni tanlang
                                     </option>
                                     {groups.response && groups.response.map((item: any) => (
-                                        <option value={item.groupId} key={item.groupId}>{item.groupName}</option>
+                                        <option value={item.id} key={item.id}>{item.name}</option>
                                     ))}
                                 </select>
                             )}

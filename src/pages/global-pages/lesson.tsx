@@ -2,22 +2,51 @@ import Breadcrumb from "@/components/custom/breadcrumb/Breadcrumb.tsx";
 import {Input, Pagination, Select} from "antd";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import Tables from "@/components/custom/tables/table.tsx";
-import {lessonThead} from "@/helpers/constanta.tsx";
+import {lessonPageThead} from "@/helpers/constanta.tsx";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
 import {useEffect, useState} from "react";
-import {categoryList, lessonPageList, moduleCategoryId} from "@/helpers/api.tsx";
+import {categoryList, lessonCrud, lessonPageList, moduleCategoryId} from "@/helpers/api.tsx";
 import ShinyButton from "@/components/magicui/shiny-button.tsx";
 import {MdOutlineAddCircle} from "react-icons/md";
 import {Link} from "react-router-dom";
 import Checkbox from "@/components/custom/checkbox/checkbox.tsx";
+import {FaEdit} from "react-icons/fa";
+import {AiFillDelete} from "react-icons/ai";
+import Modal from "@/components/custom/modal/modal.tsx";
+import toast from "react-hot-toast";
+import courseStore from "@/helpers/state-management/coursesStore.tsx";
+import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
+import ImgUpload from "@/components/custom/imagesData/img-upload.tsx";
+import globalStore from "@/helpers/state-management/globalStore.tsx";
+
+const defVal = {
+    name: '',
+    description: '',
+    videoLink: '',
+    videoTime: null,
+    moduleId: 0,
+    fileId: 0
+}
 
 const Lesson = () => {
     const [page, setPage] = useState<number>(0);
     const [name, setName] = useState<string>('');
     const [moduleId, setModuleId] = useState<string | null>(null);
     const [categoryId, setCategoryId] = useState<string>('');
+    const [isModal, setIsModal] = useState(false);
+    const [crudLesson, setCrudLesson] = useState<any>(defVal);
     const admin_role = sessionStorage.getItem('admin_roles');
+    const {editOrDeleteStatus, setEditOrDeleteStatus} = courseStore()
+    const {imgUpload, setImgUpload} = globalStore()
+    const requestData = {
+        name: crudLesson.name,
+        description: crudLesson.description,
+        videoLink: crudLesson.videoLink,
+        videoTime: crudLesson.videoTime,
+        moduleId: crudLesson.moduleId,
+        fileId: imgUpload ? imgUpload : crudLesson.fileId ? crudLesson.fileId : 0
+    }
 
     const getTestUrl = () => {
         const queryParams: string = [
@@ -31,6 +60,9 @@ const Lesson = () => {
     const {loading, response, globalDataFunc} = useGlobalRequest(getTestUrl(), 'GET', '', config)
     const categoryLists = useGlobalRequest(`${categoryList}${admin_role === 'ADMIN_EDU' ? 'EDUCATION' : 'ONLINE'}`, 'GET', '', config)
     const moduleLessonGet = useGlobalRequest(`${moduleCategoryId}${categoryId}`, 'GET', '', config)
+    const lessonAdd = useGlobalRequest(lessonCrud, 'POST', requestData, config)
+    const lessonEdit = useGlobalRequest(`${lessonCrud}/${crudLesson.id}`, 'PUT', requestData, config)
+    const lessonDelete = useGlobalRequest(`${lessonCrud}/${crudLesson.id}`, 'DELETE', '', config)
 
     useEffect(() => {
         globalDataFunc()
@@ -38,13 +70,43 @@ const Lesson = () => {
     }, []);
 
     useEffect(() => {
-        globalDataFunc()
+        if (!editOrDeleteStatus) globalDataFunc()
     }, [page, name, moduleId, categoryId]);
 
     useEffect(() => {
         if (categoryId) moduleLessonGet.globalDataFunc()
-        // setModuleId('')
     }, [categoryId]);
+
+    useEffect(() => {
+        if (lessonAdd.response) {
+            globalDataFunc()
+            toast.success('Dars muvaffaqiyatli qushildi')
+            closeModal()
+        } else if (lessonEdit.response) {
+            globalDataFunc()
+            toast.success('Dars muvaffaqiyatli taxrirlandi')
+            closeModal()
+        } else if (lessonDelete.response) {
+            globalDataFunc()
+            toast.success('Dars muvaffaqiyatli uchirildi')
+            closeModal()
+        }
+        consoleClear()
+    }, [lessonAdd.response, lessonEdit.response, lessonDelete.response]);
+
+    const handleChange = (name: string, value: string) => setCrudLesson({...crudLesson, [name]: value});
+
+    const openModal = () => setIsModal(true);
+    const closeModal = () => {
+        setIsModal(false);
+        setTimeout(() => {
+            setCrudLesson(defVal);
+            setEditOrDeleteStatus('');
+            setImgUpload(null)
+        }, 500)
+    };
+
+    console.log(crudLesson)
 
     return (
         <>
@@ -57,8 +119,8 @@ const Lesson = () => {
                     icon={<MdOutlineAddCircle size={30}/>}
                     className={`bg-darkGreen`}
                     onClick={() => {
-                        // openModal()
-                        // setEditOrDeleteStatus('POST')
+                        openModal()
+                        setEditOrDeleteStatus('POST')
                     }}
                 />
                 <div
@@ -100,7 +162,7 @@ const Lesson = () => {
                     <Skeleton/>
                     <Skeleton/>
                 </div> : (
-                    <Tables thead={lessonThead}>
+                    <Tables thead={lessonPageThead}>
                         {(response && response.body.length > 0) ? response.body.map((lesson: any, idx: number) => (
                             <tr key={idx} className={`hover:bg-whiteGreen duration-100`}>
                                 <td className="border-b border-[#eee] p-5">
@@ -120,7 +182,7 @@ const Lesson = () => {
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
                                     <p className="text-black">
-                                        <Link to={lesson.videoLink}>vedioni ko'rish</Link>
+                                        <Link to={lesson.videoLink} target={`_blank`}>vedioni ko'rish</Link>
                                     </p>
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
@@ -135,11 +197,29 @@ const Lesson = () => {
                                         id={idx}
                                     />
                                 </td>
+                                <td className="border-b border-[#eee] p-5 flex items-center gap-3">
+                                    <FaEdit
+                                        className={`text-xl hover:cursor-pointer hover:text-yellow-500 duration-300`}
+                                        onClick={() => {
+                                            openModal()
+                                            setEditOrDeleteStatus('EDIT')
+                                            setCrudLesson(lesson)
+                                        }}
+                                    />
+                                    <AiFillDelete
+                                        className={`text-xl hover:cursor-pointer hover:text-red-500 duration-300`}
+                                        onClick={() => {
+                                            openModal()
+                                            setEditOrDeleteStatus('DELETE')
+                                            setCrudLesson(lesson)
+                                        }}
+                                    />
+                                </td>
                             </tr>
                         )) : <tr className={`hover:bg-whiteGreen duration-100`}>
                             <td
                                 className="border-b border-[#eee] p-5 text-black text-center"
-                                colSpan={lessonThead.length}
+                                colSpan={lessonPageThead.length}
                             >
                                 Ma'lumot topilmadi
                             </td>
@@ -155,6 +235,111 @@ const Lesson = () => {
                     rootClassName={`mt-8 mb-5`}
                 />
             </div>
+
+            <Modal onClose={closeModal} isOpen={isModal}>
+                <div className={`min-w-54 sm:w-64 md:w-96 lg:w-[40rem]`}>
+                    {editOrDeleteStatus === 'DELETE' ? (
+                        <p className={`text-center text-black text-base lg:text-xl mb-10 mt-7`}>
+                            Haqiqatdan xam bu darsni o'chirib tashlamoqchimisiz?
+                        </p>
+                    ) : (
+                        <div className={`mt-7`}>
+                            <div className={`flex justify-center`}>
+                                <ImgUpload imgID={crudLesson.fileId && crudLesson.fileId}/>
+                            </div>
+                            <input
+                                value={crudLesson.name}
+                                onChange={(e) => handleChange('name', e.target.value)}
+                                placeholder="Dars nomini kiriting"
+                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mt-7"
+                            />
+                            <input
+                                value={crudLesson.description}
+                                onChange={(e) => handleChange('description', e.target.value)}
+                                placeholder="Tavsifni kiriting"
+                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mt-7"
+                            />
+                            <input
+                                value={crudLesson.videoLink}
+                                onChange={(e) => handleChange('videoLink', e.target.value)}
+                                placeholder="Vedio linkini kiriting"
+                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mt-7"
+                            />
+                            <input
+                                value={crudLesson.videoTime}
+                                onChange={(e) => handleChange('videoTime', e.target.value)}
+                                placeholder="Vedioni davomiyligini kiriting"
+                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mt-7"
+                            />
+                            {editOrDeleteStatus === 'POST' && (<>
+                                <select
+                                    value={crudLesson.categoryId}
+                                    onChange={(e) => {
+                                        setCategoryId(e.target.value)
+                                        handleChange(`categoryId`, e.target.value)
+                                    }}
+                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
+                                >
+                                    <option disabled selected value={``}>Kursni tanlang</option>
+                                    {categoryLists.response && categoryLists.response.map((item: any) => (
+                                        <option value={item.id} key={item.id}>{item.name}</option>
+                                    ))}
+                                </select>
+                                <select
+                                    value={crudLesson.moduleId}
+                                    onChange={(e) => handleChange(`moduleId`, e.target.value)}
+                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
+                                >
+                                    <option disabled selected value={0}>Modulni tanlang</option>
+                                    {moduleLessonGet.response && moduleLessonGet.response.map((item: any) => (
+                                        <option value={item.moduleId} key={item.moduleId}>{item.name}</option>
+                                    ))}
+                                </select>
+                            </>)}
+                        </div>
+                    )}
+                    <div className={`flex justify-end items-center gap-5 mt-5`}>
+                        <ShinyButton
+                            text={`Orqaga`}
+                            className={`bg-darkGreen`}
+                            onClick={closeModal}
+                        />
+                        {editOrDeleteStatus === 'POST' && (
+                            <ShinyButton
+                                text={lessonAdd.loading ? 'Saqlanmoqda...' : 'Saqlash'}
+                                className={`bg-darkGreen ${lessonAdd.loading && 'cursor-not-allowed opacity-60'}`}
+                                onClick={() => {
+                                    if (!lessonAdd.loading) {
+                                        if (crudLesson.name && crudLesson.description && crudLesson.videoLink && crudLesson.videoTime && crudLesson.moduleId) lessonAdd.globalDataFunc()
+                                        else toast.error('Ma\'lumotlar tuliqligini tekshirib kuring')
+                                    }
+                                }}
+                            />
+                        )}
+                        {editOrDeleteStatus === 'EDIT' && (
+                            <ShinyButton
+                                text={lessonEdit.loading ? 'Yuklanmoqda...' : 'Taxrirlash'}
+                                className={`bg-darkGreen ${lessonEdit.loading && 'cursor-not-allowed opacity-60'}`}
+                                onClick={() => {
+                                    if (!lessonEdit.loading) {
+                                        if (crudLesson.name && crudLesson.description && crudLesson.videoLink && crudLesson.videoTime) lessonEdit.globalDataFunc()
+                                        else toast.error('Ma\'lumotlar tuliqligini tekshirib kuring')
+                                    }
+                                }}
+                            />
+                        )}
+                        {editOrDeleteStatus === 'DELETE' && (
+                            <ShinyButton
+                                text={lessonDelete.loading ? 'O\'chirilmoqda...' : 'Xa'}
+                                className={`bg-darkGreen ${lessonDelete.loading && 'cursor-not-allowed opacity-60'}`}
+                                onClick={() => {
+                                    if (!lessonDelete.loading) lessonDelete.globalDataFunc()
+                                }}
+                            />
+                        )}
+                    </div>
+                </div>
+            </Modal>
         </>
     );
 };
