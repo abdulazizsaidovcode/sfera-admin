@@ -3,7 +3,7 @@ import DefaultLayout from './layout/DefaultLayout'
 import {routes} from "@/helpers/routes.tsx";
 import {useEffect} from "react";
 import {setConfig} from "@/helpers/token.tsx";
-import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
+import {consoleClear, siteSecurity} from "@/helpers/functions/toastMessage.tsx";
 
 // local admin roles
 // ADMIN_EDU, ADMIN_QUIZ, ADMIN_ONLINE
@@ -16,6 +16,7 @@ function App() {
 
     useEffect(() => {
         setConfig()
+        siteSecurity()
         window.scrollTo(0, 0);
         const refresh = sessionStorage.getItem('refreshes');
 
