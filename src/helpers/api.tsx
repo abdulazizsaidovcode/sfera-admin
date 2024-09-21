@@ -68,6 +68,8 @@ export const resultCount: string = `${baseURL}result/countAll`
 // ==============MODULE CONTROLLER====================
 export const moduleCrud: string = `${baseURL}module`
 export const moduleCategoryId: string = `${baseURL}module/byCategory/` //categoryga tegishli hamma module ni get qilish
+export const moduleEdu: string = `${baseURL}module/searchModuleEducation`
+export const moduleOnline: string = `${baseURL}module/searchModuleOnline`
 
 // ==============LESSON CONTROLLER====================
 export const lessonPageList: string = `${baseURL}lesson/search`
