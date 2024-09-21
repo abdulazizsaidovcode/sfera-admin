@@ -9,7 +9,7 @@ import {useEffect, useState} from "react";
 import {Input} from "antd";
 import {GroupLists} from "@/types/group.ts";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
-import {allUsers, categoryList, groupCrud, groupList} from "@/helpers/api.tsx";
+import {categoryList, groupCrud, groupList, userTeacherGet} from "@/helpers/api.tsx";
 import {FaEdit} from "react-icons/fa";
 import {RiDeleteBin7Fill} from "react-icons/ri";
 import Checkbox from "@/components/custom/checkbox/checkbox.tsx";
@@ -44,7 +44,7 @@ const Groups = () => {
     const groupDataEdit = useGlobalRequest(`${groupCrud}/${crudGroup.groupId}`, 'PUT', requestData, config)
     const groupDataDelete = useGlobalRequest(`${groupCrud}/${crudGroup.groupId}`, 'DELETE', '', config)
     const categoryLists = useGlobalRequest(`${categoryList}EDUCATION`, 'GET', '', config)
-    const teachersList = useGlobalRequest(`${allUsers}?role=ROLE_TEACHER&page=${0}&size=100`, 'GET', '', config);
+    const teachersList = useGlobalRequest(userTeacherGet, 'GET', '', config);
 
     useEffect(() => {
         globalDataFunc()
@@ -217,7 +217,7 @@ const Groups = () => {
                                 <option disabled selected value={0}>
                                     O'qituvchini tanlang
                                 </option>
-                                {teachersList.response && teachersList.response.body.map((item: any) => (
+                                {teachersList.response && teachersList.response.map((item: any) => (
                                     <option value={item.userId}>{item.firstName} {item.lastName}</option>
                                 ))}
                             </select>

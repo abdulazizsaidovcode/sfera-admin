@@ -4,6 +4,7 @@ export const baseURL: string = 'http://142.93.106.195:8080/'
 
 // =============LOGIN=============
 export const authLogin: string = `${baseURL}auth/login`
+export const teacherPost: string = `${baseURL}auth/admin/save-teacher`
 
 // =============STATISTIC DASHBOARD==============
 export const siteRoleCardSts: string = `${baseURL}statistic/site-dashboard`

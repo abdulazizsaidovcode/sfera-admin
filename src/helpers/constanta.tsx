@@ -1,5 +1,5 @@
 import {LuLayoutDashboard} from "react-icons/lu";
-import {PiGlobeDuotone, PiStudentFill} from "react-icons/pi";
+import {PiChalkboardTeacherBold, PiGlobeDuotone, PiStudentFill} from "react-icons/pi";
 import {MdCastForEducation, MdOutlineCategory, MdPlayLesson} from "react-icons/md";
 import {SiCoursera, SiQuizlet, SiTestcafe} from "react-icons/si";
 import {FaLayerGroup} from "react-icons/fa";
@@ -69,6 +69,7 @@ export const sideData = {
         {title: 'Kurslar', icon: <SiCoursera size={20}/>, path: '/edu/course'},
         {title: 'Module', icon: <VscFileSubmodule size={20}/>, path: '/edu/module'},
         {title: 'Darslar', icon: <MdPlayLesson size={20}/>, path: '/edu/lesson'},
+        {title: 'O\'qituvchilar', icon: <PiChalkboardTeacherBold size={20}/>, path: '/edu/teacher'},
         {title: 'Guruhlar', icon: <FaLayerGroup size={20}/>, path: '/edu/group'},
         {title: 'Foydalanuvchilar', icon: <PiStudentFill size={20}/>, path: '/edu/users'},
         {title: 'Baholar', icon: <TbHeartRateMonitor size={20}/>, path: '/edu/rate'},
@@ -154,4 +155,13 @@ export const lessonPageThead: IThead[] = [
     {id: 3, name: 'Vedio davomiyligi'},
     {id: 4, name: 'Foydalanuvchi aktivligi'},
     {id: 7, name: 'Harakat'},
+];
+
+export const teacherThead: IThead[] = [
+    {id: 5, name: 'ID'},
+    {id: 1, name: 'Rasmi'},
+    {id: 6, name: 'Ismi'},
+    {id: 2, name: 'Familiyasi'},
+    {id: 3, name: 'Telefon raqami'},
+    {id: 4, name: 'Guruhlari soni'},
 ];

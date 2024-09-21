@@ -123,7 +123,7 @@ const Tests = () => {
                     }}
                 />
                 <div
-                    className={`w-full lg:max-w-[60%] flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}
+                    className={`w-full ${admin_role === 'ADMIN_ONLINE' ? 'lg:max-w-[30%]' : 'lg:max-w-[60%]'} flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}
                 >
                     <Input
                         className={`w-full bg-transparent h-11 custom-input`}
