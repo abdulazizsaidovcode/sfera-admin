@@ -56,6 +56,7 @@ export const rateList: string = `${baseURL}rate/studentsRate`
 export const rateSts: string = `${baseURL}rate/groupByYearly`
 
 // ==============NOTIFICATION CONTROLLER====================
+export const notificationGet: string = `${baseURL}notification/all`
 export const notificationSend: string = `${baseURL}notification/send/all-users`
 
 // ==============RESULT CONTROLLER====================

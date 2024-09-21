@@ -3,6 +3,7 @@ import {AnimatePresence, motion} from "framer-motion";
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import Meteors from "@/components/magicui/meteors.tsx";
+import moment from "moment";
 
 export const HoverEffect = (
     {
@@ -11,14 +12,16 @@ export const HoverEffect = (
         link,
         className,
         onClick,
-        idx
+        idx,
+        date
     }: {
         title: string;
         description: string;
-        link: string;
+        link?: string;
         className?: string;
         onClick?: () => void
-        idx: number
+        idx: number,
+        date?: string
     }) => {
     let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -30,8 +33,8 @@ export const HoverEffect = (
             )}
         >
             <Link
-                to={link}
-                key={link}
+                to={link ? link : '#'}
+                key={idx}
                 className="relative p-1 group block h-full w-full"
                 onMouseEnter={() => setHoveredIndex(idx)}
                 onMouseLeave={() => setHoveredIndex(null)}
@@ -56,7 +59,10 @@ export const HoverEffect = (
                 </AnimatePresence>
                 <Card>
                     <CardTitle>{title}</CardTitle>
-                    <CardDescription>{description}</CardDescription>
+                    <CardDescription className={`${date && 'flex justify-between items-center gap-5'}`}>
+                        {description}
+                        {date && <span>{moment(date).format('DD.MM.YYYY')}</span>}
+                    </CardDescription>
                 </Card>
             </Link>
         </div>

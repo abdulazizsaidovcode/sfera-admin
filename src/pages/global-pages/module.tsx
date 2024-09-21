@@ -121,11 +121,10 @@ const Module = () => {
 
             {/*==================BODY===============*/}
             <div className={`flex justify-start items-start gap-5 mt-10`}>
-                <div className={`grid grid-cols-1 w-[20%] max-h-[300px] overflow-y-auto`}>
+                <div className={`grid grid-cols-1 w-[20%] max-h-[350px] overflow-y-auto`}>
                     {loading ? <Skeleton/> : response ? response.map((item: any, idx: number) => (
                         <HoverEffect
                             idx={idx}
-                            link={`#`}
                             title={item.name}
                             description={`Darslar soni: ${item.lessonCount}`}
                             onClick={() => setModuleItems(item)}
@@ -168,52 +167,55 @@ const Module = () => {
                                     <Skeleton/>
                                     <Skeleton/>
                                 </div> : (
-                                    <Tables thead={lessonThead}>
-                                        {moduleLessonGet.response ? moduleLessonGet.response.map((m: any, idx: number) => (
-                                            <tr key={idx} className={`hover:bg-whiteGreen duration-100`}>
-                                                <td className="border-b border-[#eee] p-5">
-                                                    <p className="text-black">
-                                                        {idx + 1}
-                                                    </p>
+                                    <div className={`max-h-[400px] overflow-y-auto`}>
+                                        <Tables thead={lessonThead}>
+                                            {moduleLessonGet.response ? moduleLessonGet.response.map((m: any, idx: number) => (
+                                                <tr key={idx} className={`hover:bg-whiteGreen duration-100`}>
+                                                    <td className="border-b border-[#eee] p-5">
+                                                        <p className="text-black">
+                                                            {idx + 1}
+                                                        </p>
+                                                    </td>
+                                                    <td className="border-b border-[#eee] p-5">
+                                                        <p className="text-black">
+                                                            {m.name}
+                                                        </p>
+                                                    </td>
+                                                    <td className="border-b border-[#eee] p-5">
+                                                        <p className="text-black">
+                                                            {m.description}
+                                                        </p>
+                                                    </td>
+                                                    <td className="border-b border-[#eee] p-5">
+                                                        <p className="text-black">
+                                                            <Link to={m.videoLink} target={`_blank`}>vedioni
+                                                                kurish</Link>
+                                                        </p>
+                                                    </td>
+                                                    <td className="border-b border-[#eee] p-5">
+                                                        <p className="text-black">
+                                                            {m.videoTime ? m.videoTime : '-'}
+                                                        </p>
+                                                    </td>
+                                                    <td className="border-b border-[#eee] p-5">
+                                                        <p className="text-black">
+                                                            <Checkbox
+                                                                setIsChecked={() => !m.userActive}
+                                                                isChecked={m.userActive} id={idx}
+                                                            />
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            )) : <tr className={`hover:bg-whiteGreen duration-100`}>
+                                                <td
+                                                    className="border-b border-[#eee] p-5 text-black text-center"
+                                                    colSpan={lessonThead.length}
+                                                >
+                                                    Ma'lumot topilmadi
                                                 </td>
-                                                <td className="border-b border-[#eee] p-5">
-                                                    <p className="text-black">
-                                                        {m.name}
-                                                    </p>
-                                                </td>
-                                                <td className="border-b border-[#eee] p-5">
-                                                    <p className="text-black">
-                                                        {m.description}
-                                                    </p>
-                                                </td>
-                                                <td className="border-b border-[#eee] p-5">
-                                                    <p className="text-black">
-                                                        <Link to={m.videoLink} target={`_blank`}>vedioni kurish</Link>
-                                                    </p>
-                                                </td>
-                                                <td className="border-b border-[#eee] p-5">
-                                                    <p className="text-black">
-                                                        {m.videoTime ? m.videoTime : '-'}
-                                                    </p>
-                                                </td>
-                                                <td className="border-b border-[#eee] p-5">
-                                                    <p className="text-black">
-                                                        <Checkbox
-                                                            setIsChecked={() => !m.userActive}
-                                                            isChecked={m.userActive} id={idx}
-                                                        />
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                        )) : <tr className={`hover:bg-whiteGreen duration-100`}>
-                                            <td
-                                                className="border-b border-[#eee] p-5 text-black text-center"
-                                                colSpan={lessonThead.length}
-                                            >
-                                                Ma'lumot topilmadi
-                                            </td>
-                                        </tr>}
-                                    </Tables>
+                                            </tr>}
+                                        </Tables>
+                                    </div>
                                 )}
                             </div>
                         </div>
