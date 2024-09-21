@@ -70,16 +70,14 @@ const Header = (props: {
                 <div className="hidden sm:block"></div>
                 <div className="flex items-center gap-4">
                     {role && (
-                        <Popover title="Panelni almashtirish uchun bosing" overlayStyle={{textAlign: 'center'}}>
-                            <RxDashboard
-                                size={26}
-                                className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer ${isOpen && 'opacity-70'}`}
-                                onClick={() => {
-                                    if (isOpen) closeMenu()
-                                    else openMenu()
-                                }}
-                            />
-                        </Popover>
+                        <RxDashboard
+                            size={26}
+                            className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer ${isOpen && 'opacity-70'}`}
+                            onClick={() => {
+                                if (isOpen) closeMenu()
+                                else openMenu()
+                            }}
+                        />
                     )}
                     {/*<IoNotifications*/}
                     {/*    size={26}*/}
@@ -100,34 +98,40 @@ const Header = (props: {
                     <div className="absolute right-20 xsm:right-60 sm:right-90 top-8">
                         <Dock magnification={60} distance={50} className={`bg-black/20`}>
                             <DockIcon className="bg-black/40">
-                                <MdCastForEducation
-                                    onClick={() => {
-                                        sessionStorage.setItem('admin_roles', 'ADMIN_EDU')
-                                        navigate('/edu/dashboard')
-                                        closeMenu()
-                                    }}
-                                    className="h-6 w-6 text-whiten"
-                                />
+                                <Popover title="Education" overlayStyle={{textAlign: 'center'}}>
+                                    <MdCastForEducation
+                                        onClick={() => {
+                                            sessionStorage.setItem('admin_roles', 'ADMIN_EDU')
+                                            navigate('/edu/dashboard')
+                                            closeMenu()
+                                        }}
+                                        className="h-6 w-6 text-whiten"
+                                    />
+                                </Popover>
                             </DockIcon>
                             <DockIcon className="bg-black/40">
-                                <PiGlobeDuotone
-                                    className="h-6 w-6 text-whiten"
-                                    onClick={() => {
-                                        sessionStorage.setItem('admin_roles', 'ADMIN_ONLINE')
-                                        navigate('/online/dashboard')
-                                        closeMenu()
-                                    }}
-                                />
+                                <Popover title="Online platforma" overlayStyle={{textAlign: 'center'}}>
+                                    <PiGlobeDuotone
+                                        className="h-6 w-6 text-whiten"
+                                        onClick={() => {
+                                            sessionStorage.setItem('admin_roles', 'ADMIN_ONLINE')
+                                            navigate('/online/dashboard')
+                                            closeMenu()
+                                        }}
+                                    />
+                                </Popover>
                             </DockIcon>
                             <DockIcon className="bg-black/40">
-                                <SiQuizlet
-                                    className="h-6 w-6 text-whiten"
-                                    onClick={() => {
-                                        sessionStorage.setItem('admin_roles', 'ADMIN_QUIZ')
-                                        navigate('/quiz/dashboard')
-                                        closeMenu()
-                                    }}
-                                />
+                                <Popover title="Quiz panel" overlayStyle={{textAlign: 'center'}}>
+                                    <SiQuizlet
+                                        className="h-6 w-6 text-whiten"
+                                        onClick={() => {
+                                            sessionStorage.setItem('admin_roles', 'ADMIN_QUIZ')
+                                            navigate('/quiz/dashboard')
+                                            closeMenu()
+                                        }}
+                                    />
+                                </Popover>
                             </DockIcon>
                         </Dock>
                     </div>

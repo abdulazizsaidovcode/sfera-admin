@@ -30,6 +30,7 @@ const Module = () => {
     const [crudModule, setCrudModule] = useState<any>(defVal);
     const [moduleItems, setModuleItems] = useState<any>(null);
     const [isModal, setIsModal] = useState(false);
+    const admin_role = sessionStorage.getItem('admin_roles')
     const requestData = {
         name: crudModule.name,
         categoryId: crudModule.categoryId
@@ -41,7 +42,12 @@ const Module = () => {
         loading,
         globalDataFunc
     } = useGlobalRequest(`${moduleCategoryId}${categoryFilter}`, 'GET', '', config)
-    const categoryLists = useGlobalRequest(`${categoryList}EDUCATION`, 'GET', '', config)
+    const urls = (url: string) => {
+        if (admin_role === 'ADMIN_ONLINE') return `${url}ONLINE`
+        else if (admin_role === 'ADMIN_EDU') return `${url}EDUCATION`
+        else return ''
+    }
+    const categoryLists = useGlobalRequest(urls(categoryList), 'GET', '', config);
     const moduleLessonGet = useGlobalRequest(`${lessonModuleID}${moduleItems?.moduleId}`, 'GET', '', config)
     const moduleAdd = useGlobalRequest(`${moduleCrud}`, 'POST', requestData, config)
     const moduleEdit = useGlobalRequest(`${moduleCrud}/${crudModule.moduleId}`, 'PUT', requestData, config)

@@ -32,6 +32,7 @@ export const userGroupEdit: string = `${baseURL}user/updateStudentGroup/`
 export const userGroupEditUser: string = `${baseURL}user/addStudentGroup/`
 export const userDeleted: string = `${baseURL}user/deleteUser/`
 export const userRoleUpdate: string = `${baseURL}user/update/role/`
+export const userTeacherGet: string = `${baseURL}user/teachers`
 
 //================CATEGORY CONTROLLER==================
 export const categoryList: string = `${baseURL}category/list?categoryEnum=`

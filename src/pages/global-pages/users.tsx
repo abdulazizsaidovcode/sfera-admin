@@ -14,7 +14,7 @@ import {
     userCreate,
     userDeleted,
     userGroupEdit, userGroupEditUser,
-    userRoleUpdate,
+    userRoleUpdate, userTeacherGet,
     userUpdate
 } from "@/helpers/api.tsx";
 import {Dropdown, Input, Menu, MenuProps, Pagination, Select, Space} from "antd";
@@ -63,7 +63,7 @@ const Users = () => {
         return `${allUsers}?${queryParams ? `${queryParams}&` : ''}page=${page}&size=10`;
     }
     const users = useGlobalRequest(getTestUrl(), 'GET', '', config);
-    const teachersList = useGlobalRequest(`${allUsers}?role=ROLE_TEACHER&page=${page}&size=100`, 'GET', '', config);
+    const teachersList = useGlobalRequest(userTeacherGet, 'GET', '', config);
     const groups = useGlobalRequest(groupList, 'GET', '', config);
     const userAdd = useGlobalRequest(`${userCreate}?groupId=${crudValue.groupId}`, 'POST', {
         firstName: crudValue.firstName,
@@ -265,7 +265,7 @@ const Users = () => {
                     onChange={(e) => setTeacher(e)}
                     allowClear
                 >
-                    {teachersList.response && teachersList.response.body.map((item: any) => (
+                    {teachersList.response && teachersList.response.map((item: any) => (
                         <Select.Option key={item.userId} value={item.userId}>
                             {item.firstName} {item.lastName}
                         </Select.Option>

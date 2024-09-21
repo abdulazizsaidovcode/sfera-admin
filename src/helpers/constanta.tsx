@@ -8,8 +8,6 @@ import {IThead} from "@/components/custom/tables/table.tsx";
 import {TbHeartRateMonitor} from "react-icons/tb";
 import {VscFileSubmodule} from "react-icons/vsc";
 
-const admin_role = sessionStorage.getItem("admin_roles");
-
 // ==============ADMIN ROLE TANLASH UCHUN SITE CARD DATA==============
 export const features = [
     {
@@ -115,9 +113,9 @@ export const userTableHead: IThead[] = [
 ]
 
 export const testThead: IThead[] = [
-    // {id: 4, name: 'ID'},
+    {id: 4, name: 'ID'},
     {id: 1, name: 'Savol nomi'},
-    {id: 2, name: `${admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish nomi' : 'Lesson nomi'}`},
+    {id: 2, name: `Yo'nalish nomi`},
     {id: 3, name: 'Xarakat'},
 ];
 
