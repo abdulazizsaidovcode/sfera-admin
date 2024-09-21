@@ -8,6 +8,7 @@ import {MdCastForEducation} from "react-icons/md";
 import {PiGlobeDuotone} from "react-icons/pi";
 import {SiQuizlet} from "react-icons/si";
 import {Dock, DockIcon} from "@/components/magicui/dock.tsx";
+import {Popover} from "antd";
 
 const Header = (props: {
     sidebarOpen: string | boolean | undefined;
@@ -69,24 +70,29 @@ const Header = (props: {
                 <div className="hidden sm:block"></div>
                 <div className="flex items-center gap-4">
                     {role && (
-                        <RxDashboard
-                            size={26}
-                            className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer ${isOpen && 'opacity-70'}`}
-                            onClick={() => {
-                                if (isOpen) closeMenu()
-                                else openMenu()
-                            }}
-                        />
+                        <Popover title="Panelni almashtirish uchun bosing" overlayStyle={{textAlign: 'center'}}>
+                            <RxDashboard
+                                size={26}
+                                className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer ${isOpen && 'opacity-70'}`}
+                                onClick={() => {
+                                    if (isOpen) closeMenu()
+                                    else openMenu()
+                                }}
+                            />
+                        </Popover>
                     )}
                     {/*<IoNotifications*/}
                     {/*    size={26}*/}
                     {/*    className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer`}*/}
                     {/*/>*/}
-                    <AiFillMessage
-                        size={26}
-                        className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer mr-4`}
-                        onClick={props.toggleNotificationModal}
-                    />
+                    <Popover title="Xabar yuboring" overlayStyle={{textAlign: 'center'}}>
+                        <AiFillMessage
+                            size={26}
+                            className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer mr-4`}
+                            onClick={props.toggleNotificationModal}
+                        />
+                    </Popover>
+
                     <DropdownUser/>
                 </div>
 

@@ -113,7 +113,8 @@ const Sidebar = ({sidebarOpen, setSidebarOpen, toggleModal}: SidebarProps) => {
                                 ))}
                             </li>
                         </ul>
-                        {/*<div className={`absolute bottom-5 w-60 bg-lighterGreen`}>*/}
+                        <div
+                            className={`${(admin_role === 'ADMIN_ONLINE' || admin_role === 'ADMIN_EDU') ? '' : 'absolute bottom-10 w-60'}`}>
                             <ShinyButton
                                 onClick={() => {
                                     toggleModal()
@@ -122,7 +123,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen, toggleModal}: SidebarProps) => {
                                 text='Chiqish'
                                 className='bg-darkGreen w-full'
                             />
-                        {/*</div>*/}
+                        </div>
                     </div>
                 </nav>
             </div>

@@ -99,7 +99,10 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({children}) => {
                             text={`${loading ? 'Yuborilmoqda...' : 'Yuborish'}`}
                             className={`bg-darkGreen ${loading && 'cursor-not-allowed opacity-50'}`}
                             onClick={() => {
-                                if (!loading) globalDataFunc()
+                                if (!loading) {
+                                    if (notTitle && notContent) globalDataFunc()
+                                    else toast.error('Ma\'lumotlar tuliqligini tekshirib kuring')
+                                }
                             }}
                         />
                     </div>
