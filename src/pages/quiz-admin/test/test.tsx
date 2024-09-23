@@ -229,7 +229,7 @@ const Tests = () => {
                                         <option disabled selected>
                                             Darsni tanlang
                                         </option>
-                                        {moduleLessonGet.response && categoryLists.response.map((item: any) => (
+                                        {moduleLessonGet.response && moduleLessonGet.response.map((item: any) => (
                                             <option value={item.id}>{item.name}</option>
                                         ))}
                                     </select>
