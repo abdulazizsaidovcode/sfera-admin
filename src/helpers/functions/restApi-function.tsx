@@ -44,7 +44,7 @@ export function useGlobalRequest<T>(
         },
         onError: (error: any) => {
             console.log(error)
-            toast.error('Serverda xatolik yuz berdi')
+            toast.error('Serverda xatolik yuz berdi. Error 500')
         }
     });
 
