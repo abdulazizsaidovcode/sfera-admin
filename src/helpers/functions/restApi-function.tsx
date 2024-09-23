@@ -42,7 +42,10 @@ export function useGlobalRequest<T>(
             }
             return res.data.data;
         },
-        onError: (error: any) => console.log(error)
+        onError: (error: any) => {
+            console.log(error)
+            toast.error('Serverda xatolik yuz berdi')
+        }
     });
 
     return {

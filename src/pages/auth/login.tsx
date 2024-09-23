@@ -27,7 +27,7 @@ function Login() {
                 sessionStorage.setItem('role', response.role)
                 toast.success('Tizimga muvaffaqiyatli kirdingiz')
                 navigate('/admin/site-role')
-            } else toast.success('Tizimga kirish uchun sizga ruxsat berilmagan')
+            } else toast.error('Tizimga kirish uchun sizga ruxsat berilmagan')
             consoleClear()
         }
     }, [response]);
