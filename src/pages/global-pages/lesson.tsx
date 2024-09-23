@@ -178,7 +178,8 @@ const Lesson = () => {
                                 <td className="border-b border-[#eee] p-5 min-w-[250px]">
                                     <p className="text-black">
                                         {lesson.description.length > 20 ?
-                                            <Popover title={lesson.description} overlayStyle={{textAlign: 'center', maxWidth: '400px'}}>
+                                            <Popover title={lesson.description}
+                                                     overlayStyle={{textAlign: 'center', maxWidth: '400px'}}>
                                                 {lesson.description.slice(0, 20)}...
                                             </Popover> : lesson.description}
                                     </p>
@@ -256,7 +257,7 @@ const Lesson = () => {
                     ) : (
                         <div className={`mt-7`}>
                             <div className={`flex justify-center`}>
-                                <ImgUpload imgID={crudLesson.fileId && crudLesson.fileId}/>
+                                <ImgUpload imgID={crudLesson.fileId && crudLesson.fileId} textType/>
                             </div>
                             <input
                                 value={crudLesson.name}

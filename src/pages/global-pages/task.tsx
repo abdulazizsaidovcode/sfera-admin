@@ -146,7 +146,7 @@ const Task = () => {
                     ) : (
                         <div className={`mt-7`}>
                             <div className={`flex justify-center`}>
-                                <ImgUpload imgID={crudTask.fileId && crudTask.fileId}/>
+                                <ImgUpload imgID={crudTask.fileId && crudTask.fileId} textType/>
                             </div>
                             <input
                                 value={crudTask.name}
