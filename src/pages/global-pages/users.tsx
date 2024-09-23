@@ -161,10 +161,11 @@ const Users = () => {
         {
             label: <div className={`flex items-center gap-3`}>
                 <LiaUserEditSolid className="text-xl text-orange-300 cursor-pointer duration-300"/>
-                <p>Rolini o'zgartirish</p>
+                <p>O'qituvchi qilib tayinlash</p>
             </div>,
             key: '2',
             onClick: () => {
+                console.log(user.role)
                 if (user.role === 'ROLE_STUDENT' || user.role === 'ROLE_USER') {
                     openModal()
                     setEditOrDeleteStatus('ROLE_EDIT')
@@ -174,31 +175,35 @@ const Users = () => {
         },
         {
             // edu da
-            label: <div className={`flex items-center gap-3 ${admin_role !== 'ADMIN_EDU' && 'hidden'}`}>
+            label: <div className={`flex items-center gap-3`}>
                 <MdOutlineGroupAdd className="text-xl text-blue-300 cursor-pointer duration-300"/>
                 <p>Guruhni o'zgartirish</p>
             </div>,
             key: '3',
             onClick: () => {
-                if (admin_role === 'ADMIN_EDU' && user.role === 'ROLE_STUDENT') {
-                    openModal()
-                    setEditOrDeleteStatus('UserGroupAdd')
-                    setCrudValue(user)
+                if (user.role === 'ROLE_STUDENT') {
+                    if (admin_role === 'ADMIN_EDU') {
+                        openModal()
+                        setEditOrDeleteStatus('UserGroupAdd')
+                        setCrudValue(user)
+                    } else toast.error('Bu vazifani faqat EDUCATION panelda qilishingiz mumkin')
                 } else toast.error('Bu foydalanuvchini guruhi yuq buni guruhini almashtira olmaysiz')
             }
         },
         {
             // edu da
-            label: <div className={`flex items-center gap-3 ${admin_role !== 'ADMIN_EDU' && 'hidden'}`}>
+            label: <div className={`flex items-center gap-3`}>
                 <MdOutlineGroupAdd className="text-xl text-blue-300 cursor-pointer duration-300"/>
                 <p>Guruhga qo'shish</p>
             </div>,
             key: '4',
             onClick: () => {
-                if (admin_role === 'ADMIN_EDU' && user.role === 'ROLE_USER') {
-                    openModal()
-                    setEditOrDeleteStatus('UserGroupEdit')
-                    setCrudValue(user)
+                if (user.role === 'ROLE_USER') {
+                    if (admin_role === 'ADMIN_EDU') {
+                        openModal()
+                        setEditOrDeleteStatus('UserGroupEdit')
+                        setCrudValue(user)
+                    } else toast.error('Bu vazifani faqat EDUCATION panelda qilishingiz mumkin')
                 } else toast.error('Faqat guruhi yuq foydalanuvchilarni guruhga qushish mumkin')
             }
         },
@@ -393,7 +398,8 @@ const Users = () => {
                                 </select>
                             )}
                             {editOrDeleteStatus === 'ROLE_EDIT' && (
-                                <p className={`my-5 text-center`}>Foydalanuvchini rolini o'qituvchi qilib uzgartirmoqchimisiz</p>
+                                <p className={`my-5 text-center`}>Foydalanuvchini rolini o'qituvchi qilib
+                                    uzgartirmoqchimisiz</p>
                                 // <select
                                 //     onChange={(e) => setUpdateGroupId(e.target.value)}
                                 //     className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 mt-7 mb-4"
@@ -429,7 +435,10 @@ const Users = () => {
                                         required
                                         type={`number`}
                                         value={crudValue?.phoneNumber}
-                                        onChange={e => handleInputChange('phoneNumber', e.target.value)}
+                                        onChange={e => {
+                                            const v = e.target.value
+                                            if (v.length >= 0 && v.length < 13) handleInputChange('phoneNumber', v)
+                                        }}
                                         className={`bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5`}
                                         placeholder={`Telefon raqam...`}
                                     />

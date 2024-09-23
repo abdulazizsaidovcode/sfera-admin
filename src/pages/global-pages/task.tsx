@@ -28,6 +28,7 @@ const defVal = {
 const Task = () => {
     const {id} = useParams();
     const [isModal, setIsModal] = useState(false);
+    const [imageError, setImageError] = useState('');
     const [crudTask, setCrudTask] = useState<any>(defVal);
     const {editOrDeleteStatus, setEditOrDeleteStatus} = courseStore()
     const {imgUpload, setImgUpload} = globalStore()
@@ -98,14 +99,22 @@ const Task = () => {
                     {response ? response.map((task: any, idx: number) => (
                         <Card key={idx}>
                             <div className={`flex justify-start items-start gap-5 w-full`}>
-                                <Image
-                                    src={task.fileId ? `${imgGet}${task.fileId}` : images}
-                                    alt={`img${idx}`}
-                                    width={100}
-                                    height={70}
-                                />
+                                {imageError === `${true}${idx}` ? (
+                                    <div className={`flex justify-center items-center text-center font-bold`}>Task file</div>
+                                ) : (
+                                    <Image
+                                        src={task.fileId ? `${imgGet}${task.fileId}` : images}
+                                        alt={`img${task.fileId}`}
+                                        width={100}
+                                        height={70}
+                                        onError={() => setImageError(`${true}${idx}`)}
+                                    />
+                                )}
                                 <div className={`w-full`}>
-                                    <CardTitle>{task.name}</CardTitle>
+                                    <CardTitle className={`flex justify-between items-center`}>
+                                        {task.name}
+                                        <a href={task.fileId ? imgGet + task.fileId : images} download>Yuklab olish</a>
+                                    </CardTitle>
                                     <CardDescription className={`flex justify-between items-center gap-10`}>
                                         <p><span
                                             className={`font-semibold text-black`}>Task tavsifi:</span> {`${task.description}`}
