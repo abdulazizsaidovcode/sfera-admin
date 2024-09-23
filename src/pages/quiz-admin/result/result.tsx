@@ -86,7 +86,7 @@ const Result = () => {
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
                                     <p className="text-black">
-                                        {rate.fullName}
+                                        {rate.userName}
                                     </p>
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
@@ -114,7 +114,7 @@ const Result = () => {
                                         {rate.status}
                                     </p>
                                 </td>
-                                <td className="border-b border-[#eee] p-5">
+                                <td className="border-b border-[#eee] min-w-[200px] p-5">
                                     <p className="text-black">
                                         {moment(rate.createdAt).format('DD.MM.YYYY')}
                                     </p>

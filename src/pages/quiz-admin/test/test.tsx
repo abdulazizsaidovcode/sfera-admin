@@ -11,7 +11,7 @@ import {testThead} from "@/helpers/constanta.tsx";
 import {MdOutlineAddCircle} from "react-icons/md";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
-import {categoryList, questionAllGetPage, questionCrud} from "@/helpers/api.tsx";
+import {categoryList, lessonModuleID, moduleOnline, questionAllGetPage, questionCrud} from "@/helpers/api.tsx";
 import {useEffect, useState} from "react";
 import {TestList} from "@/types/test.ts";
 import {FaEdit} from "react-icons/fa";
@@ -37,6 +37,7 @@ const Tests = () => {
     const [page, setPage] = useState<number>(0);
     const [categoryFilter, setCategoryFilter] = useState<string>('');
     const [testName, setTestName] = useState<string>('');
+    const [moduleID, setModuleID] = useState<string>('');
 
     // ============SERVER REQUEST=============
     const urls = () => {
@@ -53,22 +54,30 @@ const Tests = () => {
     }
     const categoryLists = useGlobalRequest(`${categoryList}${urls()}`, 'GET', '', config)
     const {loading, globalDataFunc, response} = useGlobalRequest(getTestUrl(), 'GET', '', config)
-    const testDataAdd = useGlobalRequest(`${questionCrud}?categoryId=${admin_role === 'ADMIN_QUIZ' ? crudTest?.categoryId : 0}&lessonId=${admin_role === 'ADMIN_ONLINE' ? crudTest?.lessonId : 0}`,
-        'POST', {
-            name: crudTest?.name,
-            optionDto: optionDto
-        }, config)
+    const testDataAdd = useGlobalRequest(
+        `${questionCrud}?categoryId=${admin_role === 'ADMIN_QUIZ' ? crudTest?.categoryId : 0}&lessonId=${admin_role === 'ADMIN_ONLINE' ? crudTest?.lessonId : 0}`,
+        'POST',
+        {name: crudTest?.name, optionDto: optionDto},
+        config
+    )
     const testDataEdit = useGlobalRequest(`${questionCrud}/${crudTest?.id}`, 'PUT', {
         name: crudTest?.name,
         optionDto: optionDto
     }, config)
     const testDataDelete = useGlobalRequest(`${questionCrud}/${crudTest?.id}`, 'DELETE', '', config)
+    const moduleGet = useGlobalRequest(moduleOnline, 'GET', '', config)
+    const moduleLessonGet = useGlobalRequest(`${lessonModuleID}${moduleID}`, 'GET', '', config)
 
     useEffect(() => {
         globalDataFunc()
         categoryLists.globalDataFunc()
+        moduleGet.globalDataFunc()
         consoleClear()
     }, []);
+
+    useEffect(() => {
+        if (moduleID) moduleLessonGet.globalDataFunc()
+    }, [moduleID]);
 
     useEffect(() => {
         globalDataFunc()
@@ -187,19 +196,45 @@ const Tests = () => {
                                 placeholder="Savolni kiriting..."
                                 className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5"
                             />
-                            {editOrDeleteStatus === 'POST' && (
-                                <select
-                                    onChange={(e) => handleChange(`categoryId`, +e.target.value)}
-                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
-                                >
-                                    <option disabled selected>
-                                        Yo'nalishni tanlang
-                                    </option>
-                                    {categoryLists.response && categoryLists.response.map((item: CoursesList) => (
-                                        <option value={item.id}>{item.name}</option>
-                                    ))}
-                                </select>
-                            )}
+                            {editOrDeleteStatus === 'POST' && (<>
+                                {admin_role === 'ADMIN_QUIZ' && (
+                                    <select
+                                        onChange={(e) => handleChange(`categoryId`, +e.target.value)}
+                                        className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
+                                    >
+                                        <option disabled selected>
+                                            Yo'nalishni tanlang
+                                        </option>
+                                        {categoryLists.response && categoryLists.response.map((item: CoursesList) => (
+                                            <option value={item.id}>{item.name}</option>
+                                        ))}
+                                    </select>
+                                )}
+                                {admin_role === 'ADMIN_ONLINE' && <>
+                                    <select
+                                        onChange={(e) => setModuleID(e.target.value)}
+                                        className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
+                                    >
+                                        <option disabled selected>
+                                            Modulni tanlang
+                                        </option>
+                                        {moduleGet.response && moduleGet.response.map((item: any) => (
+                                            <option value={item.moduleId} key={item.moduleId}>{item.name}</option>
+                                        ))}
+                                    </select>
+                                    <select
+                                        onChange={(e) => handleChange(`lessonId`, +e.target.value)}
+                                        className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
+                                    >
+                                        <option disabled selected>
+                                            Darsni tanlang
+                                        </option>
+                                        {moduleLessonGet.response && categoryLists.response.map((item: any) => (
+                                            <option value={item.id}>{item.name}</option>
+                                        ))}
+                                    </select>
+                                </>}
+                            </>)}
                             <p className={`text-center mt-4`}>
                                 {editOrDeleteStatus === 'EDIT' && 'Variantlarni uzgartirishingiz mumkin!!!'}
                             </p>
