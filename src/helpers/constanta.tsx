@@ -7,6 +7,7 @@ import {IoNotifications} from "react-icons/io5";
 import {IThead} from "@/components/custom/tables/table.tsx";
 import {TbHeartRateMonitor} from "react-icons/tb";
 import {VscFileSubmodule} from "react-icons/vsc";
+import {FaCompress} from "react-icons/fa6";
 
 // ==============ADMIN ROLE TANLASH UCHUN SITE CARD DATA==============
 export const features = [
@@ -52,7 +53,7 @@ export const sideData = {
         {title: 'Yo\'nalishlar', icon: <MdOutlineCategory size={20}/>, path: '/quiz/category'},
         {title: 'Test', icon: <SiTestcafe size={20}/>, path: '/quiz/test'},
         {title: 'Foydalanuvchilar', icon: <PiStudentFill size={20}/>, path: '/quiz/users'},
-        // {title: 'Natijalar', icon: <FaCompress size={20}/>, path: '/quiz/result'},
+        {title: 'Natijalar', icon: <FaCompress size={20}/>, path: '/quiz/result'},
         {title: 'Bildirishnoma', icon: <IoNotifications size={20}/>, path: '/quiz/notification'},
     ],
     onlineData: [
@@ -164,4 +165,15 @@ export const teacherThead: IThead[] = [
     {id: 2, name: 'Familiyasi'},
     {id: 3, name: 'Telefon raqami'},
     {id: 4, name: 'Guruhlari soni'},
+];
+
+export const resultThead: IThead[] = [
+    {id: 1, name: 'ID'},
+    {id: 2, name: 'F.I.O'},
+    {id: 3, name: 'Yunalishi'},
+    {id: 4, name: 'Savollar soni'},
+    {id: 5, name: 'To\'g\'ri javoblar soni'},
+    {id: 6, name: 'Ketgan vaqti'},
+    {id: 7, name: 'Holati'},
+    {id: 8, name: 'Savol Yaratilgan sanasi'},
 ];

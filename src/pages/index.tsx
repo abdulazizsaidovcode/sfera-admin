@@ -19,3 +19,4 @@ export {default as Teacher} from './edu-admin/teacher/teacher.tsx'
 // =========QUIZ===========
 export {default as Tests} from './quiz-admin/test/test.tsx'
 export {default as CategoryDetails} from './quiz-admin/category/category-details.tsx'
+export {default as Result} from './quiz-admin/result/result.tsx'

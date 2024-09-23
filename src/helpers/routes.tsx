@@ -13,7 +13,8 @@ import {
     CategoryDetails,
     Lesson,
     Task,
-    Teacher
+    Teacher,
+    Result
 } from "@/pages";
 
 export const routes = [
@@ -76,13 +77,13 @@ export const routes = [
             <Notifications/>
         </>
     },
-    // {
-    //     path: '/quiz/result',
-    //     element: <>
-    //         <PageTitle title="Quiz | Result"/>
-    //         <Notifications/>
-    //     </>
-    // },
+    {
+        path: '/quiz/result',
+        element: <>
+            <PageTitle title="Quiz | Result"/>
+            <Result/>
+        </>
+    },
 
     // ====================ONLINE ROUTE==================
     {

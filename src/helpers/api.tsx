@@ -1,5 +1,3 @@
-// Expandable Cards => notification variant cart ||| Floating Dock => dock ga xam variant
-
 export const baseURL: string = 'http://142.93.106.195:8080/'
 
 // =============LOGIN=============
@@ -23,7 +21,7 @@ export const onlineAdminSts: string = `${baseURL}statistic/getOnlineCount`
 export const imgUploadPost: string = `${baseURL}file/upload`;
 export const imgUpdate: string = `${baseURL}file/update/`;
 export const imgGet: string = `${baseURL}file/files/`;
-export const imgDelete: string = `${baseURL}file/delete/`;
+// export const imgDelete: string = `${baseURL}file/delete/`;
 
 // ==================USERS====================
 export const allUsers: string = `${baseURL}user/searchUser`
@@ -62,9 +60,10 @@ export const notificationGet: string = `${baseURL}notification/all`
 export const notificationSend: string = `${baseURL}notification/send/all-users`
 
 // ==============RESULT CONTROLLER====================
-export const resultResId: string = `${baseURL}result/`
-export const resultUserId: string = `${baseURL}result/user/`
-export const resultCount: string = `${baseURL}result/countAll`
+// export const resultResId: string = `${baseURL}result/`
+// export const resultUserId: string = `${baseURL}result/user/`
+// export const resultCount: string = `${baseURL}result/countAll`
+export const resultSearch: string = `${baseURL}result/search`
 
 // ==============MODULE CONTROLLER====================
 export const moduleCrud: string = `${baseURL}module`

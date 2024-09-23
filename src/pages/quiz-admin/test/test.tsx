@@ -39,15 +39,19 @@ const Tests = () => {
     const [testName, setTestName] = useState<string>('');
 
     // ============SERVER REQUEST=============
+    const urls = () => {
+        if (admin_role === 'ADMIN_QUIZ') return `QUIZ`
+        else if (admin_role === 'ADMIN_ONLINE') return `ONLINE`
+    }
     const getTestUrl = () => {
         const queryParams: string = [
             testName ? `questionName=${testName}` : '',
             categoryFilter ? `categoryId=${categoryFilter}` : ''
         ].filter(Boolean).join('&');
 
-        return `${questionAllGetPage}?${queryParams ? `${queryParams}&` : ''}page=${page}&size=10`;
+        return `${questionAllGetPage}?${queryParams ? `${queryParams}&` : ''}categoryEnum=${urls()}&page=${page}&size=10`;
     }
-    const categoryLists = useGlobalRequest(`${categoryList}QUIZ`, 'GET', '', config)
+    const categoryLists = useGlobalRequest(`${categoryList}${urls()}`, 'GET', '', config)
     const {loading, globalDataFunc, response} = useGlobalRequest(getTestUrl(), 'GET', '', config)
     const testDataAdd = useGlobalRequest(`${questionCrud}?categoryId=${admin_role === 'ADMIN_QUIZ' ? crudTest?.categoryId : 0}&lessonId=${admin_role === 'ADMIN_ONLINE' ? crudTest?.lessonId : 0}`,
         'POST', {
@@ -155,8 +159,6 @@ const Tests = () => {
                     <Tables thead={testThead}>
                         {response ? response.body.map((quiz: TestList, idx: number) => {
                             return TBody(quiz, idx, openModal, setEditOrDeleteStatus, setCrudTest, page)
-                            // if (admin_role === 'ADMIN_QUIZ' && quiz.categoryId && quiz.categoryName) return TBody(quiz, idx, openModal, setEditOrDeleteStatus, setCrudTest)
-                            // else if (admin_role === 'ADMIN_ONLINE' && quiz.lessonId && quiz.lessonName) return TBody(quiz, idx, openModal, setEditOrDeleteStatus, setCrudTest)
                         }) : NotFoundList()}
                     </Tables>
                 )}

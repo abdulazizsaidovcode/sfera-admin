@@ -2,88 +2,71 @@ import Breadcrumb from "@/components/custom/breadcrumb/Breadcrumb.tsx";
 import {Input, Pagination, Select} from "antd";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import Tables from "@/components/custom/tables/table.tsx";
-import {rateThead} from "@/helpers/constanta.tsx";
+import {resultThead} from "@/helpers/constanta.tsx";
+import moment from "moment";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
-import {RateLists} from "@/types/rate.ts";
 import {useEffect, useState} from "react";
-import {categoryList, groupList, rateList, rateSts} from "@/helpers/api.tsx";
-// import LineChart from "@/components/custom/chart/line-chart.tsx";
+import {categoryList, resultSearch} from "@/helpers/api.tsx";
 
-const Rate = () => {
-    const [page, setPage] = useState<number>(0);
-    const [keyword, setKeyword] = useState<string>('');
-    const [groupId, setGroupId] = useState<string>('');
-    const [categoryId, setCategoryId] = useState<string>('');
-    // const [chartData, setChartData] = useState<null | any[]>(null)
+const Result = () => {
+    const [page, setPage] = useState(0)
+    const [name, setName] = useState('')
+    const [categoryFilter, setCategoryFilter] = useState('')
+    const [statusFilter, setStatusFilter] = useState('')
 
     const getTestUrl = () => {
         const queryParams: string = [
-            keyword ? `keyword=${keyword}` : '',
-            groupId ? `groupId=${groupId}` : '',
-            categoryId ? `categoryId=${categoryId}` : ''
+            name ? `name=${name}` : '',
+            categoryFilter ? `categoryName=${categoryFilter}` : '',
+            statusFilter ? `statusCode=${statusFilter}` : ''
         ].filter(Boolean).join('&');
 
-        return `${rateList}?${queryParams ? `${queryParams}&` : ''}page=${page}&size=10`;
+        return `${resultSearch}?${queryParams ? `${queryParams}&` : ''}page=${page}&size=10`;
     }
-    const {loading, response, globalDataFunc} = useGlobalRequest(getTestUrl(), 'GET', '', config)
-    const rateStsGet = useGlobalRequest(rateSts, 'GET', '', config)
-    const groupListGet = useGlobalRequest(groupList, 'GET', '', config)
-    const categoryListGet = useGlobalRequest(`${categoryList}EDUCATION`, 'GET', '', config)
+    const {response, loading, globalDataFunc} = useGlobalRequest(getTestUrl(), 'GET', '', config)
+    const categoryLists = useGlobalRequest(`${categoryList}QUIZ`, 'GET', '', config)
 
     useEffect(() => {
         globalDataFunc()
-        groupListGet.globalDataFunc()
-        categoryListGet.globalDataFunc()
+        categoryLists.globalDataFunc()
     }, []);
 
     useEffect(() => {
         globalDataFunc()
-    }, [page, keyword, groupId, categoryId]);
+    }, [name, page, categoryFilter, statusFilter]);
 
     return (
         <>
-            <Breadcrumb pageName={`Baholar`}/>
-
-            {/*<div className={`mt-10`}>*/}
-            {/*    {loading ? <Skeleton/> : (response && chartData) ?*/}
-            {/*        <LineChart*/}
-            {/*            title={`Foydalanuvchilar foizlarda (%)`}*/}
-            {/*            category={['Boshqa foydalanuvchilar', 'Markaz o\'quvchilari', 'O\'qituvchilar']}*/}
-            {/*            seriesTitle={`foizlarda (%)`}*/}
-            {/*            seriesData={chartData}*/}
-            {/*            type={`bar`}*/}
-            {/*        /> : <p className={`text-center text-xl font-semibold`}>Ma'lumot topilmadi.</p>*/}
-            {/*    }*/}
-            {/*</div>*/}
+            <Breadcrumb pageName={`Natijalalar`}/>
 
             {/*=================SEARCH================*/}
             <div className={`w-full flex justify-between items-center flex-wrap xl:flex-nowrap gap-5 mt-10`}>
                 <Input
                     className={`w-full bg-transparent h-11 custom-input`}
                     placeholder="F.I.O buyicha qidiruv..."
-                    onChange={(val) => setKeyword(val.target.value)}
+                    onChange={(val) => setName(val.target.value)}
                     allowClear
                 />
                 <Select
-                    placeholder={`Kurs buyicha qidirish`}
+                    placeholder={`Yo'nalish buyicha qidirish`}
                     className={`w-full bg-transparent h-11 custom-select`}
-                    onChange={(value) => setCategoryId(value)}
+                    onChange={(value) => setCategoryFilter(value)}
                     allowClear
                 >
-                    {categoryListGet.response && categoryListGet.response.map((item: any) => (
+                    {categoryLists.response && categoryLists.response.map((item: any) => (
                         <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
                     ))}
                 </Select>
                 <Select
-                    placeholder={`Guruh buyicha qidirish`}
+                    placeholder={`Holati buyicha qidirish`}
                     className={`w-full bg-transparent h-11 custom-select`}
-                    onChange={(value) => setGroupId(value)}
+                    onChange={(value) => setStatusFilter(value)}
                     allowClear
                 >
-                    {groupListGet.response && groupListGet.response.map((item: any) => (
-                        <Select.Option value={item.id} key={item.id}>{item.name}</Select.Option>
-                    ))}
+                    <Select.Option value={3}>A'lo</Select.Option>
+                    <Select.Option value={2}>Yaxshi</Select.Option>
+                    <Select.Option value={1}>Yomon</Select.Option>
                 </Select>
             </div>
 
@@ -93,8 +76,8 @@ const Rate = () => {
                     <Skeleton/>
                     <Skeleton/>
                 </div> : (
-                    <Tables thead={rateThead}>
-                        {(response && response.body.length > 0) ? response.body.map((rate: RateLists, idx: number) => (
+                    <Tables thead={resultThead}>
+                        {response ? response.body.map((rate: any, idx: number) => (
                             <tr key={idx} className={`hover:bg-whiteGreen duration-100`}>
                                 <td className="border-b border-[#eee] p-5">
                                     <p className="text-black">
@@ -108,29 +91,39 @@ const Rate = () => {
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
                                     <p className="text-black">
-                                        {rate.groupName}
-                                    </p>
-                                </td>
-                                <td className="border-b border-[#eee] p-5">
-                                    <p className="text-black">
                                         {rate.categoryName}
                                     </p>
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
                                     <p className="text-black">
-                                        {rate.score}
+                                        {rate.countAnswer} ta
                                     </p>
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
                                     <p className="text-black">
-                                        {rate.rate}
+                                        {rate.correctAnswer} ta
+                                    </p>
+                                </td>
+                                <td className="border-b border-[#eee] p-5">
+                                    <p className="text-black">
+                                        {rate.duration} min
+                                    </p>
+                                </td>
+                                <td className="border-b border-[#eee] p-5">
+                                    <p className="text-black">
+                                        {rate.status}
+                                    </p>
+                                </td>
+                                <td className="border-b border-[#eee] p-5">
+                                    <p className="text-black">
+                                        {moment(rate.createdAt).format('DD.MM.YYYY')}
                                     </p>
                                 </td>
                             </tr>
                         )) : <tr className={`hover:bg-whiteGreen duration-100`}>
                             <td
                                 className="border-b border-[#eee] p-5 text-black text-center"
-                                colSpan={rateThead.length}
+                                colSpan={resultThead.length}
                             >
                                 Ma'lumot topilmadi
                             </td>
@@ -150,4 +143,4 @@ const Rate = () => {
     );
 };
 
-export default Rate;
+export default Result;
