@@ -17,7 +17,7 @@ import toast from "react-hot-toast";
 
 const Courses = () => {
     const admin_role = sessionStorage.getItem("admin_roles");
-    const {imgUpload} = globalStore()
+    const {imgUpload, setImgUpload} = globalStore()
     const {
         crudValue,
         setCrudValue,
@@ -28,6 +28,11 @@ const Courses = () => {
         setEditOrDeleteStatus
     } = courseStore()
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const requestObj = {
+        name: crudValue?.name,
+        description: crudValue?.description,
+        fileId: imgUpload ? imgUpload : crudValue?.fileId ? crudValue.fileId : 0,
+    }
 
     // ================REQUEST METHODS================
     const urls = (url: string) => {
@@ -37,13 +42,9 @@ const Courses = () => {
         else return ''
     }
     const categoryListDataGet = useGlobalRequest(urls(categoryList), 'GET', '', config);
-    const categoryDataAdd = useGlobalRequest(urls(categoryAdd), 'POST', crudValue, config);
+    const categoryDataAdd = useGlobalRequest(urls(categoryAdd), 'POST', requestObj, config);
     const categoryDataDelete = useGlobalRequest(`${categoryDelete}${crudValue?.id}`, 'DELETE', '', config);
-    const categoryDataEdit = useGlobalRequest(`${categoryUpdate}${crudValue?.id}`, 'PUT', {
-        name: crudValue?.name,
-        description: crudValue?.description,
-        fileId: crudValue?.fileId ? crudValue.fileId : 0,
-    }, config);
+    const categoryDataEdit = useGlobalRequest(`${categoryUpdate}${crudValue?.id}`, 'PUT', requestObj, config);
     const categoryGetFunc = () => categoryListDataGet.globalDataFunc()
 
     useEffect(() => {
@@ -74,16 +75,13 @@ const Courses = () => {
         }
     }, [categoryDataAdd.response, categoryDataEdit.response, categoryDataDelete.response]);
 
-    useEffect(() => {
-        if (crudValue && imgUpload) crudValue.fileId = imgUpload;
-    }, [imgUpload]);
-
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => {
         setIsModalOpen(false);
         setTimeout(() => {
             setEditOrDeleteStatus('');
             setCrudValue(crudValueDef);
+            setImgUpload(null)
         }, 500)
     };
 

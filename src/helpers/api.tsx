@@ -4,6 +4,7 @@ export const baseURL: string = 'http://142.93.106.195:8080/'
 
 // =============LOGIN=============
 export const authLogin: string = `${baseURL}auth/login`
+export const teacherPost: string = `${baseURL}auth/admin/save-teacher`
 
 // =============STATISTIC DASHBOARD==============
 export const siteRoleCardSts: string = `${baseURL}statistic/site-dashboard`
@@ -32,6 +33,7 @@ export const userGroupEdit: string = `${baseURL}user/updateStudentGroup/`
 export const userGroupEditUser: string = `${baseURL}user/addStudentGroup/`
 export const userDeleted: string = `${baseURL}user/deleteUser/`
 export const userRoleUpdate: string = `${baseURL}user/update/role/`
+export const userTeacherGet: string = `${baseURL}user/teachers`
 
 //================CATEGORY CONTROLLER==================
 export const categoryList: string = `${baseURL}category/list?categoryEnum=`
@@ -67,6 +69,8 @@ export const resultCount: string = `${baseURL}result/countAll`
 // ==============MODULE CONTROLLER====================
 export const moduleCrud: string = `${baseURL}module`
 export const moduleCategoryId: string = `${baseURL}module/byCategory/` //categoryga tegishli hamma module ni get qilish
+export const moduleEdu: string = `${baseURL}module/searchModuleEducation`
+export const moduleOnline: string = `${baseURL}module/searchModuleOnline`
 
 // ==============LESSON CONTROLLER====================
 export const lessonPageList: string = `${baseURL}lesson/search`

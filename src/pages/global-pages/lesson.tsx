@@ -1,5 +1,5 @@
 import Breadcrumb from "@/components/custom/breadcrumb/Breadcrumb.tsx";
-import {Input, Pagination, Select} from "antd";
+import {Input, Pagination, Popover, Select} from "antd";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import Tables from "@/components/custom/tables/table.tsx";
 import {lessonPageThead} from "@/helpers/constanta.tsx";
@@ -8,7 +8,7 @@ import {config} from "@/helpers/token.tsx";
 import {useEffect, useState} from "react";
 import {categoryList, lessonCrud, lessonPageList, moduleCategoryId} from "@/helpers/api.tsx";
 import ShinyButton from "@/components/magicui/shiny-button.tsx";
-import {MdOutlineAddCircle} from "react-icons/md";
+import {MdNextPlan, MdOutlineAddCircle} from "react-icons/md";
 import {Link, useNavigate} from "react-router-dom";
 import Checkbox from "@/components/custom/checkbox/checkbox.tsx";
 import {FaEdit} from "react-icons/fa";
@@ -124,7 +124,7 @@ const Lesson = () => {
                     }}
                 />
                 <div
-                    className={`w-full lg:max-w-[60%] flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}
+                    className={`w-full lg:max-w-[60%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5`}
                 >
                     <Input
                         className={`w-full bg-transparent h-11 custom-input`}
@@ -214,10 +214,14 @@ const Lesson = () => {
                                             setCrudLesson(lesson)
                                         }}
                                     />
-                                    <BiShowAlt
-                                        className={`text-2xl hover:cursor-pointer hover:text-darkGreen duration-300`}
-                                        onClick={() => navigate(`/edu/task/${lesson.id}`)}
-                                    />
+                                    {admin_role === 'ADMIN_EDU' && (
+                                        <Popover title="Darsga task qushish" overlayStyle={{textAlign: 'center'}}>
+                                            <MdNextPlan
+                                                className={`text-2xl hover:cursor-pointer hover:text-darkGreen duration-300`}
+                                                onClick={() => navigate(`/edu/task/${lesson.id}`)}
+                                            />
+                                        </Popover>
+                                    )}
                                 </td>
                             </tr>
                         )) : <tr className={`hover:bg-whiteGreen duration-100`}>

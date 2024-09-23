@@ -1,9 +1,9 @@
 import Breadcrumb from "@/components/custom/breadcrumb/Breadcrumb.tsx";
-import {Select} from "antd";
+import {Input, Select} from "antd";
 import ShinyButton from "@/components/magicui/shiny-button.tsx";
 import {MdOutlineAddCircle} from "react-icons/md";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
-import {categoryList, lessonModuleID, moduleCategoryId, moduleCrud} from "@/helpers/api.tsx";
+import {categoryList, lessonModuleID, moduleCrud, moduleEdu, moduleOnline} from "@/helpers/api.tsx";
 import {config} from "@/helpers/token.tsx";
 import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
@@ -30,18 +30,33 @@ const Module = () => {
     const [crudModule, setCrudModule] = useState<any>(defVal);
     const [moduleItems, setModuleItems] = useState<any>(null);
     const [isModal, setIsModal] = useState(false);
+    const [name, setName] = useState<string>('');
+    const admin_role = sessionStorage.getItem('admin_roles')
     const requestData = {
         name: crudModule.name,
         categoryId: crudModule.categoryId
     }
 
-    // ===========REQUESTS=========
+    // =====================REQUESTS======================
+    const getModuleUrl = () => {
+        const queryParams: string = [
+            name ? `moduleName=${name}` : '',
+            categoryFilter ? `categoryId=${categoryFilter}` : ''
+        ].filter(Boolean).join('&');
+
+        return `${admin_role === 'ADMIN_EDU' ? moduleEdu : moduleOnline}?${queryParams ? `${queryParams}&` : ''}`;
+    }
     const {
         response,
         loading,
         globalDataFunc
-    } = useGlobalRequest(`${moduleCategoryId}${categoryFilter}`, 'GET', '', config)
-    const categoryLists = useGlobalRequest(`${categoryList}EDUCATION`, 'GET', '', config)
+    } = useGlobalRequest(getModuleUrl(), 'GET', '', config)
+    const urls = (url: string) => {
+        if (admin_role === 'ADMIN_ONLINE') return `${url}ONLINE`
+        else if (admin_role === 'ADMIN_EDU') return `${url}EDUCATION`
+        else return ''
+    }
+    const categoryLists = useGlobalRequest(urls(categoryList), 'GET', '', config);
     const moduleLessonGet = useGlobalRequest(`${lessonModuleID}${moduleItems?.moduleId}`, 'GET', '', config)
     const moduleAdd = useGlobalRequest(`${moduleCrud}`, 'POST', requestData, config)
     const moduleEdit = useGlobalRequest(`${moduleCrud}/${crudModule.moduleId}`, 'PUT', requestData, config)
@@ -49,19 +64,20 @@ const Module = () => {
 
     useEffect(() => {
         categoryLists.globalDataFunc()
+        globalDataFunc()
     }, []);
 
     useEffect(() => {
         if (moduleAdd.response) {
-            if (categoryFilter) globalDataFunc()
+            globalDataFunc()
             toast.success('Modul muvaffaqiyatli qushildi')
             closeModal()
         } else if (moduleEdit.response) {
-            if (categoryFilter) globalDataFunc()
+            globalDataFunc()
             toast.success('Modul muvaffaqiyatli taxrirlandi')
             closeModal()
         } else if (moduleDelete.response) {
-            if (categoryFilter) globalDataFunc()
+            globalDataFunc()
             toast.success('Modul muvaffaqiyatli uchirildi')
             closeModal()
         }
@@ -69,9 +85,9 @@ const Module = () => {
     }, [moduleAdd.response, moduleEdit.response, moduleDelete.response]);
 
     useEffect(() => {
-        if (categoryFilter) globalDataFunc()
+        globalDataFunc()
         setModuleItems(null)
-    }, [categoryFilter]);
+    }, [categoryFilter, name]);
 
     useEffect(() => {
         if (moduleItems) moduleLessonGet.globalDataFunc()
@@ -104,8 +120,15 @@ const Module = () => {
                     }}
                 />
                 <div
-                    className={`w-full lg:max-w-[40%] flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}
+                    className={`w-full lg:max-w-[60%] flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}
                 >
+                    <Input
+                        className={`w-full bg-transparent h-11 custom-input`}
+                        placeholder="Modulni qidirish..."
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        allowClear
+                    />
                     <Select
                         placeholder={`Kursni tanlang`}
                         className={`w-full bg-transparent h-11 custom-select`}
@@ -122,17 +145,18 @@ const Module = () => {
             {/*==================BODY===============*/}
             <div className={`flex justify-start items-start gap-5 mt-10`}>
                 <div className={`grid grid-cols-1 w-[20%] max-h-[350px] overflow-y-auto`}>
-                    {loading ? <Skeleton/> : response ? response.map((item: any, idx: number) => (
-                        <HoverEffect
-                            idx={idx}
-                            title={item.name}
-                            description={`Darslar soni: ${item.lessonCount}`}
-                            onClick={() => setModuleItems(item)}
-                        />
-                    )) : <p>Ma'lumot topilmadi</p>}
+                    {loading ?
+                        <Skeleton/> : (response && response.length > 0) ? response.map((item: any, idx: number) => (
+                            <HoverEffect
+                                idx={idx}
+                                title={item.name}
+                                description={`Darslar soni: ${item.lessonCount}`}
+                                onClick={() => setModuleItems(item)}
+                            />
+                        )) : <p>Ma'lumot topilmadi</p>}
                 </div>
                 <div className={`w-[80%]`}>
-                    {(response && !moduleItems) && (
+                    {(response && response.length > 0 && !moduleItems) && (
                         <p className={`text-center text-xl font-semibold`}>Modulni tanlang</p>
                     )}
                     {moduleItems && (<>
@@ -234,7 +258,7 @@ const Module = () => {
                             <input
                                 value={crudModule.name}
                                 onChange={(e) => handleChange('name', e.target.value)}
-                                placeholder="Guruh nomini kiriting"
+                                placeholder="Modul nomini kiriting"
                                 className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5"
                             />
                             <select

@@ -123,7 +123,7 @@ const Tests = () => {
                     }}
                 />
                 <div
-                    className={`w-full lg:max-w-[60%] flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}
+                    className={`w-full ${admin_role === 'ADMIN_ONLINE' ? 'lg:max-w-[30%]' : 'lg:max-w-[60%]'} flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}
                 >
                     <Input
                         className={`w-full bg-transparent h-11 custom-input`}
@@ -154,7 +154,7 @@ const Tests = () => {
                 </div> : (
                     <Tables thead={testThead}>
                         {response ? response.body.map((quiz: TestList, idx: number) => {
-                            return TBody(quiz, idx, openModal, setEditOrDeleteStatus, setCrudTest)
+                            return TBody(quiz, idx, openModal, setEditOrDeleteStatus, setCrudTest, page)
                             // if (admin_role === 'ADMIN_QUIZ' && quiz.categoryId && quiz.categoryName) return TBody(quiz, idx, openModal, setEditOrDeleteStatus, setCrudTest)
                             // else if (admin_role === 'ADMIN_ONLINE' && quiz.lessonId && quiz.lessonName) return TBody(quiz, idx, openModal, setEditOrDeleteStatus, setCrudTest)
                         }) : NotFoundList()}
@@ -254,14 +254,14 @@ const Tests = () => {
 
 export default Tests;
 
-const TBody = (quiz: TestList, idx: number, openModal: () => void, setEditOrDeleteStatus: (v: string) => void, setCrudTest: (v: any) => void) => {
+const TBody = (quiz: TestList, idx: number, openModal: () => void, setEditOrDeleteStatus: (v: string) => void, setCrudTest: (v: any) => void, page: number) => {
     return (
         <tr key={idx} className={`hover:bg-whiteGreen duration-100`}>
-            {/*<td className="border-b border-[#eee] p-5">*/}
-            {/*    <p className="text-black">*/}
-            {/*        {idx + 1}*/}
-            {/*    </p>*/}
-            {/*</td>*/}
+            <td className="border-b border-[#eee] p-5">
+                <p className="text-black">
+                    {(page * 10) + idx + 1}
+                </p>
+            </td>
             <td className="border-b border-[#eee] p-5">
                 <p className="text-black">
                     {quiz.name}
