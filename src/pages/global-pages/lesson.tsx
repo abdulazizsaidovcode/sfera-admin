@@ -175,9 +175,12 @@ const Lesson = () => {
                                         {lesson.name}
                                     </p>
                                 </td>
-                                <td className="border-b border-[#eee] p-5">
+                                <td className="border-b border-[#eee] p-5 min-w-[250px]">
                                     <p className="text-black">
-                                        {lesson.description}
+                                        {lesson.description.length > 20 ?
+                                            <Popover title={lesson.description} overlayStyle={{textAlign: 'center', maxWidth: '400px'}}>
+                                                {lesson.description.slice(0, 20)}...
+                                            </Popover> : lesson.description}
                                     </p>
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
@@ -197,7 +200,7 @@ const Lesson = () => {
                                         id={idx}
                                     />
                                 </td>
-                                <td className="border-b border-[#eee] p-5 flex items-center gap-3">
+                                <td className="border-b border-[#eee] p-5 flex items-center justify-start gap-3">
                                     <FaEdit
                                         className={`text-xl hover:cursor-pointer hover:text-yellow-500 duration-300`}
                                         onClick={() => {
