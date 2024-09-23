@@ -9,7 +9,7 @@ export const toastMessage = (code: string | number, message: string) => {
     else if (+code === 6) return toast.error(message);
     else if (+code === 7) return toast.error(message);
     else if (+code === 8) return toast.error('Serverda xatolik yuz berdi');
-    else return toast.error('Serverda xatolik yuz berdi');
+    else return toast.error(message);
 };
 
 export const consoleClear = () => console.clear();
