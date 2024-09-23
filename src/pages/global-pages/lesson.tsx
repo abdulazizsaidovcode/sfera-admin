@@ -57,7 +57,7 @@ const Lesson = () => {
             categoryId ? `categoryId=${categoryId}` : ''
         ].filter(Boolean).join('&');
 
-        return `${lessonPageList}?${queryParams ? `${queryParams}&` : ''}page=${page}&size=10`;
+        return `${lessonPageList}?${queryParams ? `${queryParams}&` : ''}categoryEnum=${admin_role === 'ADMIN_EDU' ? 'EDUCATION' : 'ONLINE'}&page=${page}&size=10`;
     }
     const {loading, response, globalDataFunc} = useGlobalRequest(getTestUrl(), 'GET', '', config)
     const categoryLists = useGlobalRequest(`${categoryList}${admin_role === 'ADMIN_EDU' ? 'EDUCATION' : 'ONLINE'}`, 'GET', '', config)
