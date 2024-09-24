@@ -72,10 +72,12 @@ const Result = () => {
 
             {/*======================BODY TABLE======================*/}
             <div className={`mt-6`}>
-                {loading ? <div className={`w-full grid grid-cols-1 gap-3`}>
-                    <Skeleton/>
-                    <Skeleton/>
-                </div> : (
+                {loading ? (
+                    <div className={`w-full grid grid-cols-1 gap-3`}>
+                        <Skeleton/>
+                        <Skeleton/>
+                    </div>
+                ) : (
                     <Tables thead={resultThead}>
                         {response ? response.body.map((rate: any, idx: number) => (
                             <tr key={idx} className={`hover:bg-whiteGreen duration-100`}>

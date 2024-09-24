@@ -175,5 +175,5 @@ export const resultThead: IThead[] = [
     {id: 5, name: 'To\'g\'ri javoblar soni'},
     {id: 6, name: 'Ketgan vaqti'},
     {id: 7, name: 'Holati'},
-    {id: 8, name: 'Savol Yaratilgan sanasi'},
+    {id: 8, name: 'Test ishlangan sanasi'},
 ];
