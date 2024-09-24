@@ -79,6 +79,10 @@ const Lesson = () => {
     }, [categoryId]);
 
     useEffect(() => {
+        crudLesson.moduleId = 0
+    }, [crudLesson.categoryId]);
+
+    useEffect(() => {
         if (lessonAdd.response) {
             globalDataFunc()
             toast.success('Dars muvaffaqiyatli qushildi')
