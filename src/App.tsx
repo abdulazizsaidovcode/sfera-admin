@@ -33,6 +33,7 @@ function App() {
             else if (tokens && admin_role === 'ADMIN_EDU') navigate('/edu/dashboard');
         }
 
+        if (tokens && !admin_role) navigate('/admin/site-role');
         if (!tokens && !pathname.startsWith('/auth')) navigate('/auth/login');
         if (!tokens && pathname.startsWith('/auth')) sessionStorage.removeItem('refreshes');
 
