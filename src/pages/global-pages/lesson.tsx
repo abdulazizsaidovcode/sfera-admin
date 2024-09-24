@@ -19,7 +19,6 @@ import courseStore from "@/helpers/state-management/coursesStore.tsx";
 import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 import ImgUpload from "@/components/custom/imagesData/img-upload.tsx";
 import globalStore from "@/helpers/state-management/globalStore.tsx";
-import {BiShowAlt} from "react-icons/bi";
 
 const defVal = {
     name: '',
