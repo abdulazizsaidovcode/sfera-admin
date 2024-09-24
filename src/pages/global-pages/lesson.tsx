@@ -278,10 +278,16 @@ const Lesson = () => {
                                 className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mt-7"
                             />
                             <input
-                                type={`number`}
+                                type="number"
                                 value={crudLesson.videoTime}
-                                onChange={(e) => handleChange('videoTime', e.target.value)}
-                                placeholder="Vedioni davomiyligini kiriting"
+                                onChange={(e) => {
+                                    const v = e.target.value;
+                                    if (Number(v) >= 0) handleChange('videoTime', v);
+                                }}
+                                onKeyDown={(e) => {
+                                    if (e.key === "-" || e.key === "e" || e.key === "+") e.preventDefault();
+                                }}
+                                placeholder="Videoni davomiyligini kiriting"
                                 className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mt-7"
                             />
                             {editOrDeleteStatus === 'POST' && (<>

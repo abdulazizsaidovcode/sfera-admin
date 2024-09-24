@@ -61,18 +61,16 @@ const Courses = () => {
             categoryGetFunc()
             closeModal()
             toast.success(`${admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'} muvaffaqiyatli qo'shildi`)
-            consoleClear()
         } else if (categoryDataEdit.response) {
             categoryGetFunc()
             closeModal()
             toast.success(`${admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'} muvaffaqiyatli taxrirlandi`)
-            consoleClear()
         } else if (categoryDataDelete.response) {
             categoryGetFunc()
             closeModal()
             toast.success(`${admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'} muvaffaqiyatli o'chirildi`)
-            consoleClear()
         }
+        consoleClear()
     }, [categoryDataAdd.response, categoryDataEdit.response, categoryDataDelete.response]);
 
     const openModal = () => setIsModalOpen(true);

@@ -18,9 +18,9 @@ export function CourseCard({imgUrl, title, desc, openModal, fullData}: {
     const admin_role = sessionStorage.getItem('admin_roles');
     const {setEditOrDeleteStatus, setCrudValue} = courseStore()
     return (
-        <CardContainer className="inter-var">
+        <CardContainer className="inter-var w-full">
             <CardBody
-                className="bg-gray-50 relative group/card border-veryPaleGreen w-auto h-auto rounded-xl p-6 border"
+                className="bg-gray-50 relative group/card border-veryPaleGreen w-full h-auto rounded-xl p-6 border"
             >
                 <BorderBeam size={200} duration={10} delay={2} colorFrom={`#16423C`}/>
                 <CardItem translateZ="60" className="w-full">
