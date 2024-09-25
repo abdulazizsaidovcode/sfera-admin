@@ -1,20 +1,7 @@
 import PageTitle from "@/components/custom/Header/PageTitle.tsx";
 import {
-    Courses,
-    Dashboard,
-    Login,
-    SiteRole,
-    Users,
-    Groups,
-    Notifications,
-    Tests,
-    Rate,
-    Module,
-    CategoryDetails,
-    Lesson,
-    Task,
-    Teacher,
-    Result
+    Courses, Dashboard, Login, SiteRole, Users, Groups, Notifications, Tests, Rate, Module, CategoryDetails, Lesson,
+    Task, Teacher, Result, UsersEdu
 } from "@/pages";
 
 export const routes = [
@@ -205,6 +192,13 @@ export const routes = [
         element: <>
             <PageTitle title="Education | Teacher"/>
             <Teacher/>
+        </>
+    },
+    {
+        path: '/edu/users-confirm',
+        element: <>
+            <PageTitle title="Education | Confirm Users"/>
+            <UsersEdu/>
         </>
     },
 ]

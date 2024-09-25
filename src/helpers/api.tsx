@@ -33,6 +33,7 @@ export const userGroupEditUser: string = `${baseURL}user/addStudentGroup/`
 export const userDeleted: string = `${baseURL}user/deleteUser/`
 export const userRoleUpdate: string = `${baseURL}user/update/role/`
 export const userTeacherGet: string = `${baseURL}user/teachers`
+export const userConfirms: string = `${baseURL}user/searchUserAdmin`
 
 //================CATEGORY CONTROLLER==================
 export const categoryList: string = `${baseURL}category/list?categoryEnum=`

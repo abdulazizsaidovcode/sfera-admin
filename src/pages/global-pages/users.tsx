@@ -39,7 +39,6 @@ const crudValueDef = {
 const Users = () => {
     const [name, setName] = useState<string>('');
     const [phone, setPhone] = useState<string>('');
-    const [role, setRole] = useState<string | null>(null);
     const [group, setGroup] = useState<string | null>(null);
     const [teacher, setTeacher] = useState<string | null>(null);
     const [page, setPage] = useState<number>(0);
@@ -56,7 +55,6 @@ const Users = () => {
             name ? `name=${name}` : '',
             teacher ? `teacherId=${teacher}` : '',
             group ? `groupId=${group}` : '',
-            role ? `role=${role}` : '',
             phone ? `phone_number=${phone}` : ''
         ].filter(Boolean).join('&');
 
@@ -91,7 +89,7 @@ const Users = () => {
     useEffect(() => {
         users.globalDataFunc()
         if (users.response && users.response.totalElements < 10) setPage(0)
-    }, [name, phone, role, group, teacher, page]);
+    }, [name, phone, group, teacher, page]);
 
     useEffect(() => {
         if (userAdd.response) {
@@ -242,24 +240,13 @@ const Users = () => {
                     allowClear
                 />
                 <Select
-                    placeholder={`Roli bo'yicha`}
-                    className={`w-full bg-transparent h-11 custom-select`}
-                    value={role}
-                    onChange={(e) => setRole(e)}
-                    allowClear
-                >
-                    <Select.Option value="ROLE_TEACHER">O'qituvchilar</Select.Option>
-                    <Select.Option value="ROLE_STUDENT">O'quvchilar</Select.Option>
-                    <Select.Option value="ROLE_USER">Boshqa foydalanuvchilar</Select.Option>
-                </Select>
-                <Select
                     placeholder={`Guruh bo'yicha`}
                     className={`w-full bg-transparent h-11 custom-select`}
                     value={group}
                     onChange={(e) => setGroup(e)}
                     allowClear
                 >
-                    {groups.response && groups.response.map((grp: any, idx: any) => (
+                    {groups.response && groups.response.map((grp: any, idx: number) => (
                         <Select.Option key={idx} value={grp.id}>{grp.name}</Select.Option>
                     ))}
                 </Select>
@@ -295,7 +282,7 @@ const Users = () => {
                         <Skeleton/>
                     </div> :
                     <Tables thead={userTableHead}>
-                        {(users.response && users.response.body.length > 0) ? users.response.body.map((sts: any, idx: any) => (
+                        {(users.response && users.response.body.length > 0) ? users.response.body.map((sts: any, idx: number) => (
                             <tr key={sts.id} className={`hover:bg-whiteGreen duration-100`}>
                                 <td className="border-b border-[#eee] p-5">
                                     <p className="text-black">
@@ -398,18 +385,9 @@ const Users = () => {
                                 </select>
                             )}
                             {editOrDeleteStatus === 'ROLE_EDIT' && (
-                                <p className={`my-5 text-center`}>Foydalanuvchini rolini o'qituvchi qilib
-                                    uzgartirmoqchimisiz</p>
-                                // <select
-                                //     onChange={(e) => setUpdateGroupId(e.target.value)}
-                                //     className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 mt-7 mb-4"
-                                // >
-                                //     <option disabled selected>Rolni tanlang</option>
-                                //     <option value={`ROLE_ADMIN`}>Admin qilish</option>
-                                //     <option value={`ROLE_TEACHER`}>Teacher qilish</option>
-                                //     <option value={`ROLE_STUDENT`}>Student qilish</option>
-                                //     <option value={`ROLE_USER`}>Boshqa foydalanuvchi</option>
-                                // </select>
+                                <p className={`my-5 text-center`}>
+                                    Foydalanuvchini rolini o'qituvchi qilib uzgartirmoqchimisiz
+                                </p>
                             )}
                             {(editOrDeleteStatus === 'ADD' || editOrDeleteStatus === 'EDIT') && (<>
                                 <div className="mb-4">
@@ -431,6 +409,7 @@ const Users = () => {
                                     />
                                 </div>
                                 <div className="mb-4">
+                                    <label className={`mb-2`}>Raqam kiritish uchun namuna: 998912120257</label>
                                     <input
                                         required
                                         type={`number`}
@@ -438,6 +417,9 @@ const Users = () => {
                                         onChange={e => {
                                             const v = e.target.value
                                             if (v.length >= 0 && v.length < 13) handleInputChange('phoneNumber', v)
+                                        }}
+                                        onKeyDown={(e) => {
+                                            if (e.key === "-" || e.key === "e" || e.key === "+") e.preventDefault();
                                         }}
                                         className={`bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5`}
                                         placeholder={`Telefon raqam...`}

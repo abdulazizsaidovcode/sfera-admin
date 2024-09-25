@@ -73,6 +73,7 @@ export const sideData = {
         {title: 'O\'qituvchilar', icon: <PiChalkboardTeacherBold size={20}/>, path: '/edu/teacher'},
         {title: 'Guruhlar', icon: <FaLayerGroup size={20}/>, path: '/edu/group'},
         {title: 'Foydalanuvchilar', icon: <PiStudentFill size={20}/>, path: '/edu/users'},
+        {title: 'Tasdiqlanishi kerak bulganlar', icon: <PiStudentFill size={24}/>, path: '/edu/users-confirm'},
         {title: 'Baholar', icon: <TbHeartRateMonitor size={20}/>, path: '/edu/rate'},
         {title: 'Bildirishnoma', icon: <IoNotifications size={20}/>, path: '/edu/notification'},
     ],
@@ -111,6 +112,14 @@ export const userTableHead: IThead[] = [
     {id: 3, name: 'Familiyasi'},
     {id: 5, name: 'Telefon raqami'},
     {id: 7, name: 'Roli'},
+    {id: 6, name: 'Xarakat'},
+]
+
+export const confirmUserTHead: IThead[] = [
+    {id: 1, name: 'ID'},
+    {id: 2, name: 'Ismi'},
+    {id: 3, name: 'Familiyasi'},
+    {id: 5, name: 'Telefon raqami'},
     {id: 6, name: 'Xarakat'},
 ]
 

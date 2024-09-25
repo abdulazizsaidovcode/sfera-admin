@@ -76,7 +76,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen, toggleModal}: SidebarProps) => {
                         <ul className="mb-6 flex flex-col">
                             <li>
                                 {!admin_role && <MenuItem
-                                    title='Site role'
+                                    title='Boshqaruv paneli'
                                     icon={<LuLayoutDashboard size={20}/>}
                                     pathname={location.pathname}
                                     to='/admin/site-role'

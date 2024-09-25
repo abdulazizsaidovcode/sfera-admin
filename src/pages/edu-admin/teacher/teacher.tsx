@@ -128,34 +128,43 @@ const Teacher = () => {
                         <p className={`text-center text-black text-base lg:text-xl mb-10 mt-7`}>
                             Haqiqatdan xam bu darsni o'chirib tashlamoqchimisiz?
                         </p>
-                    ) : (<>
+                    ) : (<div className={`mt-5`}>
+                        <label className={`mb-2`}>O'qituvchini ismini kiriting</label>
                         <Input
                             value={crudTeacher.firstName}
                             onChange={(e) => handleChange('firstName', e.target.value)}
                             placeholder="Ismini kiriting"
-                            className="w-full bg-transparent h-11 custom-input mt-5"
+                            className="w-full bg-transparent h-11 custom-input mb-5"
                         />
+                        <label className={`mb-2`}>O'qituvchini familiyasini kiriting</label>
                         <Input
                             value={crudTeacher.lastName}
                             onChange={(e) => handleChange('lastName', e.target.value)}
                             placeholder="Familiyani kiriting"
-                            className="w-full bg-transparent h-11 custom-input mt-10"
+                            className="w-full bg-transparent h-11 custom-input mb-5"
                         />
+                        <label className={`mb-2`}>O'qituvchini telefon raqamini kiriting (Namuna: 998912120257)</label>
+                        <Input
+                            type={`number`}
+                            value={crudTeacher.phoneNumber}
+                            onChange={(e) => {
+                                handleChange('phoneNumber', e.target.value)
+                            }}
+                            onKeyDown={(e) => {
+                                if (e.key === "-" || e.key === "e" || e.key === "+") e.preventDefault();
+                            }}
+                            placeholder="Telefon raqamini kiriting"
+                            className="w-full bg-transparent h-11 custom-input mb-5"
+                            maxLength={12}
+                        />
+                        <label className={`mb-2`}>O'qituvchini parolini kiriting</label>
                         <Input
                             value={crudTeacher.password}
                             onChange={(e) => handleChange('password', e.target.value)}
                             placeholder="Parolini kiriting"
-                            className="w-full bg-transparent h-11 custom-input mt-10"
+                            className="w-full bg-transparent h-11 custom-input"
                         />
-                        <Input
-                            type={`number`}
-                            value={crudTeacher.phoneNumber}
-                            onChange={(e) => handleChange('phoneNumber', e.target.value)}
-                            placeholder="Telefon raqamini kiriting"
-                            className="w-full bg-transparent h-11 custom-input mt-10"
-                            maxLength={12}
-                        />
-                    </>)}
+                    </div>)}
                     <div className={`flex justify-end items-center gap-5 mt-10`}>
                         <ShinyButton
                             text={`Orqaga`}
