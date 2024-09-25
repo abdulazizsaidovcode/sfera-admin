@@ -19,6 +19,7 @@ import courseStore from "@/helpers/state-management/coursesStore.tsx";
 import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 import ImgUpload from "@/components/custom/imagesData/img-upload.tsx";
 import globalStore from "@/helpers/state-management/globalStore.tsx";
+import VideoPlayer from "@/components/custom/video/video.tsx";
 
 const defVal = {
     name: '',
@@ -188,8 +189,12 @@ const Lesson = () => {
                                     </p>
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
-                                    <p className="text-black">
-                                        <Link to={lesson.videoLink} target={`_blank`}>vedioni ko'rish</Link>
+                                    <p className="text-black hover:cursor-pointer hover:text-lighterGreen duration-300" onClick={() => {
+                                        openModal()
+                                        setEditOrDeleteStatus('OPEN_VIDEO')
+                                        setCrudLesson(lesson)
+                                    }}>
+                                        vedioni ko'rish
                                     </p>
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
@@ -257,68 +262,69 @@ const Lesson = () => {
                         <p className={`text-center text-black text-base lg:text-xl mb-10 mt-7`}>
                             Haqiqatdan xam bu darsni o'chirib tashlamoqchimisiz?
                         </p>
-                    ) : (
-                        <div className={`mt-7`}>
-                            <div className={`flex justify-center`}>
-                                <ImgUpload imgID={crudLesson.fileId && crudLesson.fileId} textType/>
-                            </div>
-                            <input
-                                value={crudLesson.name}
-                                onChange={(e) => handleChange('name', e.target.value)}
-                                placeholder="Dars nomini kiriting"
-                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mt-7"
-                            />
-                            <input
-                                value={crudLesson.description}
-                                onChange={(e) => handleChange('description', e.target.value)}
-                                placeholder="Tavsifni kiriting"
-                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mt-7"
-                            />
-                            <input
-                                value={crudLesson.videoLink}
-                                onChange={(e) => handleChange('videoLink', e.target.value)}
-                                placeholder="Vedio linkini kiriting"
-                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mt-7"
-                            />
-                            <input
-                                type="number"
-                                value={crudLesson.videoTime}
-                                onChange={(e) => {
-                                    const v = e.target.value;
-                                    if (Number(v) >= 0) handleChange('videoTime', v);
-                                }}
-                                onKeyDown={(e) => {
-                                    if (e.key === "-" || e.key === "e" || e.key === "+") e.preventDefault();
-                                }}
-                                placeholder="Videoni davomiyligini kiriting"
-                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mt-7"
-                            />
-                            {editOrDeleteStatus === 'POST' && (<>
-                                <select
-                                    value={crudLesson.categoryId}
+                    ) : (editOrDeleteStatus === 'OPEN_VIDEO'
+                            ? <VideoPlayer videoId={crudLesson.videoLink} key={crudLesson.id} className={`mt-7`}/>
+                            : <div className={`mt-7`}>
+                                <div className={`flex justify-center`}>
+                                    <ImgUpload imgID={crudLesson.fileId && crudLesson.fileId} textType/>
+                                </div>
+                                <input
+                                    value={crudLesson.name}
+                                    onChange={(e) => handleChange('name', e.target.value)}
+                                    placeholder="Dars nomini kiriting"
+                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mt-7"
+                                />
+                                <input
+                                    value={crudLesson.description}
+                                    onChange={(e) => handleChange('description', e.target.value)}
+                                    placeholder="Tavsifni kiriting"
+                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mt-7"
+                                />
+                                <input
+                                    value={crudLesson.videoLink}
+                                    onChange={(e) => handleChange('videoLink', e.target.value)}
+                                    placeholder="Vedio linkini kiriting"
+                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mt-7"
+                                />
+                                <input
+                                    type="number"
+                                    value={crudLesson.videoTime}
                                     onChange={(e) => {
-                                        setCategoryId(e.target.value)
-                                        handleChange(`categoryId`, e.target.value)
+                                        const v = e.target.value;
+                                        if (Number(v) >= 0) handleChange('videoTime', v);
                                     }}
-                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
-                                >
-                                    <option disabled selected value={``}>Kursni tanlang</option>
-                                    {categoryLists.response && categoryLists.response.map((item: any) => (
-                                        <option value={item.id} key={item.id}>{item.name}</option>
-                                    ))}
-                                </select>
-                                <select
-                                    value={crudLesson.moduleId}
-                                    onChange={(e) => handleChange(`moduleId`, e.target.value)}
-                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
-                                >
-                                    <option disabled selected value={0}>Modulni tanlang</option>
-                                    {moduleLessonGet.response && moduleLessonGet.response.map((item: any) => (
-                                        <option value={item.moduleId} key={item.moduleId}>{item.name}</option>
-                                    ))}
-                                </select>
-                            </>)}
-                        </div>
+                                    onKeyDown={(e) => {
+                                        if (e.key === "-" || e.key === "e" || e.key === "+") e.preventDefault();
+                                    }}
+                                    placeholder="Videoni davomiyligini kiriting"
+                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mt-7"
+                                />
+                                {editOrDeleteStatus === 'POST' && (<>
+                                    <select
+                                        value={crudLesson.categoryId}
+                                        onChange={(e) => {
+                                            setCategoryId(e.target.value)
+                                            handleChange(`categoryId`, e.target.value)
+                                        }}
+                                        className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
+                                    >
+                                        <option disabled selected value={``}>Kursni tanlang</option>
+                                        {categoryLists.response && categoryLists.response.map((item: any) => (
+                                            <option value={item.id} key={item.id}>{item.name}</option>
+                                        ))}
+                                    </select>
+                                    <select
+                                        value={crudLesson.moduleId}
+                                        onChange={(e) => handleChange(`moduleId`, e.target.value)}
+                                        className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
+                                    >
+                                        <option disabled selected value={0}>Modulni tanlang</option>
+                                        {moduleLessonGet.response && moduleLessonGet.response.map((item: any) => (
+                                            <option value={item.moduleId} key={item.moduleId}>{item.name}</option>
+                                        ))}
+                                    </select>
+                                </>)}
+                            </div>
                     )}
                     <div className={`flex justify-end items-center gap-5 mt-5`}>
                         <ShinyButton
