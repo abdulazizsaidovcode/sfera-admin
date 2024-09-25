@@ -50,6 +50,11 @@ const Users = () => {
     const {imgUpload} = globalStore()
 
     // ===========================REQUEST FUNCTION================================
+    const urls = () => {
+        if (admin_role === 'ADMIN_QUIZ') return `QUIZ`
+        else if (admin_role === 'ADMIN_ONLINE') return `ONLINE`
+        else if (admin_role === 'ADMIN_EDU') return `EDUCATION`
+    }
     const getTestUrl = () => {
         const queryParams: string = [
             name ? `name=${name}` : '',
@@ -58,7 +63,7 @@ const Users = () => {
             phone ? `phone_number=${phone}` : ''
         ].filter(Boolean).join('&');
 
-        return `${allUsers}?${queryParams ? `${queryParams}&` : ''}page=${page}&size=10`;
+        return `${allUsers}?${queryParams ? `${queryParams}&` : ''}type=${urls()}&page=${page}&size=10`;
     }
     const users = useGlobalRequest(getTestUrl(), 'GET', '', config);
     const teachersList = useGlobalRequest(userTeacherGet, 'GET', '', config);

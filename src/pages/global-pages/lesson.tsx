@@ -179,6 +179,16 @@ const Lesson = () => {
                                         {lesson.name}
                                     </p>
                                 </td>
+                                <td className="border-b border-[#eee] p-5">
+                                    <p className="text-black">
+                                        {lesson.moduleName}
+                                    </p>
+                                </td>
+                                <td className="border-b border-[#eee] p-5">
+                                    <p className="text-black">
+                                        {lesson.moduleName}
+                                    </p>
+                                </td>
                                 <td className="border-b border-[#eee] p-5 min-w-[250px]">
                                     <p className="text-black">
                                         {lesson.description.length > 20 ?
