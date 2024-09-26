@@ -62,6 +62,9 @@ export const rateSts: string = `${baseURL}rate/groupByYearly`
 // ==============NOTIFICATION CONTROLLER====================
 export const notificationGet: string = `${baseURL}notification/all`
 export const notificationSend: string = `${baseURL}notification/send/all-users`
+export const notificationRead: string = `${baseURL}notification/read`
+export const notificationCount: string = `${baseURL}notification/count`
+export const notificationDelete: string = `${baseURL}notification/del-registrant/`
 
 // ==============RESULT CONTROLLER====================
 // export const resultResId: string = `${baseURL}result/`

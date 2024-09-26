@@ -13,15 +13,17 @@ export const HoverEffect = (
         className,
         onClick,
         idx,
-        date
+        date,
+        read
     }: {
         title: string;
         description: string;
         link?: string;
         className?: string;
-        onClick?: () => void
-        idx: number,
-        date?: string
+        onClick?: () => void;
+        idx: number;
+        date?: string;
+        read?: boolean
     }) => {
     let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -58,7 +60,10 @@ export const HoverEffect = (
                     )}
                 </AnimatePresence>
                 <Card>
-                    <CardTitle>{title}</CardTitle>
+                    <CardTitle className={read ? 'flex justify-between items-center gap-5' : ''}>
+                        {title}
+                        {read && <span>{read ? '✅' : ''}</span>}
+                    </CardTitle>
                     <CardDescription className={`${date && 'flex justify-between items-center gap-5'}`}>
                         {description}
                         {date && <span>{moment(date).format('DD.MM.YYYY')}</span>}
@@ -80,7 +85,7 @@ export const Card = (
     return (
         <div
             className={cn(
-                "rounded-3xl h-full w-full px-2 overflow-hidden bg-white border border-veryPaleGreen duration-200 group-hover:border-lighterGreen relative z-20",
+                `rounded-3xl h-full w-full px-2 overflow-hidden border border-veryPaleGreen duration-200 group-hover:border-lighterGreen relative z-20`,
                 className
             )}
         >

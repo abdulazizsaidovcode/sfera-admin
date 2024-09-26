@@ -53,8 +53,8 @@ const Courses = () => {
     }, []);
 
     useEffect(() => {
-        if (categoryListDataGet.response) setCourseData(categoryListDataGet.response)
-    }, [categoryListDataGet.response]);
+        setCourseData(categoryListDataGet.response)
+    }, [categoryListDataGet.response, admin_role]);
 
     useEffect(() => {
         if (categoryDataAdd.response) {

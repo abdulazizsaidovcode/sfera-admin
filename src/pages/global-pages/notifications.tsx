@@ -29,6 +29,10 @@ const Notifications = () => {
                     title={n.title}
                     description={`Tavsif: ${n.content}`}
                     date={n.create}
+                    read={n.read}
+                    onClick={() => {
+
+                    }}
                 />
             )) : <Card className={`mt-10`}>
                 <CardTitle className={`flex items-center justify-center gap-3`}>

@@ -151,6 +151,8 @@ export const rateThead: IThead[] = [
 export const lessonThead: IThead[] = [
     {id: 5, name: 'ID'},
     {id: 1, name: 'Dars nomi'},
+    {id: 7, name: 'Yunalish nomi'},
+    {id: 8, name: 'Modul nomi'},
     {id: 6, name: 'Tavsifi'},
     {id: 2, name: 'Vedio linki'},
     {id: 3, name: 'Vedio davomiyligi'},

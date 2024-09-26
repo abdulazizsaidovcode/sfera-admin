@@ -11,7 +11,7 @@ const ImageUpload = ({imgID, textType}: { imgID?: string | number, textType?: bo
     const [selectedFile, setSelectedFile] = useState<any>(null);
     const [fileName, setFileName] = useState<string | null>(null);
     const [formData, setFormData] = useState<any>(null);
-    const {setImgUpload} = globalStore();
+    const {setImgUpload, imgUpload} = globalStore();
     const {loading, response, globalDataFunc} = useGlobalRequest(imgUploadPost, 'POST', formData, config)
     const editImg = useGlobalRequest(`${imgUpdate}${imgID}`, 'PUT', formData, config)
 
@@ -32,11 +32,15 @@ const ImageUpload = ({imgID, textType}: { imgID?: string | number, textType?: bo
         }
     }, [formData]);
 
+    useEffect(() => {
+        if (!imgUpload) setSelectedFile(null)
+    }, [imgUpload]);
+
     const handleImageChange = async (event: any) => {
         const file = event.target.files[0];
         const fileExtension = file.name.split('.').pop()?.toLowerCase();
 
-        const imageTypes = ['jpg', 'jpeg', 'png'];
+        const imageTypes = ['jpg', 'jpeg', 'png', 'JPG', 'JPEG'];
         const fileTypes = ['pdf', 'pptx', 'doc', 'docx', 'zip'];
 
         if (imageTypes.includes(fileExtension || '') || fileTypes.includes(fileExtension || '')) {

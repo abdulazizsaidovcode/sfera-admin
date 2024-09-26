@@ -7,7 +7,7 @@ import {config} from "@/helpers/token";
 import React, {useEffect, useState} from "react";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards";
 import ShinyButton from "@/components/magicui/shiny-button.tsx";
-import {groupList, userConfirms, userDeleted, userGroupEditUser} from "@/helpers/api.tsx";
+import {groupList, notificationDelete, userConfirms, userGroupEditUser} from "@/helpers/api.tsx";
 import {Dropdown, Input, Menu, MenuProps, Pagination, Space} from "antd";
 import {CiMenuKebab} from "react-icons/ci";
 import Modal from "@/components/custom/modal/modal.tsx";
@@ -43,7 +43,7 @@ const UsersEdu = () => {
     }
     const users = useGlobalRequest(getTestUrl(), 'GET', '', config);
     const groups = useGlobalRequest(groupList, 'GET', '', config);
-    const userDelete = useGlobalRequest(`${userDeleted}${crudValue.userId}`, 'DELETE', '', config);
+    const userDelete = useGlobalRequest(`${notificationDelete}${crudValue.userId}`, 'DELETE', '', config);
     const userGroupUpdateUser = useGlobalRequest(`${userGroupEditUser}${crudValue.userId}/${updateGroupId}`, 'PUT', '', config);
 
     useEffect(() => {

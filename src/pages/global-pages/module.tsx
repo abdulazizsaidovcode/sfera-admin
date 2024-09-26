@@ -143,8 +143,8 @@ const Module = () => {
             </div>
 
             {/*==================BODY===============*/}
-            <div className={`flex justify-start items-start gap-5 mt-10`}>
-                <div className={`grid grid-cols-1 w-[20%] max-h-[350px] overflow-y-auto`}>
+            <div className={`flex justify-start items-start flex-wrap lg:flex-nowrap gap-5 mt-10`}>
+                <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 lg:w-[20%] w-full max-h-[350px] overflow-y-auto`}>
                     {loading ?
                         <Skeleton/> : (response && response.length > 0) ? response.map((item: any, idx: number) => (
                             <HoverEffect
@@ -155,7 +155,7 @@ const Module = () => {
                             />
                         )) : <p>Ma'lumot topilmadi</p>}
                 </div>
-                <div className={`w-[80%]`}>
+                <div className={`w-full lg:w-[80%]`}>
                     {(response && response.length > 0 && !moduleItems) && (
                         <p className={`text-center text-xl font-semibold`}>Modulni tanlang</p>
                     )}
@@ -203,6 +203,16 @@ const Module = () => {
                                                     <td className="border-b border-[#eee] p-5">
                                                         <p className="text-black">
                                                             {m.name}
+                                                        </p>
+                                                    </td>
+                                                    <td className="border-b border-[#eee] p-5">
+                                                        <p className="text-black">
+                                                            {m.categoryName ? m.categoryName : '-'}
+                                                        </p>
+                                                    </td>
+                                                    <td className="border-b border-[#eee] p-5">
+                                                        <p className="text-black">
+                                                            {m.moduleName ? m.moduleName : '-'}
                                                         </p>
                                                     </td>
                                                     <td className="border-b border-[#eee] p-5">
