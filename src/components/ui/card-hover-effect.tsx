@@ -62,7 +62,7 @@ export const HoverEffect = (
                 <Card>
                     <CardTitle className={read ? 'flex justify-between items-center gap-5' : ''}>
                         {title}
-                        {read && <span>{read ? '✅' : ''}</span>}
+                        {read && <span className={`text-xl`} onClick={onClick}>{read ? '✅' : ''}</span>}
                     </CardTitle>
                     <CardDescription className={`${date && 'flex justify-between items-center gap-5'}`}>
                         {description}

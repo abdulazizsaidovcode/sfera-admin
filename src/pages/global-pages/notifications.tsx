@@ -1,24 +1,45 @@
 import Breadcrumb from "@/components/custom/breadcrumb/Breadcrumb.tsx";
 import {Card, CardTitle, HoverEffect} from "@/components/ui/card-hover-effect.tsx";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
-import {notificationGet} from "@/helpers/api.tsx";
+import {notificationGet, notificationRead} from "@/helpers/api.tsx";
 import {config} from "@/helpers/token.tsx";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import {MdNote} from "react-icons/md";
+import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
+import toast from "react-hot-toast";
 
 const Notifications = () => {
+    const [readID, setReadID] = useState<number | null>(null)
     const {response, loading, globalDataFunc} = useGlobalRequest(notificationGet, 'GET', '', config)
+    const readNotification = useGlobalRequest(notificationRead, 'POST', {
+        ids: [readID]
+    }, config)
+
     useEffect(() => {
         globalDataFunc();
+        consoleClear()
     }, []);
+
+    useEffect(() => {
+        if (readID) readNotification.globalDataFunc();
+    }, [readID]);
+
+    useEffect(() => {
+        if (readNotification.response) {
+            globalDataFunc();
+            setReadID(null)
+            toast.success('Bildirishnomani o\'qilgan qilib belgiladingiz')
+        }
+        consoleClear()
+    }, [readNotification.response]);
 
     return (
         <>
             <Breadcrumb pageName={`Bildirishnomalar`}/>
             <Card className={`mb-10`}>
                 <CardTitle className={`text-center`}>
-                    Adminni o'zi yuborgan (boshqalarga yuborgan) xabarlari shu yerda chiqadi
+                    Admin uchun bildirishnomalar
                 </CardTitle>
             </Card>
             {loading ? <div className={`w-full grid grid-cols-1 gap-3`}>
@@ -29,9 +50,9 @@ const Notifications = () => {
                     title={n.title}
                     description={`Tavsif: ${n.content}`}
                     date={n.create}
-                    read={n.read}
+                    read={!n.read}
                     onClick={() => {
-
+                        if (!n.read) setReadID(n.id)
                     }}
                 />
             )) : <Card className={`mt-10`}>

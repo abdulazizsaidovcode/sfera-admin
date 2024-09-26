@@ -9,6 +9,8 @@ import {PiGlobeDuotone} from "react-icons/pi";
 import {SiQuizlet} from "react-icons/si";
 import {Dock, DockIcon} from "@/components/magicui/dock.tsx";
 import {Popover} from "antd";
+import {IoNotifications} from "react-icons/io5";
+import globalStore from "@/helpers/state-management/globalStore.tsx";
 
 const Header = (props: {
     sidebarOpen: string | boolean | undefined;
@@ -16,10 +18,13 @@ const Header = (props: {
     toggleNotificationModal: () => void
 }) => {
     const navigate = useNavigate();
+    const {notificationCounts, getMeData} = globalStore()
     const role = sessionStorage.getItem('admin_roles')
     const [isOpen, setIsOpen] = useState(false);
     const openMenu = () => setIsOpen(true)
     const closeMenu = () => setIsOpen(false)
+    // console.log(getMeData)
+    // console.log(notificationCounts)
     return (
         <header className="sticky top-0 z-999 flex w-full bg-lighterGreen drop-shadow-1" onClick={() => {
             if (isOpen) closeMenu()
@@ -79,10 +84,17 @@ const Header = (props: {
                             }}
                         />
                     )}
-                    {/*<IoNotifications*/}
-                    {/*    size={26}*/}
-                    {/*    className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer`}*/}
-                    {/*/>*/}
+                    <Popover title="Bildirishnomalar" overlayStyle={{textAlign: 'center'}}>
+                        <IoNotifications
+                            size={26}
+                            className={`text-whiten hover:opacity-70 duration-300 hover:cursor-pointer`}
+                            onClick={() => {
+                                if (role === 'ADMIN_EDU') navigate('/edu/notification')
+                                else if (role === 'ADMIN_ONLINE') navigate('/online/notification')
+                                else if (role === 'ADMIN_QUIZ') navigate('/quiz/notification')
+                            }}
+                        />
+                    </Popover>
                     <Popover title="Xabar yuboring" overlayStyle={{textAlign: 'center'}}>
                         <AiFillMessage
                             size={26}

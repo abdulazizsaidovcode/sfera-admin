@@ -2,7 +2,6 @@
 // export const baseURL: string = 'http://142.93.106.195:8080/'
 export const baseURL: string = 'https://online.sferaedu.uz/'
 
-
 // =============LOGIN=============
 export const authLogin: string = `${baseURL}auth/login`
 export const teacherPost: string = `${baseURL}auth/admin/save-teacher`
@@ -36,6 +35,7 @@ export const userDeleted: string = `${baseURL}user/deleteUser/`
 export const userRoleUpdate: string = `${baseURL}user/update/role/`
 export const userTeacherGet: string = `${baseURL}user/teachers`
 export const userConfirms: string = `${baseURL}user/searchUserAdmin`
+export const userGetMe: string = `${baseURL}user/get/me`
 
 //================CATEGORY CONTROLLER==================
 export const categoryList: string = `${baseURL}category/list?categoryEnum=`

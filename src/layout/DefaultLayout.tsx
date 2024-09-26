@@ -10,8 +10,9 @@ import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
 // import ImgUpload from "@/components/custom/imagesData/img-upload.tsx";
 import globalStore from "@/helpers/state-management/globalStore.tsx";
-import {notificationSend} from "@/helpers/api.tsx";
+import {notificationCount, notificationSend, userGetMe} from "@/helpers/api.tsx";
 import toast from "react-hot-toast";
+import ImgUpload from "@/components/custom/imagesData/img-upload.tsx";
 
 const DefaultLayout: React.FC<{ children: ReactNode }> = ({children}) => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -22,7 +23,7 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({children}) => {
     const [notContent, setNotContent] = useState<string>('');
     const {pathname} = useLocation();
     const navigate = useNavigate()
-    const {imgUpload, setImgUpload} = globalStore()
+    const {imgUpload, setImgUpload, setNotificationCounts, setMeData} = globalStore()
     const {
         response,
         loading,
@@ -31,6 +32,8 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({children}) => {
         title: notTitle,
         content: notContent
     }, config)
+    const getNotificationCount = useGlobalRequest(notificationCount, 'GET', '', config)
+    const getMe = useGlobalRequest(userGetMe, 'GET', '', config)
 
     useEffect(() => {
         setIsVisibleSidebar(!(pathname.startsWith('/auth')))
@@ -43,13 +46,23 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({children}) => {
         }
     }, [response])
 
+    useEffect(() => {
+        getNotificationCount.globalDataFunc()
+        getMe.globalDataFunc()
+    }, []);
+
+    useEffect(() => {
+        if (getMe.response) setMeData(getMe.response)
+        if (getNotificationCount.response) setNotificationCounts(getNotificationCount.response)
+    }, [getMe.response, getNotificationCount.response]);
+
     const toggleModal = () => setIsOpenModal(!isOpenModal)
     const openNotificationModal = () => setIsNotificationModal(true)
     const closeNotificationModal = () => {
         setIsNotificationModal(false)
         setNotTitle('')
         setNotContent('')
-        setImgUpload('')
+        setImgUpload(null)
     }
 
     return (
@@ -74,7 +87,8 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({children}) => {
             <Modal isOpen={isNotificationModal} onClose={closeNotificationModal}>
                 <p className='text-2xl text-center text-black-2 my-3'>Platformadagi hammaga message junatish</p>
                 <div className="w-54 sm:w-64 md:w-96 lg:w-[40rem] flex flex-col gap-3 items-center justify-center">
-                    {/*<ImgUpload/>*/}
+                    <ImgUpload/>
+                    <p className={`-translate-y-3`}>File yuborish ixtiyory</p>
                     <Input
                         value={notTitle}
                         className={`w-full bg-transparent h-11 custom-input`}

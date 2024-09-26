@@ -10,6 +10,10 @@ const globalStore = create<Global>((set) => ({
     setGetMeData: (val: any | null) => set({getMeData: val}),
     imgUpload: null,
     setImgUpload: (val: any) => set({imgUpload: val}),
+    notificationCounts: null,
+    setNotificationCounts: (counts: number | null) => set({notificationCounts: counts}),
+    meData: null,
+    setMeData: (val: any | null) => set({meData: val}),
 }));
 
 export default globalStore;
