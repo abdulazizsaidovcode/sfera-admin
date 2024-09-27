@@ -85,9 +85,9 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({children}) => {
             </div>
 
             <Modal isOpen={isNotificationModal} onClose={closeNotificationModal}>
-                <p className='text-2xl text-center text-black-2 my-3'>Platformadagi hammaga message junatish</p>
+                <p className='text-2xl text-center text-black-2 my-3'>Platformadagi hammaga xabar junatish</p>
                 <div className="w-54 sm:w-64 md:w-96 lg:w-[40rem] flex flex-col gap-3 items-center justify-center">
-                    <ImgUpload/>
+                    <ImgUpload textType/>
                     <p className={`-translate-y-3`}>File yuborish ixtiyory</p>
                     <Input
                         value={notTitle}

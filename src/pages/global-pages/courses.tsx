@@ -101,7 +101,7 @@ const Courses = () => {
                     }}
                 />
                 <div
-                    className={`w-full lg:max-w-[60%] flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}>
+                    className={`w-full lg:max-w-[30%] flex justify-start xl:justify-between items-center flex-wrap md:flex-nowrap gap-5`}>
                     <input
                         type={`search`}
                         disabled
