@@ -40,7 +40,7 @@ export const HoverEffect = (
                 className="relative p-1 group block h-full w-full"
                 onMouseEnter={() => setHoveredIndex(idx)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                onClick={onClick}
+                // onClick={onClick}
             >
                 <AnimatePresence>
                     {hoveredIndex === idx && (
