@@ -1,6 +1,4 @@
-// export const baseURL: string = 'http://93.188.84.178:8080/'
-// export const baseURL: string = 'http://142.93.106.195:8080/'
-export const baseURL: string = 'https://online.sferaedu.uz/'
+export const baseURL = import.meta.env.VITE_BASE_URL;
 
 // =============LOGIN=============
 export const authLogin: string = `${baseURL}auth/login`
