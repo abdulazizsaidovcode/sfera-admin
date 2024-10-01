@@ -56,6 +56,12 @@ function Login() {
         setPhoneNumber(formatted);
     };
 
+    const handleSubmit = () => {
+        if (validateText(password) && formatedNumber(phoneNumber)) {
+            if (!loading) globalDataFunc()
+        } else toast.error('Ma\'lumotlar tuliqligini tekshiring')
+    }
+
     return (
         <>
             <DotPattern/>
@@ -84,6 +90,9 @@ function Login() {
                                         type="tel"
                                         value={phoneNumber}
                                         onChange={handlePhoneNumberChange}
+                                        onKeyDown={e => {
+                                            if (e.key === 'Enter') handleSubmit()
+                                        }}
                                         className="bg-white border border-[#087E43] text-gray-900 rounded-lg focus:ring-[#087E43] focus:border-[#087E43] block w-full p-2.5"
                                         placeholder="Telefon raqamingizmi kiriting..."
                                     />
@@ -95,6 +104,9 @@ function Login() {
                                         name="password"
                                         value={password}
                                         onChange={e => setPassword(e.target.value)}
+                                        onKeyDown={e => {
+                                            if (e.key === 'Enter') handleSubmit()
+                                        }}
                                         placeholder="Parolni kiriting..."
                                         className="bg-white border border-[#087E43] text-gray-900 rounded-lg focus:ring-[#087E43] focus:border-[#087E43] block w-full p-2.5"
                                     />
@@ -102,10 +114,7 @@ function Login() {
                                 <ShinyButton
                                     text={loading ? 'Yuklanmoqda...' : 'Tizimga kirish'}
                                     className={`bg-lighterGreen w-full ${loading && 'cursor-not-allowed opacity-50'}`}
-                                    onClick={() => {
-                                        if (validateText(password) && formatedNumber(phoneNumber)) !loading && globalDataFunc()
-                                        else toast.error('Ma\'lumotlar tuliqligini tekshiring')
-                                    }}/>
+                                    onClick={() => handleSubmit()}/>
                             </div>
                         </div>
                     </div>
