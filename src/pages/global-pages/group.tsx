@@ -233,20 +233,37 @@ const Groups = () => {
                                 <option value={`JUF`}>Juft kunlari: Seshanba, Payshanba, Shanba</option>
                             </select>
                             <label className={`mb-2`}>Guruh ochiladigan kunni tanlang</label>
-                            <input
-                                type="date"
-                                value={crudGroup.startDate}
-                                onChange={(e) => handleChange('startDate', e.target.value)}
-                                placeholder="Guruh ochiladigan kunni tanlang"
-                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mb-5"
-                            />
+                            <div className="custom-date-input">
+                                <input
+                                    type="date"
+                                    value={crudGroup.startDate}
+                                    onChange={(e) => handleChange('startDate', e.target.value)}
+                                    placeholder="Guruh ochiladigan kunni tanlang"
+                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mb-5"
+                                />
+                            </div>
                             <label className={`mb-2`}>
                                 Guruh dars boshlanish vaqtini kiriting. Namuna: (08:00 yoki 20:00)
                             </label>
                             <input
                                 value={crudGroup.startTime}
-                                onChange={(e) => handleChange('startTime', e.target.value)}
-                                placeholder="Guruh dars boshlanish vaqtini kiriting"
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    if (/^\d{0,2}(:\d{0,2})?$/.test(value)) handleChange('startTime', value);
+                                }}
+                                onBlur={(e) => {
+                                    const value = e.target.value;
+                                    if (/^\d{1,2}(:\d{1,2})?$/.test(value)) {
+                                        let [hours, minutes] = value.split(':');
+                                        hours = hours.padStart(2, '0');
+                                        minutes = (minutes || '00').padStart(2, '0');
+                                        handleChange('startTime', `${hours}:${minutes}`);
+                                    }
+                                }}
+                                onKeyDown={(e) => {
+                                    if (e.key === "-" || e.key === "e" || e.key === "+" || e.key === " ") e.preventDefault();
+                                }}
+                                placeholder="Guruh dars vaqtini kiriting"
                                 className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mb-5"
                             />
                             <label className={`mb-2`}>
@@ -254,7 +271,22 @@ const Groups = () => {
                             </label>
                             <input
                                 value={crudGroup.endTime}
-                                onChange={(e) => handleChange('endTime', e.target.value)}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    if (/^\d{0,2}(:\d{0,2})?$/.test(value)) handleChange('endTime', value);
+                                }}
+                                onBlur={(e) => {
+                                    const value = e.target.value;
+                                    if (/^\d{1,2}(:\d{1,2})?$/.test(value)) {
+                                        let [hours, minutes] = value.split(':');
+                                        hours = hours.padStart(2, '0');
+                                        minutes = (minutes || '00').padStart(2, '0');
+                                        handleChange('endTime', `${hours}:${minutes}`);
+                                    }
+                                }}
+                                onKeyDown={(e) => {
+                                    if (e.key === "-" || e.key === "e" || e.key === "+" || e.key === " ") e.preventDefault();
+                                }}
                                 placeholder="Guruh dars vaqtini kiriting"
                                 className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5"
                             />
