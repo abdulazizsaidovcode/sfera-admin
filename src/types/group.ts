@@ -14,6 +14,7 @@ export interface GroupLists {
 }
 
 export interface GroupCreate {
+    id?: number
     name: string
     categoryId: number
     teacherId: number

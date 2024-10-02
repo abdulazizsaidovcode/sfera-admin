@@ -28,6 +28,7 @@ const Groups = () => {
     const {editOrDeleteStatus, setEditOrDeleteStatus} = courseStore()
     const {crudGroup, setCrudGroup, defVal} = groupStore()
     const [isModal, setIsModal] = useState(false);
+    const [groupID, setGroupID] = useState<null | number>(null);
     const requestData = {
         name: crudGroup.name,
         categoryId: crudGroup.categoryId,
@@ -40,9 +41,10 @@ const Groups = () => {
 
     // ===============REQUEST FUNCTION==================
     const {response, loading, globalDataFunc} = useGlobalRequest(groupList, 'GET', '', config)
+    const groupOne = useGlobalRequest(`${groupCrud}/${groupID}`, 'GET', '', config)
     const groupDataAdd = useGlobalRequest(groupCrud, 'POST', requestData, config)
-    const groupDataEdit = useGlobalRequest(`${groupCrud}/${crudGroup.groupId}`, 'PUT', requestData, config)
-    const groupDataDelete = useGlobalRequest(`${groupCrud}/${crudGroup.groupId}`, 'DELETE', '', config)
+    const groupDataEdit = useGlobalRequest(`${groupCrud}/${crudGroup.id}`, 'PUT', requestData, config)
+    const groupDataDelete = useGlobalRequest(`${groupCrud}/${crudGroup.id}`, 'DELETE', '', config)
     const categoryLists = useGlobalRequest(`${categoryList}EDUCATION`, 'GET', '', config)
     const teachersList = useGlobalRequest(userTeacherGet, 'GET', '', config);
 
@@ -69,12 +71,30 @@ const Groups = () => {
         consoleClear()
     }, [groupDataAdd.response, groupDataEdit.response, groupDataDelete.response]);
 
+    useEffect(() => {
+        handleEdit()
+    }, [groupID]);
+
+    useEffect(() => {
+        if (groupOne.response) {
+            const daysName: string = groupOne.response.daysName[0] === 'MONDAY' ? 'MONDAY' : 'TUESDAY';
+            setCrudGroup({
+                ...groupOne.response,
+                daysWeekIds: daysName === 'MONDAY' ? 'TOQ' : 'JUF'
+            });
+        }
+    }, [groupOne.response]);
+
     const openModal = () => setIsModal(true);
     const closeModal = () => {
         setIsModal(false);
         setTimeout(() => {
-            setCrudGroup(defVal);
-            setEditOrDeleteStatus('');
+            setCrudGroup(defVal)
+            setEditOrDeleteStatus('')
+            setGroupID(null)
+            groupDataAdd.response = undefined
+            groupDataEdit.response = undefined
+            groupDataDelete.response = undefined
         }, 500)
     };
 
@@ -82,6 +102,14 @@ const Groups = () => {
 
     const changeRegex = () => {
         return crudGroup.name && crudGroup.teacherId && crudGroup.daysWeekIds && crudGroup.startTime && crudGroup.categoryId && crudGroup.endTime && crudGroup.startDate
+    }
+
+    const handleEdit = () => {
+        if (groupID) {
+            groupOne.globalDataFunc()
+            openModal()
+            setEditOrDeleteStatus('EDIT')
+        }
     }
 
     return (
@@ -118,8 +146,8 @@ const Groups = () => {
                         <Skeleton/>
                     </div> :
                     <Tables thead={groupThead}>
-                        {response ? response.map((sts: GroupLists, idx: number) => (
-                            <tr key={sts.groupId} className={`hover:bg-whiteGreen duration-100`}>
+                        {response ? response.map((sts: any | GroupLists, idx: number) => (
+                            <tr key={sts.id} className={`hover:bg-whiteGreen duration-100`}>
                                 <td className="border-b border-[#eee] p-5">
                                     <p className="text-black">
                                         {idx + 1}
@@ -153,11 +181,7 @@ const Groups = () => {
                                     <p className="text-black flex items-center justify-start gap-5 text-xl">
                                         <FaEdit
                                             className={`hover:text-yellow-500 duration-300 cursor-pointer`}
-                                            onClick={() => {
-                                                openModal()
-                                                setCrudGroup(sts)
-                                                setEditOrDeleteStatus('EDIT')
-                                            }}
+                                            onClick={() => setGroupID(sts.id)}
                                         />
                                         <RiDeleteBin7Fill
                                             className={`hover:text-red-500 duration-300 cursor-pointer`}
