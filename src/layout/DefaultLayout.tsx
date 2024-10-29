@@ -47,7 +47,7 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({children}) => {
     }, [response])
 
     useEffect(() => {
-        getNotificationCount.globalDataFunc()
+        // getNotificationCount.globalDataFunc()
         getMe.globalDataFunc()
     }, []);
 

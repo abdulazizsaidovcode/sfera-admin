@@ -46,6 +46,7 @@ export function useGlobalRequest<T>(
         onError: (error: any) => {
             if (error.status > 500) toastMessage(500, 'Serverda xatolik yuz berdi. Error 500')
             else if (error.response?.data?.status >= 500) toastMessage(500, 'Serverda xatolik yuz berdi. Error 500')
+            else if (error.response?.status === 403) toastMessage(403, `Bildirishnoma o'qishda ${error?.message} xatolik yuz berdi`)
             consoleClear()
         }
     });

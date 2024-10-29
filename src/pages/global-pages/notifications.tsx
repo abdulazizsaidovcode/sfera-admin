@@ -46,6 +46,7 @@ const Notifications = () => {
                 {[...Array(4)].map((_, index) => <Skeleton key={index}/>)}
             </div> : response ? response.map((n: any, idx: number) => (
                 <HoverEffect
+                    key={idx}
                     idx={idx}
                     title={n.title}
                     description={`Tavsif: ${n.content}`}
