@@ -17,7 +17,7 @@ import {Card, CardDescription, CardTitle} from "@/components/ui/card-hover-effec
 import {FaEdit} from "react-icons/fa";
 import {AiFillDelete} from "react-icons/ai";
 import {Image} from "antd";
-import images from '@/assets/images/img.avif'
+import images from '@/assets/images/category.jpg'
 
 const defVal = {
     name: '',

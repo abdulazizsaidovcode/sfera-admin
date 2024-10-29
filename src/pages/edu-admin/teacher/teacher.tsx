@@ -12,7 +12,7 @@ import {useEffect, useState} from "react";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
 import {imgGet, teacherPost, userTeacherGet} from "@/helpers/api.tsx";
-import images from '@/assets/images/img.avif'
+import images from '@/assets/images/avatar.png'
 
 const defVal = {
     firstName: '',

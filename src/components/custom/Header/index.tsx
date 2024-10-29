@@ -10,7 +10,7 @@ import {SiQuizlet} from "react-icons/si";
 import {Dock, DockIcon} from "@/components/magicui/dock.tsx";
 import {Popover} from "antd";
 import {IoNotifications} from "react-icons/io5";
-import globalStore from "@/helpers/state-management/globalStore.tsx";
+// import globalStore from "@/helpers/state-management/globalStore.tsx";
 
 const Header = (props: {
     sidebarOpen: string | boolean | undefined;
@@ -18,7 +18,7 @@ const Header = (props: {
     toggleNotificationModal: () => void
 }) => {
     const navigate = useNavigate();
-    const {notificationCounts, getMeData} = globalStore()
+    // const {notificationCounts, getMeData} = globalStore()
     const role = sessionStorage.getItem('admin_roles')
     const [isOpen, setIsOpen] = useState(false);
     const openMenu = () => setIsOpen(true)

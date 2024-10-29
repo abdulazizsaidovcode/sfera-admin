@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {toastMessage} from "@/helpers/functions/toastMessage.tsx";
+import {consoleClear, toastMessage} from "@/helpers/functions/toastMessage.tsx";
 import {useMutation} from "react-query";
 import toast from "react-hot-toast";
 
@@ -37,13 +37,16 @@ export function useGlobalRequest<T>(
                     return toast.error('Method xaltolik yuz berdi!');
             }
             if (res.data.error) {
+                consoleClear()
                 if (method !== 'GET') toastMessage(res.data.error.code, res.data.error.message);
                 else return ''
             }
             return res.data.data;
         },
         onError: (error: any) => {
-            if (error.status > 500) toast.error('Serverda xatolik yuz berdi. Error 500')
+            if (error.status > 500) toastMessage(500, 'Serverda xatolik yuz berdi. Error 500')
+            else if (error.response?.data?.status >= 500) toastMessage(500, 'Serverda xatolik yuz berdi. Error 500')
+            consoleClear()
         }
     });
 

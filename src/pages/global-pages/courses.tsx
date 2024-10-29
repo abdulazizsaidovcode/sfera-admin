@@ -11,7 +11,7 @@ import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
 import {categoryAdd, categoryDelete, categoryList, categoryUpdate, imgGet} from "@/helpers/api.tsx";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
-import images from '@/assets/images/img.avif'
+import images from '@/assets/images/category.jpg'
 import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 import toast from "react-hot-toast";
 
