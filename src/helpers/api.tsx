@@ -84,3 +84,8 @@ export const lessonModuleID: string = `${baseURL}lesson/list/edu/`
 // ==============TASK CONTROLLER====================
 export const taskCrud: string = `${baseURL}task/`
 export const taskLessonId: string = `${baseURL}task/getTaskByLesson/` //lessonga tegishli hamma module ni get qilish
+
+// =======================================
+export const attendanceGet: string = `${baseURL}api/v1/attendance/by-group`
+export const attendanceCreate: string = `${baseURL}api/v1/attendance/by-group`
+export const attendanceEdit: string = `${baseURL}api/v1/attendance/`

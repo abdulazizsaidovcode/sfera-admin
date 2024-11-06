@@ -82,7 +82,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen, toggleModal}: SidebarProps) => {
                                     to='/admin/site-role'
                                 />}
                                 {admin_role === 'ADMIN_QUIZ' && quizData.map((side, idx) => (
-                                    <BlurFade duration={idx / 10 + .3} delay={idx / 9}>
+                                    <BlurFade duration={idx / 10 + .3} delay={idx / 9} key={idx}>
                                         <MenuItem
                                             title={side.title}
                                             icon={side.icon}
@@ -92,7 +92,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen, toggleModal}: SidebarProps) => {
                                     </BlurFade>
                                 ))}
                                 {admin_role === 'ADMIN_EDU' && eduData.map((side, idx) => (
-                                    <BlurFade duration={idx / 10 + .3} delay={idx / 9}>
+                                    <BlurFade duration={idx / 10 + .3} delay={idx / 9} key={idx}>
                                         <MenuItem
                                             title={side.title}
                                             icon={side.icon}
@@ -102,7 +102,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen, toggleModal}: SidebarProps) => {
                                     </BlurFade>
                                 ))}
                                 {admin_role === 'ADMIN_ONLINE' && onlineData.map((side, idx) => (
-                                    <BlurFade duration={idx / 10 + .3} delay={idx / 9}>
+                                    <BlurFade duration={idx / 10 + .3} delay={idx / 9} key={idx}>
                                         <MenuItem
                                             title={side.title}
                                             icon={side.icon}

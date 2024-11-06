@@ -1,23 +1,37 @@
-const SidebarStudent = () => {
+import moment from "moment";
+
+const SidebarStudent = ({response}: { response: any }) => {
     return (
         <div className="bg-white p-6 w-1/4 shadow-md rounded-lg">
-            <h2 className="text-lg font-semibold">Arab tili 10</h2>
-            <p className="mt-2">ARAB TILI • Abdullah Tutor</p>
-            <p className="text-gray-500">Narx: <strong>200 000 UZS</strong></p>
-            <p className="text-gray-500">Vaqt: Juft kunlar • 14:00</p>
-            <p className="text-gray-500">Xonalar: N1</p>
-            <p className="text-gray-500">Mashg'ulotlar sanalari: 01.08.2022 – 31.08.2023</p>
+            <h2 className="text-lg font-bold">{response?.name}</h2>
+            <p className="mt-2">
+                <span className={'font-semibold'}>{response?.name}</span> • {response?.teacherName}
+            </p>
+            <p className="text-gray-500">
+                <span className={'font-semibold'}>
+                    {response?.daysName[0] === 'MONDAY' ? 'Toq kunlar ' : 'Juft kunlar '}
+                </span>
+                • {response?.daysName[0] === 'MONDAY' ? 'Dushanba, Chorshanba, Juma' : 'Seshanba, Payshanba, Shanba'}
+            </p>
+            <p className="text-gray-500">
+                <span className={'font-semibold'}>Guruh ochilgan kun: </span>
+                {moment(response?.startDate).format('DD.MM.YYYY')}
+            </p>
+            <p className="text-gray-500">
+                <span className={'font-semibold'}>Mashg'ulotlar vaqti: </span>
+                {response?.startTime} – {response?.endTime}
+            </p>
 
-            <ul className="mt-4 space-y-2">
-                {['Akobir Quronov', 'Муниса Рахматова', 'Niso Khamraeva'].map((name, index) => (
-                    <li key={index} className="flex items-center justify-between text-gray-800">
-            <span className="flex items-center">
-              <span className={`w-2 h-2 rounded-full mr-2 ${index % 2 === 0 ? 'bg-green-500' : 'bg-red-500'}`} />
-                {name}
-            </span>
-                        <span className="text-sm text-gray-500">({Math.floor(Math.random() * 1000)})</span>
+            <ul className="mt-5">
+                <p className={'font-semibold'}>{response?.name}: <span>O'quvchilari</span></p>
+                {response?.students?.length > 0 ? response.students.map((name: {
+                    studentId: number,
+                    fullName: string
+                }, index: number) => (
+                    <li key={index} className="text-gray-800">
+                        {index + 1}. {name.fullName}
                     </li>
-                ))}
+                )) : <p>Studentlar mavjud emas</p>}
             </ul>
         </div>
     );
