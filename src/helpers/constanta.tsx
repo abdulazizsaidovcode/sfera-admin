@@ -1,7 +1,7 @@
 import {LuLayoutDashboard} from "react-icons/lu";
 import {PiChalkboardTeacherBold, PiGlobeDuotone, PiStudentFill} from "react-icons/pi";
 import {MdCastForEducation, MdOutlineCategory, MdPlayLesson} from "react-icons/md";
-import {SiCoursera, SiQuizlet, SiTestcafe} from "react-icons/si";
+import {SiBitcoincash, SiCoursera, SiQuizlet, SiTestcafe} from "react-icons/si";
 import {FaLayerGroup} from "react-icons/fa";
 import {IoNotifications} from "react-icons/io5";
 import {IThead} from "@/components/custom/tables/table.tsx";
@@ -74,10 +74,20 @@ export const sideData = {
         {title: 'Guruhlar', icon: <FaLayerGroup size={20}/>, path: '/edu/group'},
         {title: 'Foydalanuvchilar', icon: <PiStudentFill size={20}/>, path: '/edu/users'},
         {title: 'Tasdiqlanishi kerak bulganlar', icon: <PiStudentFill size={24}/>, path: '/edu/users-confirm'},
+        {title: 'Moliya', icon: <SiBitcoincash size={20}/>, path: '/edu/payment'},
         {title: 'Baholar', icon: <TbHeartRateMonitor size={20}/>, path: '/edu/rate'},
         {title: 'Bildirishnoma', icon: <IoNotifications size={20}/>, path: '/edu/notification'},
     ],
 };
+
+// ============CONST TEXT============
+export const regNotFound: string = 'Ma\'lumotlar tuliqligini tekshirib kuring'
+export const notFound: string = 'Ma\'lumot topilmadi'
+
+export const deleteText = (text: string) => `Haqiqatdan xam bu ${text} o'chirib tashlamoqchimisiz?`
+export const successAdd = (text: string) => `${text} muvaffaqiyatli qo'shildi`
+export const successEdit = (text: string) => `${text} muvaffaqiyatli taxrirlandi`
+export const successDelete = (text: string) => `${text} muvaffaqiyatli o'chirildi`
 
 // ===================THEAD DATA==================
 export const topGroupEdu: IThead[] = [
@@ -108,6 +118,15 @@ export const userTableHead: IThead[] = [
     {id: 3, name: 'Familiyasi'},
     {id: 5, name: 'Telefon raqami'},
     {id: 7, name: 'Roli'},
+    {id: 6, name: 'Xarakat'},
+]
+
+export const paymentTHead: IThead[] = [
+    {id: 1, name: 'ID'},
+    {id: 7, name: 'F.I.O'},
+    {id: 2, name: 'To\'lov summasi (UZS)'},
+    {id: 3, name: 'To\'lov turi'},
+    {id: 5, name: 'To\'langan sanasi'},
     {id: 6, name: 'Xarakat'},
 ]
 

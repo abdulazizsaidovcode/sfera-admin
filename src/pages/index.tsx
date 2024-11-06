@@ -15,6 +15,7 @@ export {default as Task} from './global-pages/task.tsx'
 // ========EDUCATION=======
 export {default as Rate} from './edu-admin/rate/rate.tsx'
 export {default as GroupAttendance} from './edu-admin/group/attendance.tsx'
+export {default as Payment} from './edu-admin/payment/payment.tsx'
 export {default as Teacher} from './edu-admin/teacher/teacher.tsx'
 export {default as UsersEdu} from './edu-admin/users/users.tsx'
 

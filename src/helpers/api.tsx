@@ -89,3 +89,7 @@ export const taskLessonId: string = `${baseURL}task/getTaskByLesson/` //lessonga
 export const attendanceGet: string = `${baseURL}api/v1/attendance/by-group`
 export const attendanceCreate: string = `${baseURL}api/v1/attendance/by-group`
 export const attendanceEdit: string = `${baseURL}api/v1/attendance/`
+
+// ================PAYMENT==============
+export const paymentList: string = `${baseURL}payment/search`
+export const paymentAdd: string = `${baseURL}payment`

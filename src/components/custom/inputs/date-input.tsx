@@ -15,7 +15,7 @@ const DateInput = ({label, value, handleChange, placeholder}: {
                     value={value}
                     onChange={handleChange}
                     placeholder={placeholder}
-                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mb-5"
+                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2"
                 />
             </div>
         </>
