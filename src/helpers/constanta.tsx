@@ -80,7 +80,6 @@ export const sideData = {
 };
 
 // ===================THEAD DATA==================
-// dashboard top group
 export const topGroupEdu: IThead[] = [
     {id: 5, name: 'ID'},
     {id: 1, name: 'Guruh nomi'},
@@ -88,7 +87,6 @@ export const topGroupEdu: IThead[] = [
     {id: 3, name: 'Guruh umumiy bali'},
 ];
 
-// dashboard top teacher
 export const topTeacherEdu: IThead[] = [
     {id: 5, name: 'ID'},
     {id: 1, name: 'Guruh nomi'},
@@ -96,7 +94,6 @@ export const topTeacherEdu: IThead[] = [
     {id: 3, name: 'Guruh umumiy bali'},
 ];
 
-// dashboard top student
 export const topStudentEdu: IThead[] = [
     {id: 5, name: 'ID'},
     {id: 1, name: 'F.I.O'},
@@ -104,7 +101,6 @@ export const topStudentEdu: IThead[] = [
     {id: 3, name: 'Umumiy bali'},
 ];
 
-// user tables head data
 export const userTableHead: IThead[] = [
     {id: 1, name: 'ID'},
     {id: 7, name: 'Rasm'},

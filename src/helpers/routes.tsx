@@ -1,7 +1,7 @@
 import PageTitle from "@/components/custom/Header/PageTitle.tsx";
 import {
     Courses, Dashboard, Login, SiteRole, Users, Groups, Notifications, Tests, Rate, Module, CategoryDetails, Lesson,
-    Task, Teacher, Result, UsersEdu
+    Task, Teacher, Result, UsersEdu, GroupAttendance
 } from "@/pages";
 
 export const routes = [
@@ -143,6 +143,13 @@ export const routes = [
         element: <>
             <PageTitle title="Education | Groups"/>
             <Groups/>
+        </>
+    },
+    {
+        path: '/edu/group-attendance/:name/:id',
+        element: <>
+            <PageTitle title="Education | Attendance"/>
+            <GroupAttendance/>
         </>
     },
     {

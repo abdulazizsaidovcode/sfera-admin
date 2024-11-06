@@ -27,6 +27,9 @@ import toast from "react-hot-toast";
 import globalStore from "@/helpers/state-management/globalStore.tsx";
 import images from '@/assets/images/user.jpg'
 import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
+import {styles} from "@/styles/style.tsx";
+import TextInput from "@/components/custom/inputs/text-input.tsx";
+import PhoneNumberInput from "@/components/custom/inputs/number-input.tsx";
 
 const crudValueDef = {
     firstName: '',
@@ -355,7 +358,7 @@ const Users = () => {
 
             {/*==========UNIVERSAL MODAL============*/}
             <Modal onClose={closeModal} isOpen={isModalOpen}>
-                <div className={`w-54 sm:w-64 md:w-96 lg:w-[40rem]`}>
+                <div className={styles.modalMain}>
                     <form className={`mt-5`} onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()}>
                         {editOrDeleteStatus !== 'DELETE' ? (<>
                             {editOrDeleteStatus === 'EDIT' && (
@@ -396,48 +399,39 @@ const Users = () => {
                             )}
                             {(editOrDeleteStatus === 'ADD' || editOrDeleteStatus === 'EDIT') && (<>
                                 <div className="mb-4">
-                                    <input
-                                        required
+                                    <TextInput
+                                        label={'Ism'}
                                         value={crudValue?.firstName}
-                                        onChange={e => handleInputChange('firstName', e.target.value)}
-                                        className={`bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5`}
-                                        placeholder={`Ism...`}
+                                        handleChange={e => handleInputChange('firstName', e.target.value)}
+                                        placeholder={'Ismni kiriting...'}
                                     />
                                 </div>
                                 <div className="mb-4">
-                                    <input
-                                        required
+                                    <TextInput
+                                        label={'Familiya'}
                                         value={crudValue?.lastName}
-                                        onChange={e => handleInputChange('lastName', e.target.value)}
-                                        className={`bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5`}
-                                        placeholder={`Familiya...`}
+                                        handleChange={e => handleInputChange('lastName', e.target.value)}
+                                        placeholder={'Familiyani kiriting...'}
                                     />
                                 </div>
                                 <div className="mb-4">
-                                    <label className={`mb-2`}>Raqam kiritish uchun namuna: 998912120257</label>
-                                    <input
-                                        required
-                                        type={`number`}
+                                    <PhoneNumberInput
+                                        label={'Raqam kiritish uchun namuna: 998912120257'}
                                         value={crudValue?.phoneNumber}
-                                        onChange={e => {
+                                        handleChange={e => {
                                             const v = e.target.value
-                                            if (v.length >= 0 && v.length < 13) handleInputChange('phoneNumber', v)
+                                            if (v.length >= 0 && v.length < 13 && !isNaN(+v) && !v.startsWith('0')) handleInputChange('phoneNumber', v)
                                         }}
-                                        onKeyDown={(e) => {
-                                            if (e.key === "-" || e.key === "e" || e.key === "+") e.preventDefault();
-                                        }}
-                                        className={`bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5`}
-                                        placeholder={`Telefon raqam...`}
+                                        placeholder={'Telefon raqam...'}
                                     />
                                 </div>
                                 <div className="mb-4">
-                                    <input
-                                        required
+                                    <TextInput
+                                        label={'Parol'}
                                         type={`password`}
                                         value={crudValue?.password}
-                                        onChange={e => handleInputChange('password', e.target.value)}
-                                        className={`bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5`}
-                                        placeholder={`Parol...`}
+                                        handleChange={e => handleInputChange('password', e.target.value)}
+                                        placeholder={'Parolni kiriting...'}
                                     />
                                 </div>
                             </>)}
@@ -447,16 +441,16 @@ const Users = () => {
                             </p>
                         </>}
 
-                        <div className={`flex justify-end items-center gap-5`}>
+                        <div className={styles.modalFooter}>
                             <ShinyButton
                                 text={`Orqaga`}
-                                className={`bg-darkGreen`}
+                                className={styles.modalBtn}
                                 onClick={closeModal}
                             />
                             {editOrDeleteStatus === 'ADD' && (
                                 <ShinyButton
                                     text={userAdd.loading ? 'Saqlanmoqda...' : 'Saqlash'}
-                                    className={`bg-darkGreen ${userAdd.loading && 'cursor-not-allowed opacity-60'}`}
+                                    className={`${styles.modalBtn} ${userAdd.loading && 'cursor-not-allowed opacity-60'}`}
                                     onClick={() => {
                                         if (!userAdd.loading) {
                                             if (crudValue?.firstName && crudValue?.lastName && crudValue?.phoneNumber && crudValue?.password && crudValue?.groupId) userAdd.globalDataFunc()
@@ -468,7 +462,7 @@ const Users = () => {
                             {editOrDeleteStatus === 'EDIT' && (
                                 <ShinyButton
                                     text={userEdit.loading ? 'Yuklanmoqda...' : 'Taxrirlash'}
-                                    className={`bg-darkGreen ${userEdit.loading && 'cursor-not-allowed opacity-60'}`}
+                                    className={`${styles.modalBtn} ${userEdit.loading && 'cursor-not-allowed opacity-60'}`}
                                     onClick={() => {
                                         if (!userEdit.loading) {
                                             if (crudValue?.firstName && crudValue?.lastName && crudValue?.phoneNumber && crudValue?.password) userEdit.globalDataFunc()
@@ -480,7 +474,7 @@ const Users = () => {
                             {editOrDeleteStatus === 'DELETE' && (
                                 <ShinyButton
                                     text={userDelete.loading ? 'O\'chirilmoqda...' : 'Xa'}
-                                    className={`bg-darkGreen ${userDelete.loading && 'cursor-not-allowed opacity-60'}`}
+                                    className={`${styles.modalBtn} ${userDelete.loading && 'cursor-not-allowed opacity-60'}`}
                                     onClick={() => {
                                         if (!userDelete.loading) userDelete.globalDataFunc()
                                     }}
@@ -489,7 +483,7 @@ const Users = () => {
                             {editOrDeleteStatus === 'UserGroupAdd' && (
                                 <ShinyButton
                                     text={userGroupUpdate.loading ? 'Yuklanmoqda...' : 'Saqlash'}
-                                    className={`bg-darkGreen ${userGroupUpdate.loading && 'cursor-not-allowed opacity-60'}`}
+                                    className={`${styles.modalBtn} ${userGroupUpdate.loading && 'cursor-not-allowed opacity-60'}`}
                                     onClick={() => {
                                         if (!userGroupUpdate.loading) userGroupUpdate.globalDataFunc()
                                     }}
@@ -498,7 +492,7 @@ const Users = () => {
                             {editOrDeleteStatus === 'UserGroupEdit' && (
                                 <ShinyButton
                                     text={userGroupUpdateUser.loading ? 'Yuklanmoqda...' : 'Saqlash'}
-                                    className={`bg-darkGreen ${userGroupUpdateUser.loading && 'cursor-not-allowed opacity-60'}`}
+                                    className={`${styles.modalBtn} ${userGroupUpdateUser.loading && 'cursor-not-allowed opacity-60'}`}
                                     onClick={() => {
                                         if (!userGroupUpdateUser.loading) userGroupUpdateUser.globalDataFunc()
                                     }}
@@ -507,7 +501,7 @@ const Users = () => {
                             {editOrDeleteStatus === 'ROLE_EDIT' && (
                                 <ShinyButton
                                     text={userRoleEdit.loading ? 'Yuklanmoqda...' : 'Saqlash'}
-                                    className={`bg-darkGreen ${userRoleEdit.loading && 'cursor-not-allowed opacity-60'}`}
+                                    className={`${styles.modalBtn} ${userRoleEdit.loading && 'cursor-not-allowed opacity-60'}`}
                                     onClick={() => {
                                         if (!userRoleEdit.loading) userRoleEdit.globalDataFunc()
                                     }}

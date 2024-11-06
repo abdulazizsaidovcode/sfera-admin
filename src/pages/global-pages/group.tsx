@@ -1,12 +1,12 @@
 import Breadcrumb from "@/components/custom/breadcrumb/Breadcrumb.tsx";
 import ShinyButton from "@/components/magicui/shiny-button.tsx";
-import {MdOutlineAddCircle} from "react-icons/md";
+import {MdNextPlan, MdOutlineAddCircle} from "react-icons/md";
 import Tables from "@/components/custom/tables/table.tsx";
 import {groupThead} from "@/helpers/constanta.tsx";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
 import {useEffect, useState} from "react";
-import {Input} from "antd";
+import {Input, Popover} from "antd";
 import {GroupLists} from "@/types/group.ts";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import {categoryList, groupCrud, groupList, userTeacherGet} from "@/helpers/api.tsx";
@@ -20,11 +20,13 @@ import {CoursesList} from "@/types/course.ts";
 import Modal from "@/components/custom/modal/modal.tsx";
 import toast from "react-hot-toast";
 import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
+import {useNavigate} from "react-router-dom";
 
 const odd: number[] = [1, 3, 5]
 const couple: number[] = [2, 4, 6]
 
 const Groups = () => {
+    const navigate = useNavigate()
     const {editOrDeleteStatus, setEditOrDeleteStatus} = courseStore()
     const {crudGroup, setCrudGroup, defVal} = groupStore()
     const [isModal, setIsModal] = useState(false);
@@ -171,7 +173,7 @@ const Groups = () => {
                                 <td className="border-b border-[#eee] p-5">
                                     <p className="text-black">
                                         <Checkbox
-                                            id={sts.groupId}
+                                            id={sts.id}
                                             isChecked={sts.active}
                                             setIsChecked={() => sts.active}
                                         />
@@ -191,6 +193,12 @@ const Groups = () => {
                                                 setEditOrDeleteStatus('DELETE')
                                             }}
                                         />
+                                        <Popover title="Davomatga o'tish" overlayStyle={{textAlign: 'center'}}>
+                                            <MdNextPlan
+                                                className={`text-2xl hover:cursor-pointer hover:text-darkGreen duration-300`}
+                                                onClick={() => navigate(`/edu/group-attendance/${sts.name}/${sts.id}`)}
+                                            />
+                                        </Popover>
                                     </p>
                                 </td>
                             </tr>
