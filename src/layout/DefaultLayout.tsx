@@ -47,8 +47,10 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({children}) => {
     }, [response])
 
     useEffect(() => {
-        // getNotificationCount.globalDataFunc()
-        getMe.globalDataFunc()
+        if (sessionStorage.getItem('token')) {
+            // getNotificationCount.globalDataFunc()
+            getMe.globalDataFunc()
+        }
     }, []);
 
     useEffect(() => {

@@ -16,7 +16,7 @@ import React, {useEffect, useState} from "react";
 import {FaEdit} from "react-icons/fa";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards";
 import ShinyButton from "@/components/magicui/shiny-button.tsx";
-import {groupCrud, groupList, paymentAdd, paymentList} from "@/helpers/api.tsx";
+import {groupCrud, groupList, paymentAdd, paymentList, paymentTotal, paymentYear} from "@/helpers/api.tsx";
 import {Dropdown, Input, Menu, MenuProps, Pagination, Select, Space} from "antd";
 import {CiMenuKebab} from "react-icons/ci";
 import Modal from "@/components/custom/modal/modal.tsx";
@@ -30,6 +30,7 @@ import NumberGenerate from "@/components/magicui/number-ticker.tsx";
 import DateInput from "@/components/custom/inputs/date-input.tsx";
 import StatisticCard from "@/components/custom/cards/statistic-card.tsx";
 import LineChart from "@/components/custom/chart/line-chart.tsx";
+import {SiCashapp} from "react-icons/si";
 
 const crudValueDef = {
     paySum: 0,
@@ -44,7 +45,10 @@ const Payment = () => {
     const [payType, setPayType] = useState<string>('');
     const [payDate, setPayDate] = useState<string>('');
     const [page, setPage] = useState<number>(0);
+    const [maxSize, setMaxSize] = useState<number>(100000);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [chartData, setChartData] = useState<number[]>([])
+    const [chartDataMonth, setChartDataMonth] = useState<string[]>([])
     const [crudValue, setCrudValue] = useState<any>(crudValueDef);
     const {editOrDeleteStatus, setEditOrDeleteStatus} = courseStore()
 
@@ -56,7 +60,7 @@ const Payment = () => {
     }
     const getTestUrl = () => {
         const queryParams: string = [
-            studentName ? `studentName=${studentName}` : '',
+            studentName ? `keyword=${studentName}` : '',
             payType ? `payType=${payType}` : '',
             payDate ? `payDate=${payDate}` : ''
         ].filter(Boolean).join('&');
@@ -66,6 +70,16 @@ const Payment = () => {
     const users = useGlobalRequest(getTestUrl(), 'GET', '', config);
     const groups = useGlobalRequest(groupList, 'GET', '', config);
     const groupOne = useGlobalRequest(`${groupCrud}/${crudValue?.groupId}`, 'GET', '', config);
+    const {
+        response: stsCardData,
+        globalDataFunc: stsCardFunc,
+        loading: stsLoading
+    } = useGlobalRequest(paymentTotal, 'GET', '', config);
+    const {
+        response: stsChartData,
+        globalDataFunc: stsChartFunc,
+        loading: stsChartLoading
+    } = useGlobalRequest(paymentYear, 'GET', '', config);
     const userAdd = useGlobalRequest(`${paymentAdd}?payType=${crudValue?.paymentType}`, 'POST', requestData, config);
     const userEdit = useGlobalRequest(`${paymentAdd}/${crudValue?.paymentId}?payType=${crudValue?.paymentType}`, 'PUT', requestData, config);
     const userDelete = useGlobalRequest(`${paymentAdd}/${crudValue?.paymentId}`, 'DELETE', '', config);
@@ -73,6 +87,8 @@ const Payment = () => {
     useEffect(() => {
         users.globalDataFunc()
         groups.globalDataFunc()
+        stsCardFunc()
+        stsChartFunc()
     }, []);
 
     useEffect(() => {
@@ -112,6 +128,23 @@ const Payment = () => {
         consoleClear()
     }, [userDelete.response]);
 
+    useEffect(() => {
+        if (stsChartData && stsChartData.length > 0) {
+            let data: number[] = [];
+            let dataMonth: string[] = [];
+            stsChartData.map((item: { totalPay: number }) => data.push(item.totalPay))
+            stsChartData.map((item: { month: string }) => dataMonth.push(item.month))
+            let min: number = stsChartData[0].totalPay
+            for (let i = 0; i <= stsChartData.length; i++) {
+                if (min < stsChartData[i]) min = stsChartData[i]
+            }
+
+            setMaxSize(min)
+            setChartData(data)
+            setChartDataMonth(dataMonth)
+        }
+    }, [stsChartData]);
+
     const getItems = (user: any): MenuProps['items'] => [
         {
             label: <div className={`flex items-center gap-3`}>
@@ -132,9 +165,10 @@ const Payment = () => {
             </div>,
             key: '1',
             onClick: () => {
-                openModal()
-                setEditOrDeleteStatus('DELETE')
-                setCrudValue(user)
+                toast.error('Malumotlarni o\'chirish mumkin emas!!!')
+                // openModal()
+                // setEditOrDeleteStatus('DELETE')
+                // setCrudValue(user)
             }
         }
     ];
@@ -149,11 +183,37 @@ const Payment = () => {
     };
 
     const handleInputChange = (name: string, value: string) => setCrudValue({...crudValue, [name]: value})
-
-    console.log(crudValue)
+    console.log(chartDataMonth)
     return (
         <>
-            <Breadcrumb pageName={`Foydalanuvchilar`}/>
+            <Breadcrumb pageName={`Moliya`}/>
+            <div className={'flex justify-between flex-wrap md:flex-nowrap gap-5 items-start'}>
+                <div className={'w-full md:w-[30%]'}>
+                    {stsLoading ? <Skeleton/> :
+                        <StatisticCard
+                            key={'totalMonthPay'}
+                            total={stsCardData ? stsCardData.totalSum : 0}
+                            title={stsCardData ? `${moment(stsCardData.startDate).format('DD.MM.YYYY')} - ${moment(stsCardData.endDate).format('DD.MM.YYYY')}` : notFound}
+                            children={<SiCashapp className={'text-xl'}/>}
+                        />
+                    }
+                </div>
+                <div className={'w-full md:w-[70%]'}>
+                    {stsChartLoading ? <div className={'grid grid-cols-1 gap-5'}>
+                            <Skeleton/>
+                            <Skeleton/>
+                        </div> :
+                        <LineChart
+                            title={`Yillik statistika`}
+                            category={chartDataMonth}
+                            seriesTitle={`Umumiy summa`}
+                            seriesData={chartData}
+                            type={`bar`}
+                            maxSize={maxSize + 100000}
+                        />
+                    }
+                </div>
+            </div>
 
             {/*===================SEARCH===================*/}
             <div className={`w-full flex justify-between items-center flex-wrap md:flex-nowrap gap-3 mt-10`}>
@@ -192,25 +252,6 @@ const Payment = () => {
 
             {/*========================BODY===================*/}
             <div className={`mt-6`}>
-                <div className={'flex justify-between flex-wrap md:flex-nowrap gap-5 items-start'}>
-                    <div className={'w-full md:w-[30%]'}>
-                        <StatisticCard
-                            key={'totalMonthPay'}
-                            total={'sdjc'}
-                            title={'sdibcb'}
-                            children={<></>}
-                        />
-                    </div>
-                    <div className={'w-full md:w-[70%]'}>
-                        <LineChart
-                            title={`Yillik statistika`}
-                            category={['Boshqa foydalanuvchilar', 'Markaz o\'quvchilari', 'O\'qituvchilar']}
-                            seriesTitle={`Umumiy summa`}
-                            seriesData={[]}
-                            type={`bar`}
-                        />
-                    </div>
-                </div>
                 {users.loading ? <div className={`grid grid-cols-1 gap-5`}>
                         <Skeleton/>
                         <Skeleton/>

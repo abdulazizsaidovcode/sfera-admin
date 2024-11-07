@@ -93,3 +93,5 @@ export const attendanceEdit: string = `${baseURL}api/v1/attendance/`
 // ================PAYMENT==============
 export const paymentList: string = `${baseURL}payment/search`
 export const paymentAdd: string = `${baseURL}payment`
+export const paymentYear: string = `${baseURL}payment/yearly`
+export const paymentTotal: string = `${baseURL}payment/totalSum`
