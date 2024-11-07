@@ -1,7 +1,7 @@
 import Breadcrumb from "@/components/custom/breadcrumb/Breadcrumb.tsx";
 import {MdDelete, MdOutlineGroupAdd} from "react-icons/md";
 import Tables from "@/components/custom/tables/table.tsx";
-import {confirmUserTHead} from "@/helpers/constanta.tsx";
+import {confirmUserTHead, deleteText, notFound, successDelete} from "@/helpers/constanta.tsx";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function";
 import {config} from "@/helpers/token";
 import React, {useEffect, useState} from "react";
@@ -14,6 +14,7 @@ import Modal from "@/components/custom/modal/modal.tsx";
 import courseStore from "@/helpers/state-management/coursesStore.tsx";
 import toast from "react-hot-toast";
 import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
+import {styles} from "@/styles/style.tsx";
 
 const crudValueDef = {
     firstName: '',
@@ -60,15 +61,19 @@ const UsersEdu = () => {
         if (userDelete.response) {
             users.globalDataFunc()
             closeModal()
-            toast.success('Foydalanuvchi muvaffaqiyatli o\'chirildi')
+            toast.success(successDelete('Foydalanuvchi'))
         }
+        consoleClear()
+    }, [userDelete.response]);
+
+    useEffect(() => {
         if (userGroupUpdateUser.response) {
             users.globalDataFunc()
             closeModal()
             toast.success('Foydalanuvchini guruhga muvaffaqiyatli qushdingiz')
         }
         consoleClear()
-    }, [userDelete.response, userGroupUpdateUser.response]);
+    }, [userGroupUpdateUser.response]);
 
     const getItems = (user: any): MenuProps['items'] => [
         {
@@ -175,7 +180,7 @@ const UsersEdu = () => {
                         )) : <tr>
                             <td className="border-b border-[#eee] p-5" colSpan={confirmUserTHead.length}>
                                 <p className="text-black text-center">
-                                    Foydalanuvchilar topilmadi
+                                    {notFound}
                                 </p>
                             </td>
                         </tr>}
@@ -193,7 +198,7 @@ const UsersEdu = () => {
 
             {/*==========UNIVERSAL MODAL============*/}
             <Modal onClose={closeModal} isOpen={isModalOpen}>
-                <div className={`w-54 sm:w-64 md:w-96 lg:w-[40rem]`}>
+                <div className={styles.modalMain}>
                     <form className={`mt-5`} onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()}>
                         {editOrDeleteStatus !== 'DELETE' ? (<>
                             <select
@@ -209,20 +214,20 @@ const UsersEdu = () => {
                             </select>
                         </>) : <>
                             <p className={`text-center text-black text-base lg:text-xl mb-10`}>
-                                Haqiqatdan xam bu foydalanuvchini o'chirib tashlamoqchimisiz?
+                                {deleteText('foydalanuvchini')}
                             </p>
                         </>}
 
-                        <div className={`flex justify-end items-center gap-5`}>
+                        <div className={styles.modalFooter}>
                             <ShinyButton
                                 text={`Orqaga`}
-                                className={`bg-darkGreen`}
+                                className={`bg-darkGreen ${styles.modalBtn}`}
                                 onClick={closeModal}
                             />
                             {editOrDeleteStatus === 'DELETE' && (
                                 <ShinyButton
                                     text={userDelete.loading ? 'O\'chirilmoqda...' : 'Xa'}
-                                    className={`bg-darkGreen ${userDelete.loading && 'cursor-not-allowed opacity-60'}`}
+                                    className={`bg-darkGreen ${styles.modalBtn} ${userDelete.loading && 'cursor-not-allowed opacity-60'}`}
                                     onClick={() => {
                                         if (!userDelete.loading) userDelete.globalDataFunc()
                                     }}
@@ -231,7 +236,7 @@ const UsersEdu = () => {
                             {editOrDeleteStatus === 'UserGroupAdd' && (
                                 <ShinyButton
                                     text={userGroupUpdateUser.loading ? 'Yuklanmoqda...' : 'Saqlash'}
-                                    className={`bg-darkGreen ${userGroupUpdateUser.loading && 'cursor-not-allowed opacity-60'}`}
+                                    className={`bg-darkGreen ${styles.modalBtn} ${userGroupUpdateUser.loading && 'cursor-not-allowed opacity-60'}`}
                                     onClick={() => {
                                         if (!userGroupUpdateUser.loading) userGroupUpdateUser.globalDataFunc()
                                     }}

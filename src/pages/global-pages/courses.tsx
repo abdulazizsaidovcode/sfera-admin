@@ -14,6 +14,9 @@ import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import images from '@/assets/images/category.jpg'
 import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 import toast from "react-hot-toast";
+import {deleteText, notFound, regNotFound, successAdd, successDelete, successEdit} from "@/helpers/constanta.tsx";
+import TextInput from "@/components/custom/inputs/text-input.tsx";
+import {styles} from "@/styles/style.tsx";
 
 const Courses = () => {
     const admin_role = sessionStorage.getItem("admin_roles");
@@ -60,18 +63,28 @@ const Courses = () => {
         if (categoryDataAdd.response) {
             categoryGetFunc()
             closeModal()
-            toast.success(`${admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'} muvaffaqiyatli qo'shildi`)
-        } else if (categoryDataEdit.response) {
-            categoryGetFunc()
-            closeModal()
-            toast.success(`${admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'} muvaffaqiyatli taxrirlandi`)
-        } else if (categoryDataDelete.response) {
-            categoryGetFunc()
-            closeModal()
-            toast.success(`${admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'} muvaffaqiyatli o'chirildi`)
+            toast.success(successAdd(admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'))
         }
         consoleClear()
-    }, [categoryDataAdd.response, categoryDataEdit.response, categoryDataDelete.response]);
+    }, [categoryDataAdd.response]);
+
+    useEffect(() => {
+        if (categoryDataEdit.response) {
+            categoryGetFunc()
+            closeModal()
+            toast.success(successEdit(admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'))
+        }
+        consoleClear()
+    }, [categoryDataEdit.response]);
+
+    useEffect(() => {
+        if (categoryDataDelete.response) {
+            categoryGetFunc()
+            closeModal()
+            toast.success(successDelete(admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'))
+        }
+        consoleClear()
+    }, [categoryDataDelete.response]);
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => {
@@ -127,61 +140,52 @@ const Courses = () => {
                         key={index}
                     />
                 )}</div>
-                : <div className={`text-xl md:text-3xl text-center text-black w-full mt-12`}>Ma'lumot topilmadi</div>}
+                : <div className={`text-xl md:text-3xl text-center text-black w-full mt-12`}>{notFound}</div>}
 
             {/*==========UNIVERSAL MODAL============*/}
             <Modal onClose={closeModal} isOpen={isModalOpen}>
-                <div className={`w-54 sm:w-64 md:w-96 lg:w-[40rem]`}>
+                <div className={styles.modalMain}>
                     <form className={`mt-5`} onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()}>
                         {editOrDeleteStatus !== 'DELETE' ? (<>
                             <div className="mb-4 mt-5 flex justify-center">
                                 <ImgUpload imgID={crudValue?.fileId ? crudValue.fileId : ''}/>
                             </div>
                             <div className="mb-4">
-                                <label className="block text-gray-700 mb-2">
-                                    {admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'} nomi
-                                </label>
-                                <input
-                                    required
-                                    value={crudValue?.name}
-                                    onChange={e => handleInputChange('name', e.target.value)}
-                                    className={`bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5`}
+                                <TextInput
+                                    handleChange={e => handleInputChange('name', e.target.value)}
                                     placeholder={`${admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'} nomini kiriting...`}
+                                    value={crudValue?.name}
+                                    label={`${admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'} nomi`}
                                 />
                             </div>
                             <div className="mb-4">
-                                <label className="block text-gray-700 mb-2">
-                                    {admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'} tavsifi
-                                </label>
-                                <input
-                                    required
-                                    value={crudValue?.description}
-                                    onChange={e => handleInputChange('description', e.target.value)}
-                                    className={`bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5`}
+                                <TextInput
+                                    handleChange={e => handleInputChange('description', e.target.value)}
                                     placeholder={`${admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'} tavsifini kiriting...`}
+                                    value={crudValue?.description}
+                                    label={`${admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'} tavsifi`}
                                 />
                             </div>
                         </>) : <>
                             <p className={`text-center text-black text-base lg:text-xl mb-10`}>
-                                Haqiqatdan xam bu {admin_role === 'ADMIN_QUIZ' ? 'yo\'nalishni' : 'kursni'} o'chirib
-                                tashlamoqchimisiz?
+                                {deleteText(admin_role === 'ADMIN_QUIZ' ? 'yo\'nalishni' : 'kursni')}
                             </p>
                         </>}
 
-                        <div className={`flex justify-end items-center gap-5`}>
+                        <div className={styles.modalFooter}>
                             <ShinyButton
                                 text={`Orqaga`}
-                                className={`bg-darkGreen`}
+                                className={`bg-darkGreen ${styles.modalBtn}`}
                                 onClick={closeModal}
                             />
                             {editOrDeleteStatus === 'ADD' && (
                                 <ShinyButton
                                     text={categoryDataAdd.loading ? 'Saqlanmoqda...' : 'Saqlash'}
-                                    className={`bg-darkGreen ${categoryDataAdd.loading && 'cursor-not-allowed opacity-60'}`}
+                                    className={`bg-darkGreen ${styles.modalBtn} ${categoryDataAdd.loading && 'cursor-not-allowed opacity-60'}`}
                                     onClick={() => {
                                         if (!categoryDataAdd.loading) {
                                             if (crudValue?.name && crudValue?.description) categoryDataAdd.globalDataFunc()
-                                            else toast.error('Ma\'lumotlar tuliqligini tekshirib kuring')
+                                            else toast.error(regNotFound)
                                         }
                                     }}
                                 />
@@ -189,11 +193,11 @@ const Courses = () => {
                             {editOrDeleteStatus === 'EDIT' && (
                                 <ShinyButton
                                     text={categoryDataEdit.loading ? 'Yuklanmoqda...' : 'Taxrirlash'}
-                                    className={`bg-darkGreen ${categoryDataEdit.loading && 'cursor-not-allowed opacity-60'}`}
+                                    className={`bg-darkGreen ${styles.modalBtn} ${categoryDataEdit.loading && 'cursor-not-allowed opacity-60'}`}
                                     onClick={() => {
                                         if (!categoryDataEdit.loading) {
                                             if (crudValue?.name && crudValue?.description) categoryDataEdit.globalDataFunc()
-                                            else toast.error('Ma\'lumotlar tuliqligini tekshirib kuring')
+                                            else toast.error(regNotFound)
                                         }
                                     }}
                                 />
@@ -201,7 +205,7 @@ const Courses = () => {
                             {editOrDeleteStatus === 'DELETE' && (
                                 <ShinyButton
                                     text={categoryDataDelete.loading ? 'O\'chirilmoqda...' : 'Xa'}
-                                    className={`bg-darkGreen ${categoryDataDelete.loading && 'cursor-not-allowed opacity-60'}`}
+                                    className={`bg-darkGreen ${styles.modalBtn} ${categoryDataDelete.loading && 'cursor-not-allowed opacity-60'}`}
                                     onClick={() => {
                                         if (!categoryDataDelete.loading) categoryDataDelete.globalDataFunc()
                                     }}

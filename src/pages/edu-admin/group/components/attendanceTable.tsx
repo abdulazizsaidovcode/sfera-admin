@@ -1,6 +1,7 @@
 import StudentRow from './check';
 import moment from "moment";
 import ShinyButton from "@/components/magicui/shiny-button.tsx";
+import toast from "react-hot-toast";
 
 const months = [
     {month: 'Yan', id: 1},
@@ -62,7 +63,9 @@ const AttendanceTable = ({active, setActive, response, groupRes}: {
                         />
                     )) : <>
                         <tr>
-                            <td colSpan={response?.days?.length} className={'py-3 text-center'}>Studentlar mavjud emas</td>
+                            <td colSpan={response?.days?.length} className={'py-3 text-center'}>
+                                Studentlar mavjud emas
+                            </td>
                         </tr>
                     </>}
                     </tbody>
@@ -76,6 +79,7 @@ const AttendanceTable = ({active, setActive, response, groupRes}: {
                         text={'Saqlash'}
                         className={'bg-darkGreen'}
                         onClick={() => {
+                            toast.error('Xali qilingani yuq')
                         }}
                     />
                 </div>

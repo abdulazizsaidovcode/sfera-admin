@@ -2,7 +2,7 @@ import Breadcrumb from "@/components/custom/breadcrumb/Breadcrumb.tsx";
 import {Input, Pagination, Select} from "antd";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import Tables from "@/components/custom/tables/table.tsx";
-import {rateThead} from "@/helpers/constanta.tsx";
+import {notFound, rateThead} from "@/helpers/constanta.tsx";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
 import {RateLists} from "@/types/rate.ts";
@@ -132,7 +132,7 @@ const Rate = () => {
                                 className="border-b border-[#eee] p-5 text-black text-center"
                                 colSpan={rateThead.length}
                             >
-                                Ma'lumot topilmadi
+                                {notFound}
                             </td>
                         </tr>}
                     </Tables>

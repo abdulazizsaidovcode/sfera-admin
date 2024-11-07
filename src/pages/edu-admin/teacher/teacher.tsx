@@ -3,16 +3,18 @@ import ShinyButton from "@/components/magicui/shiny-button.tsx";
 import {MdOutlineAddCircle} from "react-icons/md";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import Tables from "@/components/custom/tables/table.tsx";
-import {teacherThead} from "@/helpers/constanta.tsx";
+import {deleteText, notFound, regNotFound, successAdd, teacherThead} from "@/helpers/constanta.tsx";
 import toast from "react-hot-toast";
 import Modal from "@/components/custom/modal/modal.tsx";
-import {Input} from "antd";
 import courseStore from "@/helpers/state-management/coursesStore.tsx";
 import {useEffect, useState} from "react";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
 import {imgGet, teacherPost, userTeacherGet} from "@/helpers/api.tsx";
 import images from '@/assets/images/avatar.png'
+import NumberInput from "@/components/custom/inputs/number-input.tsx";
+import TextInput from "@/components/custom/inputs/text-input.tsx";
+import {styles} from "@/styles/style.tsx";
 
 const defVal = {
     firstName: '',
@@ -36,7 +38,7 @@ const Teacher = () => {
         if (teacherAdd.response) {
             globalDataFunc()
             closeModal()
-            toast.success('Teacher muvaffaqiyatli qushildi')
+            toast.success(successAdd('O\'qituvchi'))
         }
     }, [teacherAdd.response]);
 
@@ -53,7 +55,7 @@ const Teacher = () => {
 
     return (
         <>
-            <Breadcrumb pageName={`O\'qituvchilar`}/>
+            <Breadcrumb pageName={`O'qituvchilar`}/>
 
             {/*=================SEARCH================*/}
             <div className={`w-full flex justify-between items-center flex-wrap xl:flex-nowrap gap-5 mt-10`}>
@@ -101,7 +103,7 @@ const Teacher = () => {
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
                                     <p className="text-black">
-                                        {teacher.phoneNumber}
+                                        +{teacher.phoneNumber}
                                     </p>
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
@@ -114,71 +116,69 @@ const Teacher = () => {
                             <td
                                 className="border-b border-[#eee] p-5 text-black text-center"
                                 colSpan={teacherThead.length}
-                            >
-                                Ma'lumot topilmadi
-                            </td>
+                            >{notFound}</td>
                         </tr>}
                     </Tables>
                 )}
             </div>
 
             <Modal onClose={closeModal} isOpen={isModal}>
-                <div className={`min-w-54 sm:w-64 md:w-96 lg:w-[40rem]`}>
+                <div className={styles.modalMain}>
                     {editOrDeleteStatus === 'DELETE' ? (
                         <p className={`text-center text-black text-base lg:text-xl mb-10 mt-7`}>
-                            Haqiqatdan xam bu darsni o'chirib tashlamoqchimisiz?
+                            {deleteText('darsni')}
                         </p>
                     ) : (<div className={`mt-5`}>
-                        <label className={`mb-2`}>O'qituvchini ismini kiriting</label>
-                        <Input
-                            value={crudTeacher.firstName}
-                            onChange={(e) => handleChange('firstName', e.target.value)}
-                            placeholder="Ismini kiriting"
-                            className="w-full bg-transparent h-11 custom-input mb-5"
-                        />
-                        <label className={`mb-2`}>O'qituvchini familiyasini kiriting</label>
-                        <Input
-                            value={crudTeacher.lastName}
-                            onChange={(e) => handleChange('lastName', e.target.value)}
-                            placeholder="Familiyani kiriting"
-                            className="w-full bg-transparent h-11 custom-input mb-5"
-                        />
-                        <label className={`mb-2`}>O'qituvchini telefon raqamini kiriting (Namuna: 998912120257)</label>
-                        <Input
-                            type={`number`}
-                            value={crudTeacher.phoneNumber}
-                            onChange={(e) => {
-                                handleChange('phoneNumber', e.target.value)
-                            }}
-                            onKeyDown={(e) => {
-                                if (e.key === "-" || e.key === "e" || e.key === "+") e.preventDefault();
-                            }}
-                            placeholder="Telefon raqamini kiriting"
-                            className="w-full bg-transparent h-11 custom-input mb-5"
-                            maxLength={12}
-                        />
-                        <label className={`mb-2`}>O'qituvchini parolini kiriting</label>
-                        <Input
-                            value={crudTeacher.password}
-                            onChange={(e) => handleChange('password', e.target.value)}
-                            placeholder="Parolini kiriting"
-                            className="w-full bg-transparent h-11 custom-input"
-                        />
+                        <div className={'mb-4'}>
+                            <TextInput
+                                handleChange={(e) => handleChange('firstName', e.target.value)}
+                                placeholder={'Ismini kiriting'}
+                                label={'O\'qituvchini ismini kiriting'}
+                                value={crudTeacher.firstName}
+                            />
+                        </div>
+                        <div className={'mb-4'}>
+                            <TextInput
+                                handleChange={(e) => handleChange('lastName', e.target.value)}
+                                placeholder={'Familiyani kiriting'}
+                                label={'O\'qituvchini familiyasini kiriting'}
+                                value={crudTeacher.lastName}
+                            />
+                        </div>
+                        <div className={'mb-4'}>
+                            <NumberInput
+                                handleChange={e => {
+                                    const v = e.target.value
+                                    if (v.length <= 12 && !isNaN(+v) && !v.startsWith('0')) handleChange('phoneNumber', v)
+                                }}
+                                placeholder={'Telefon raqamini kiriting'}
+                                value={crudTeacher.phoneNumber}
+                                label={'O\'qituvchini telefon raqamini kiriting (Namuna: 998912120257)'}
+                            />
+                        </div>
+                        <div className={'mb-4'}>
+                            <TextInput
+                                handleChange={(e) => handleChange('password', e.target.value)}
+                                placeholder={'Parolini kiriting'}
+                                label={'O\'qituvchini parolini kiriting'}
+                                value={crudTeacher.password}
+                            />
+                        </div>
                     </div>)}
-                    <div className={`flex justify-end items-center gap-5 mt-10`}>
+                    <div className={styles.modalFooter}>
                         <ShinyButton
                             text={`Orqaga`}
-                            className={`bg-darkGreen`}
+                            className={`bg-darkGreen ${styles.modalBtn}`}
                             onClick={closeModal}
                         />
                         {editOrDeleteStatus === 'POST' && (
                             <ShinyButton
                                 text={teacherAdd.loading ? 'Saqlanmoqda...' : 'Saqlash'}
-                                className={`bg-darkGreen ${teacherAdd.loading && 'cursor-not-allowed opacity-60'}`}
+                                className={`bg-darkGreen ${styles.modalBtn} ${teacherAdd.loading && 'cursor-not-allowed opacity-60'}`}
                                 onClick={() => {
                                     if (!teacherAdd.loading) {
                                         if (crudTeacher.firstName && crudTeacher.lastName && crudTeacher.phoneNumber && crudTeacher.password) teacherAdd.globalDataFunc()
-                                        else toast.error('Ma\'lumotlar tuliqligini tekshirib kuring')
+                                        else toast.error(regNotFound)
                                     }
                                 }}
                             />

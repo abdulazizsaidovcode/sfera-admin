@@ -183,7 +183,7 @@ const Payment = () => {
     };
 
     const handleInputChange = (name: string, value: string) => setCrudValue({...crudValue, [name]: value})
-    console.log(chartDataMonth)
+
     return (
         <>
             <Breadcrumb pageName={`Moliya`}/>
