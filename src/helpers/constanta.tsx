@@ -163,6 +163,13 @@ export const rateThead: IThead[] = [
     {id: 4, name: 'Reytingi'},
 ];
 
+export const stsThead: IThead[] = [
+    {id: 5, name: 'ID'},
+    {id: 1, name: 'Ismi'},
+    {id: 6, name: 'Familiya'},
+    {id: 3, name: 'To\'langan pul (UZS)'},
+];
+
 export const lessonThead: IThead[] = [
     {id: 5, name: 'ID'},
     {id: 1, name: 'Dars nomi'},

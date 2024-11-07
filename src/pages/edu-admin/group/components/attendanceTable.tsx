@@ -51,9 +51,12 @@ const AttendanceTable = ({active, setActive, response, groupRes}: {
                     </tr>
                     </thead>
                     <tbody>
-                    {groupRes?.students?.length > 0 ? groupRes.students.map((name: {
-                        fullName: string
-                        studentId: number
+                    {response?.attendanceDtos?.length > 0 ? response.attendanceDtos.map((name: {
+                        attendance: boolean
+                        date: string
+                        id: number
+                        studentLastName: string
+                        studentName: string
                     }, index: number) => (
                         <StudentRow
                             key={index}

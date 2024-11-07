@@ -4,9 +4,10 @@ import SidebarStudent from "./components/students.tsx";
 import AttendanceTable from "./components/attendanceTable.tsx";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
-import {attendanceGet, groupCrud} from "@/helpers/api.tsx";
+import {attendanceGet, groupCrud, paymentSts} from "@/helpers/api.tsx";
 import {useEffect, useState} from "react";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
+import StsTable from "@/pages/edu-admin/group/components/stsTable.tsx";
 
 const GroupAttendance = () => {
     const {id, name} = useParams<{ id: string; name: string }>();
@@ -22,14 +23,21 @@ const GroupAttendance = () => {
         globalDataFunc: oneGetGroup,
         response: oneGroupData
     } = useGlobalRequest(`${groupCrud}/${id}`, 'GET', '', config)
+    const {
+        loading: stsLoading,
+        globalDataFunc: stsFunction,
+        response: stsData
+    } = useGlobalRequest(`${paymentSts}${id}?year=${defYear}&month=${active}`, 'GET', '', config)
 
     useEffect(() => {
         globalDataFunc()
         oneGetGroup()
+        stsFunction()
     }, []);
 
     useEffect(() => {
         globalDataFunc()
+        stsFunction()
     }, [active]);
 
     return (
@@ -42,8 +50,8 @@ const GroupAttendance = () => {
                     <Skeleton/>
                 </div> : <SidebarStudent response={oneGroupData}/>}
                 {groupLoading && loading ? <div className={'grid grid-cols-1 gap-4 w-3/4'}>
-                    <Skeleton/>
-                    <Skeleton/>
+                        <Skeleton/>
+                        <Skeleton/>
                     </div> :
                     <AttendanceTable
                         response={response}
@@ -53,6 +61,10 @@ const GroupAttendance = () => {
                     />
                 }
             </div>
+            {stsLoading ? <div className={'grid grid-cols-1 gap-4'}>
+                <Skeleton/>
+                <Skeleton/>
+            </div> : <StsTable res={stsData}/>}
         </>
     );
 };

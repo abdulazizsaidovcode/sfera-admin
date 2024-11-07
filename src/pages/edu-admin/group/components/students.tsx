@@ -26,9 +26,10 @@ const SidebarStudent = ({response}: { response: any }) => {
                 <p className={'font-semibold'}>{response?.name}: <span>O'quvchilari</span></p>
                 {response?.students?.length > 0 ? response.students.map((name: {
                     studentId: number,
-                    fullName: string
+                    fullName: string,
+                    active: boolean
                 }, index: number) => (
-                    <li key={index} className="text-gray-800">
+                    <li key={index} className={`${name.active ? 'text-gray-800' : 'text-red-500 line-through'}`}>
                         {index + 1}. {name.fullName}
                     </li>
                 )) : <p>Studentlar mavjud emas</p>}
