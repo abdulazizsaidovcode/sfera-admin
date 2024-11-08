@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {consoleClear, toastMessage} from "@/helpers/functions/toastMessage.tsx";
 import {useMutation} from "react-query";
 import toast from "react-hot-toast";
+import {consoleClear, toastMessage} from "@/helpers/functions/common-functions.tsx";
 
 // =============react query global function==================
 export interface UseGlobalResponse<T> {

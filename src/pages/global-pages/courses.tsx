@@ -12,7 +12,6 @@ import {config} from "@/helpers/token.tsx";
 import {categoryAdd, categoryDelete, categoryList, categoryUpdate, imgGet} from "@/helpers/api.tsx";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import images from '@/assets/images/category.jpg'
-import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 import toast from "react-hot-toast";
 import {deleteText, notFound, regNotFound, successAdd, successDelete, successEdit} from "@/helpers/constanta.tsx";
 import TextInput from "@/components/custom/inputs/text-input.tsx";
@@ -52,7 +51,6 @@ const Courses = () => {
 
     useEffect(() => {
         categoryGetFunc()
-        consoleClear()
     }, []);
 
     useEffect(() => {
@@ -65,7 +63,6 @@ const Courses = () => {
             closeModal()
             toast.success(successAdd(admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'))
         }
-        consoleClear()
     }, [categoryDataAdd.response]);
 
     useEffect(() => {
@@ -74,7 +71,6 @@ const Courses = () => {
             closeModal()
             toast.success(successEdit(admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'))
         }
-        consoleClear()
     }, [categoryDataEdit.response]);
 
     useEffect(() => {
@@ -83,7 +79,6 @@ const Courses = () => {
             closeModal()
             toast.success(successDelete(admin_role === 'ADMIN_QUIZ' ? 'Yo\'nalish' : 'Kurs'))
         }
-        consoleClear()
     }, [categoryDataDelete.response]);
 
     const openModal = () => setIsModalOpen(true);

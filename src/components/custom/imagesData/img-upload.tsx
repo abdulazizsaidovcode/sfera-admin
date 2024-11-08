@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import {BiSolidImageAdd} from 'react-icons/bi';
 import {config} from "@/helpers/token.tsx";
-import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 import {imgGet, imgUpdate, imgUploadPost} from "@/helpers/api.tsx";
 import globalStore from "@/helpers/state-management/globalStore.tsx";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
@@ -16,13 +15,8 @@ const ImageUpload = ({imgID, textType}: { imgID?: string | number, textType?: bo
     const editImg = useGlobalRequest(`${imgUpdate}${imgID}`, 'PUT', formData, config)
 
     useEffect(() => {
-        if (response) {
-            setImgUpload(response)
-            consoleClear()
-        } else if (editImg.response) {
-            setImgUpload(response)
-            consoleClear()
-        }
+        if (response) setImgUpload(response)
+        else if (editImg.response) setImgUpload(response)
     }, [response, editImg.response]);
 
     useEffect(() => {

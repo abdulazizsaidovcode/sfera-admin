@@ -6,7 +6,6 @@ import {config} from "@/helpers/token.tsx";
 import {useEffect, useState} from "react";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import {MdNote} from "react-icons/md";
-import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 import toast from "react-hot-toast";
 
 const Notifications = () => {
@@ -18,7 +17,6 @@ const Notifications = () => {
 
     useEffect(() => {
         globalDataFunc();
-        consoleClear()
     }, []);
 
     useEffect(() => {
@@ -31,7 +29,6 @@ const Notifications = () => {
             setReadID(null)
             toast.success('Bildirishnomani o\'qilgan qilib belgiladingiz')
         }
-        consoleClear()
     }, [readNotification.response]);
 
     return (

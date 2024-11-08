@@ -13,7 +13,6 @@ import {CiMenuKebab} from "react-icons/ci";
 import Modal from "@/components/custom/modal/modal.tsx";
 import courseStore from "@/helpers/state-management/coursesStore.tsx";
 import toast from "react-hot-toast";
-import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 import {styles} from "@/styles/style.tsx";
 
 const crudValueDef = {
@@ -63,7 +62,6 @@ const UsersEdu = () => {
             closeModal()
             toast.success(successDelete('Foydalanuvchi'))
         }
-        consoleClear()
     }, [userDelete.response]);
 
     useEffect(() => {
@@ -72,7 +70,6 @@ const UsersEdu = () => {
             closeModal()
             toast.success('Foydalanuvchini guruhga muvaffaqiyatli qushdingiz')
         }
-        consoleClear()
     }, [userGroupUpdateUser.response]);
 
     const getItems = (user: any): MenuProps['items'] => [

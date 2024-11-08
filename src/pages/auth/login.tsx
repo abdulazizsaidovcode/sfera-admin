@@ -7,7 +7,6 @@ import {useEffect, useState} from 'react';
 import {formatedNumber, validateText} from "@/helpers/functions/common-functions.tsx";
 import {authLogin} from "@/helpers/api.tsx";
 import toast from "react-hot-toast";
-import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 
 function Login() {
@@ -28,7 +27,6 @@ function Login() {
                 toast.success('Tizimga muvaffaqiyatli kirdingiz')
                 navigate('/admin/site-role')
             } else toast.error('Tizimga kirish uchun sizga ruxsat berilmagan')
-            consoleClear()
         }
     }, [response]);
 

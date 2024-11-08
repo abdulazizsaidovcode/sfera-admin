@@ -7,7 +7,7 @@ import testStore from "@/helpers/state-management/testStore.tsx";
 import TestCrudCheck from "@/pages/quiz-admin/test/components/test-crud-check.tsx";
 import toast from "react-hot-toast";
 import courseStore from "@/helpers/state-management/coursesStore.tsx";
-import {testThead} from "@/helpers/constanta.tsx";
+import {deleteText, notFound, successAdd, successDelete, successEdit, testThead} from "@/helpers/constanta.tsx";
 import {MdOutlineAddCircle} from "react-icons/md";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
@@ -18,7 +18,6 @@ import {FaEdit} from "react-icons/fa";
 import {RiDeleteBin7Fill} from "react-icons/ri";
 import {CoursesList} from "@/types/course.ts";
 import {Input, Pagination, Select} from 'antd';
-import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 
 const defVal = {
     name: '',
@@ -72,7 +71,6 @@ const Tests = () => {
         globalDataFunc()
         categoryLists.globalDataFunc()
         moduleGet.globalDataFunc()
-        consoleClear()
     }, []);
 
     useEffect(() => {
@@ -81,14 +79,13 @@ const Tests = () => {
 
     useEffect(() => {
         globalDataFunc()
-        consoleClear()
     }, [page, categoryFilter, testName]);
 
     useEffect(() => {
         if (testDataAdd.response) {
             globalDataFunc()
             closeModal()
-            toast.success('Savol muvaffaqiyatli qushildi')
+            toast.success(successAdd('Savol'))
         }
     }, [testDataAdd.response]);
 
@@ -96,7 +93,7 @@ const Tests = () => {
         if (testDataEdit.response) {
             globalDataFunc()
             closeModal()
-            toast.success('Savol muvaffaqiyatli taxrirlandi')
+            toast.success(successEdit('Savol'))
         }
     }, [testDataEdit.response]);
 
@@ -104,7 +101,7 @@ const Tests = () => {
         if (testDataDelete.response) {
             globalDataFunc()
             closeModal()
-            toast.success('Savol muvaffaqiyatli o\'chirildi')
+            toast.success(successDelete('Savol'))
         }
     }, [testDataDelete.response]);
 
@@ -185,7 +182,7 @@ const Tests = () => {
                 <div className={`min-w-54 sm:w-64 md:w-96 lg:w-[40rem]`}>
                     {editOrDeleteStatus === 'DELETE' ? (
                         <p className={`text-center text-black text-base lg:text-xl mb-10 mt-7`}>
-                            Haqiqatdan xam bu savolni o'chirib tashlamoqchimisiz?
+                            {deleteText('savolni')}
                         </p>
                     ) : (
                         <div className={`mt-7`}>
@@ -340,7 +337,7 @@ const NotFoundList = () => {
                 className="border-b border-[#eee] p-5 text-black text-center"
                 colSpan={testThead.length}
             >
-                Ma'lumot topilmadi
+                {notFound}
             </td>
         </tr>
     )

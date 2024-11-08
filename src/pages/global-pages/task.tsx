@@ -11,13 +11,13 @@ import Modal from "@/components/custom/modal/modal.tsx";
 import toast from "react-hot-toast";
 import courseStore from "@/helpers/state-management/coursesStore.tsx";
 import ImgUpload from "@/components/custom/imagesData/img-upload.tsx";
-import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 import globalStore from "@/helpers/state-management/globalStore.tsx";
 import {Card, CardDescription, CardTitle} from "@/components/ui/card-hover-effect.tsx";
 import {FaEdit} from "react-icons/fa";
 import {AiFillDelete} from "react-icons/ai";
 import {Image} from "antd";
 import images from '@/assets/images/category.jpg'
+import {successAdd, successDelete, successEdit} from "@/helpers/constanta.tsx";
 
 const defVal = {
     name: '',
@@ -50,19 +50,26 @@ const Task = () => {
     useEffect(() => {
         if (taskAdd.response) {
             globalDataFunc()
-            toast.success('Task muvaffaqiyatli qushildi')
-            closeModal()
-        } else if (taskEdit.response) {
-            globalDataFunc()
-            toast.success('Task muvaffaqiyatli taxrirlandi')
-            closeModal()
-        } else if (taskDelete.response) {
-            globalDataFunc()
-            toast.success('Task muvaffaqiyatli uchirildi')
+            toast.success(successAdd('Task'))
             closeModal()
         }
-        consoleClear()
-    }, [taskAdd.response, taskEdit.response, taskDelete.response]);
+    }, [taskAdd.response]);
+
+    useEffect(() => {
+        if (taskEdit.response) {
+            globalDataFunc()
+            toast.success(successEdit('Task'))
+            closeModal()
+        }
+    }, [taskEdit.response]);
+
+    useEffect(() => {
+        if (taskDelete.response) {
+            globalDataFunc()
+            toast.success(successDelete('Task'))
+            closeModal()
+        }
+    }, [taskDelete.response]);
 
     const handleChange = (name: string, value: string) => setCrudTask({...crudTask, [name]: value});
 
@@ -100,7 +107,8 @@ const Task = () => {
                         <Card key={idx}>
                             <div className={`flex justify-start items-start gap-5 w-full`}>
                                 {imageError === `${true}${idx}` ? (
-                                    <div className={`flex justify-center items-center text-center font-bold`}>Task file</div>
+                                    <div className={`flex justify-center items-center text-center font-bold`}>Task
+                                        file</div>
                                 ) : (
                                     <Image
                                         src={task.fileId ? `${imgGet}${task.fileId}` : images}

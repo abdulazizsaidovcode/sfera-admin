@@ -22,7 +22,6 @@ import {CiMenuKebab} from "react-icons/ci";
 import Modal from "@/components/custom/modal/modal.tsx";
 import courseStore from "@/helpers/state-management/coursesStore.tsx";
 import toast from "react-hot-toast";
-import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 import {styles} from "@/styles/style.tsx";
 import TextInput from "@/components/custom/inputs/text-input.tsx";
 import moment from "moment";
@@ -107,7 +106,6 @@ const Payment = () => {
             closeModal()
             toast.success(successAdd('To\'lov malumoti'))
         }
-        consoleClear()
     }, [userAdd.response]);
 
     useEffect(() => {
@@ -116,7 +114,6 @@ const Payment = () => {
             closeModal()
             toast.success(successEdit('To\'lov malumoti'))
         }
-        consoleClear()
     }, [userEdit.response]);
 
     useEffect(() => {
@@ -125,7 +122,6 @@ const Payment = () => {
             closeModal()
             toast.success(successDelete('To\'lov malumoti'))
         }
-        consoleClear()
     }, [userDelete.response]);
 
     useEffect(() => {

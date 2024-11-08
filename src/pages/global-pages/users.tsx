@@ -1,7 +1,7 @@
 import Breadcrumb from "@/components/custom/breadcrumb/Breadcrumb.tsx";
 import {MdDelete, MdOutlineGroupAdd} from "react-icons/md";
 import Tables from "@/components/custom/tables/table.tsx";
-import {userTableHead} from "@/helpers/constanta.tsx";
+import {notFound, successAdd, successDelete, successEdit, userTableHead} from "@/helpers/constanta.tsx";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function";
 import {config} from "@/helpers/token";
 import React, {useEffect, useState} from "react";
@@ -26,7 +26,6 @@ import ImgUpload from "@/components/custom/imagesData/img-upload.tsx";
 import toast from "react-hot-toast";
 import globalStore from "@/helpers/state-management/globalStore.tsx";
 import images from '@/assets/images/user.jpg'
-import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 import {styles} from "@/styles/style.tsx";
 import TextInput from "@/components/custom/inputs/text-input.tsx";
 import PhoneNumberInput from "@/components/custom/inputs/number-input.tsx";
@@ -103,35 +102,49 @@ const Users = () => {
         if (userAdd.response) {
             users.globalDataFunc()
             closeModal()
-            toast.success('Foydalanuvchi muvaffaqiyatli qo\'shildi')
+            toast.success(successAdd('Foydalanuvchi'))
         }
+    }, [userAdd.response]);
+
+    useEffect(() => {
         if (userEdit.response) {
             users.globalDataFunc()
             closeModal()
-            toast.success('Foydalanuvchi muvaffaqiyatli taxrirlandi')
+            toast.success(successEdit('Foydalanuvchi'))
         }
+    }, [userEdit.response]);
+
+    useEffect(() => {
         if (userDelete.response) {
             users.globalDataFunc()
             closeModal()
-            toast.success('Foydalanuvchi muvaffaqiyatli o\'chirildi')
+            toast.success(successDelete('Foydalanuvchi'))
         }
+    }, [userDelete.response]);
+
+    useEffect(() => {
         if (userGroupUpdate.response) {
             users.globalDataFunc()
             closeModal()
             toast.success('O\'zgarishlar muvaffaqiyatli saqlandi')
         }
+    }, [userGroupUpdate.response]);
+
+    useEffect(() => {
         if (userRoleEdit.response) {
             users.globalDataFunc()
             closeModal()
             toast.success('Foydalanuvchi roli muvaffaqiyatli o\'zgartirildi')
         }
+    }, [userRoleEdit.response]);
+
+    useEffect(() => {
         if (userGroupUpdateUser.response) {
             users.globalDataFunc()
             closeModal()
             toast.success('O\'zgarishlar muvaffaqiyatli saqlandi')
         }
-        consoleClear()
-    }, [userAdd.response, userEdit.response, userDelete.response, userGroupUpdate.response, userRoleEdit.response, userGroupUpdateUser.response]);
+    }, [userGroupUpdateUser.response]);
 
     const userRole = (role: string) => {
         if (role === 'ROLE_STUDENT') return 'O\'quvchi';
@@ -340,7 +353,7 @@ const Users = () => {
                         )) : <tr>
                             <td className="border-b border-[#eee] p-5" colSpan={userTableHead.length}>
                                 <p className="text-black text-center">
-                                    Foydalanuvchilar topilmadi
+                                    {notFound}
                                 </p>
                             </td>
                         </tr>}

@@ -2,21 +2,20 @@ import Breadcrumb from "@/components/custom/breadcrumb/Breadcrumb.tsx";
 import {Input, Pagination, Popover, Select} from "antd";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import Tables from "@/components/custom/tables/table.tsx";
-import {lessonPageThead} from "@/helpers/constanta.tsx";
+import {lessonPageThead, successAdd, successDelete, successEdit} from "@/helpers/constanta.tsx";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
 import {useEffect, useState} from "react";
 import {categoryList, lessonCrud, lessonPageList, moduleCategoryId} from "@/helpers/api.tsx";
 import ShinyButton from "@/components/magicui/shiny-button.tsx";
 import {MdNextPlan, MdOutlineAddCircle} from "react-icons/md";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import Checkbox from "@/components/custom/checkbox/checkbox.tsx";
 import {FaEdit} from "react-icons/fa";
 import {AiFillDelete} from "react-icons/ai";
 import Modal from "@/components/custom/modal/modal.tsx";
 import toast from "react-hot-toast";
 import courseStore from "@/helpers/state-management/coursesStore.tsx";
-import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 import ImgUpload from "@/components/custom/imagesData/img-upload.tsx";
 import globalStore from "@/helpers/state-management/globalStore.tsx";
 import VideoPlayer from "@/components/custom/video/video.tsx";
@@ -86,19 +85,26 @@ const Lesson = () => {
     useEffect(() => {
         if (lessonAdd.response) {
             globalDataFunc()
-            toast.success('Dars muvaffaqiyatli qushildi')
-            closeModal()
-        } else if (lessonEdit.response) {
-            globalDataFunc()
-            toast.success('Dars muvaffaqiyatli taxrirlandi')
-            closeModal()
-        } else if (lessonDelete.response) {
-            globalDataFunc()
-            toast.success('Dars muvaffaqiyatli uchirildi')
+            toast.success(successAdd('Dars'))
             closeModal()
         }
-        consoleClear()
-    }, [lessonAdd.response, lessonEdit.response, lessonDelete.response]);
+    }, [lessonAdd.response]);
+
+    useEffect(() => {
+        if (lessonEdit.response) {
+            globalDataFunc()
+            toast.success(successEdit('Dars'))
+            closeModal()
+        }
+    }, [lessonEdit.response]);
+
+    useEffect(() => {
+        if (lessonDelete.response) {
+            globalDataFunc()
+            toast.success(successDelete('Dars'))
+            closeModal()
+        }
+    }, [lessonDelete.response]);
 
     const handleChange = (name: string, value: string) => setCrudLesson({...crudLesson, [name]: value});
 
@@ -199,11 +205,12 @@ const Lesson = () => {
                                     </p>
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
-                                    <p className="text-black hover:cursor-pointer hover:text-lighterGreen duration-300" onClick={() => {
-                                        openModal()
-                                        setEditOrDeleteStatus('OPEN_VIDEO')
-                                        setCrudLesson(lesson)
-                                    }}>
+                                    <p className="text-black hover:cursor-pointer hover:text-lighterGreen duration-300"
+                                       onClick={() => {
+                                           openModal()
+                                           setEditOrDeleteStatus('OPEN_VIDEO')
+                                           setCrudLesson(lesson)
+                                       }}>
                                         vedioni ko'rish
                                     </p>
                                 </td>

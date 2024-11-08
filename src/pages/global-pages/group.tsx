@@ -2,7 +2,7 @@ import Breadcrumb from "@/components/custom/breadcrumb/Breadcrumb.tsx";
 import ShinyButton from "@/components/magicui/shiny-button.tsx";
 import {MdNextPlan, MdOutlineAddCircle} from "react-icons/md";
 import Tables from "@/components/custom/tables/table.tsx";
-import {groupThead} from "@/helpers/constanta.tsx";
+import {groupThead, successAdd, successDelete, successEdit} from "@/helpers/constanta.tsx";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
 import {useEffect, useState} from "react";
@@ -19,7 +19,6 @@ import groupStore from "@/helpers/state-management/groupStore.tsx";
 import {CoursesList} from "@/types/course.ts";
 import Modal from "@/components/custom/modal/modal.tsx";
 import toast from "react-hot-toast";
-import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 import {useNavigate} from "react-router-dom";
 
 const odd: number[] = [1, 3, 5]
@@ -59,19 +58,26 @@ const Groups = () => {
     useEffect(() => {
         if (groupDataAdd.response) {
             globalDataFunc()
-            toast.success('Guruh muvaffaqiyatli qushildi')
-            closeModal()
-        } else if (groupDataEdit.response) {
-            globalDataFunc()
-            toast.success('Guruh muvaffaqiyatli taxrirlandi')
-            closeModal()
-        } else if (groupDataDelete.response) {
-            globalDataFunc()
-            toast.success('Guruh muvaffaqiyatli o\'chirildi')
+            toast.success(successAdd('Guruh'))
             closeModal()
         }
-        consoleClear()
-    }, [groupDataAdd.response, groupDataEdit.response, groupDataDelete.response]);
+    }, [groupDataAdd.response]);
+
+    useEffect(() => {
+        if (groupDataEdit.response) {
+            globalDataFunc()
+            toast.success(successEdit('Guruh'))
+            closeModal()
+        }
+    }, [groupDataEdit.response]);
+
+    useEffect(() => {
+      if (groupDataDelete.response) {
+            globalDataFunc()
+            toast.success(successDelete('Guruh'))
+            closeModal()
+        }
+    }, [ groupDataDelete.response]);
 
     useEffect(() => {
         handleEdit()

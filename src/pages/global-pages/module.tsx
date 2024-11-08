@@ -9,13 +9,12 @@ import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
 import Modal from "@/components/custom/modal/modal.tsx";
 import courseStore from "@/helpers/state-management/coursesStore.tsx";
-import {consoleClear} from "@/helpers/functions/toastMessage.tsx";
 import {Card, CardDescription, CardTitle, HoverEffect} from "@/components/ui/card-hover-effect.tsx";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import {FaEdit} from "react-icons/fa";
 import {AiFillDelete} from "react-icons/ai";
 import Tables from "@/components/custom/tables/table.tsx";
-import {lessonThead} from "@/helpers/constanta.tsx";
+import {lessonThead, notFound, successAdd, successDelete, successEdit} from "@/helpers/constanta.tsx";
 import Checkbox from "@/components/custom/checkbox/checkbox.tsx";
 import {Link} from "react-router-dom";
 
@@ -70,19 +69,26 @@ const Module = () => {
     useEffect(() => {
         if (moduleAdd.response) {
             globalDataFunc()
-            toast.success('Modul muvaffaqiyatli qushildi')
-            closeModal()
-        } else if (moduleEdit.response) {
-            globalDataFunc()
-            toast.success('Modul muvaffaqiyatli taxrirlandi')
-            closeModal()
-        } else if (moduleDelete.response) {
-            globalDataFunc()
-            toast.success('Modul muvaffaqiyatli uchirildi')
+            toast.success(successAdd('Modul'))
             closeModal()
         }
-        consoleClear()
-    }, [moduleAdd.response, moduleEdit.response, moduleDelete.response]);
+    }, [moduleAdd.response]);
+
+    useEffect(() => {
+        if (moduleEdit.response) {
+            globalDataFunc()
+            toast.success(successEdit('Modul'))
+            closeModal()
+        }
+    }, [moduleEdit.response]);
+
+    useEffect(() => {
+        if (moduleDelete.response) {
+            globalDataFunc()
+            toast.success(successDelete('Modul'))
+            closeModal()
+        }
+    }, [moduleDelete.response]);
 
     useEffect(() => {
         globalDataFunc()
@@ -144,7 +150,8 @@ const Module = () => {
 
             {/*==================BODY===============*/}
             <div className={`flex justify-start items-start flex-wrap lg:flex-nowrap gap-5 mt-10`}>
-                <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 lg:w-[20%] w-full max-h-[350px] overflow-y-auto`}>
+                <div
+                    className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 lg:w-[20%] w-full max-h-[350px] overflow-y-auto`}>
                     {loading ?
                         <Skeleton/> : (response && response.length > 0) ? response.map((item: any, idx: number) => (
                             <HoverEffect
@@ -153,7 +160,7 @@ const Module = () => {
                                 description={`Darslar soni: ${item.lessonCount}`}
                                 onClick={() => setModuleItems(item)}
                             />
-                        )) : <p>Ma'lumot topilmadi</p>}
+                        )) : <p>{notFound}</p>}
                 </div>
                 <div className={`w-full lg:w-[80%]`}>
                     {(response && response.length > 0 && !moduleItems) && (
@@ -245,7 +252,7 @@ const Module = () => {
                                                     className="border-b border-[#eee] p-5 text-black text-center"
                                                     colSpan={lessonThead.length}
                                                 >
-                                                    Ma'lumot topilmadi
+                                                    {notFound}
                                                 </td>
                                             </tr>}
                                         </Tables>
