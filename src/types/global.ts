@@ -17,3 +17,9 @@ export interface RegionOrDistricts {
     id: number
     name: string
 }
+
+export interface IStudentData {
+    studentId: number;
+    attendance: boolean;
+    date: string
+}

@@ -4,6 +4,11 @@ import ShinyButton from "@/components/magicui/shiny-button.tsx";
 import toast from "react-hot-toast";
 import {useEffect, useState} from "react";
 import {todayDate} from "@/helpers/functions/common-functions.tsx";
+import {IStudentData} from "@/types/global.ts";
+import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
+import {attendanceCreate} from "@/helpers/api.tsx";
+import {config} from "@/helpers/token.tsx";
+import {notFound} from "@/helpers/constanta.tsx";
 
 const months = [
     {month: 'Yan', id: 1},
@@ -31,17 +36,20 @@ export interface IAttendance {
     studentName: string
 }
 
-const AttendanceTable = ({active, setActive, response}: {
+const AttendanceTable = ({active, setActive, response, setAddResp}: {
     active: number,
     setActive: (v: number) => void,
     response: IAttendance[],
+    setAddResp: (v: string) => void,
 }) => {
-    const [attendanceData, setAttendanceData] = useState<{
-        studentId: number;
-        attendance: boolean;
-        date: string
-    }[]>([]);
+    const [attendanceData, setAttendanceData] = useState<IStudentData[]>([]);
     const [isAttendance, setIsAttendance] = useState<boolean>(false)
+
+    const {
+        loading: addLoading,
+        globalDataFunc: addAttendance,
+        response: addResponse
+    } = useGlobalRequest(attendanceCreate, 'POST', attendanceData, config)
 
     useEffect(() => {
         const foundAttendance = response?.length > 0 && response?.some(item =>
@@ -55,6 +63,18 @@ const AttendanceTable = ({active, setActive, response}: {
         );
         if (!foundAttendance) setIsAttendance(false);
     }, [response]);
+
+    useEffect(() => {
+        if (addResponse) {
+            setAttendanceData([])
+            setIsAttendance(false)
+            setAddResp(addResponse)
+        }
+    }, [addResponse]);
+
+    useEffect(() => {
+        setAttendanceData([])
+    }, [active]);
 
     const handleUpdateAttendance = (data: { studentId: number; attendance: boolean; date: string }[]) => {
         setAttendanceData((prev) => {
@@ -104,7 +124,7 @@ const AttendanceTable = ({active, setActive, response}: {
                     )) : <>
                         <tr>
                             <td colSpan={response?.length} className={'py-3 text-center'}>
-                                Studentlar mavjud emas
+                                {notFound}
                             </td>
                         </tr>
                     </>}
@@ -116,14 +136,13 @@ const AttendanceTable = ({active, setActive, response}: {
                     className={`${response.length >= 6 ? 'flex justify-end mt-7' : 'absolute bottom-5 right-5'}`}
                 >
                     <ShinyButton
-                        text={'Saqlash'}
-                        className={'bg-darkGreen'}
+                        text={addLoading ? 'Yuborilmoqda...' : 'Saqlash'}
+                        className={`bg-darkGreen ${addLoading && 'cursor-not-allowed opacity-60'}`}
                         onClick={() => {
                             if (isAttendance) toast.error('Siz bugun bu guruhni yo\'qlama qilib bo\'ldingiz. Istasangiz tahrirlashingiz mumkin!');
                             else {
-                                if (response.length === attendanceData.length) {
-                                    toast.success('Success')
-                                } else toast.error('Hamma o\'quvchini yo\'qlama qilishingiz shart!')
+                                if (response.length === attendanceData.length && !addLoading) addAttendance()
+                                else toast.error('Hamma o\'quvchini yo\'qlama qilishingiz shart!')
                             }
                         }}
                     />

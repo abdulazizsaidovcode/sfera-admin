@@ -11,6 +11,7 @@ import StsTable from "@/pages/edu-admin/group/components/stsTable.tsx";
 
 const GroupAttendance = () => {
     const {id, name} = useParams<{ id: string; name: string }>();
+    const [addResp, setAddResp] = useState('')
     const [active, setActive] = useState<number>(new Date().getMonth() + 1)
     const defYear = new Date().getFullYear()
     const {
@@ -29,6 +30,7 @@ const GroupAttendance = () => {
         response: stsData
     } = useGlobalRequest(`${paymentSts}${id}?year=${defYear}&month=${active}`, 'GET', '', config)
 
+
     useEffect(() => {
         globalDataFunc()
         oneGetGroup()
@@ -39,6 +41,16 @@ const GroupAttendance = () => {
         globalDataFunc()
         stsFunction()
     }, [active]);
+
+    useEffect(() => {
+        if (addResp) {
+            globalDataFunc()
+            stsFunction()
+            setTimeout(() => {
+                setAddResp('')
+            }, 200)
+        }
+    }, [addResp]);
 
     return (
         <>
@@ -55,9 +67,9 @@ const GroupAttendance = () => {
                     </div> :
                     <AttendanceTable
                         response={response}
-                        groupRes={oneGroupData}
                         active={active}
                         setActive={setActive}
+                        setAddResp={setAddResp}
                     />
                 }
             </div>
