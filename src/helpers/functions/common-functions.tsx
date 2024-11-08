@@ -18,6 +18,9 @@ export const validateText = (inputText: string) => {
     return inputText;
 };
 
+// ============NUMBER FORMATTER===========
+export const formatNumber = (num: number) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
 // ===============TODAY DATE================
 const day = new Date().getDate() < 10 ? `0${new Date().getDate()}` : new Date().getDate();
 const month = new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1;

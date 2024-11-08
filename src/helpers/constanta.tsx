@@ -89,6 +89,21 @@ export const successAdd = (text: string) => `${text} muvaffaqiyatli qo'shildi`
 export const successEdit = (text: string) => `${text} muvaffaqiyatli taxrirlandi`
 export const successDelete = (text: string) => `${text} muvaffaqiyatli o'chirildi`
 
+export const monthList = [
+    {id: 1, name: 'Yanvar'},
+    {id: 2, name: 'Fevral'},
+    {id: 3, name: 'Mart'},
+    {id: 4, name: 'Aprel'},
+    {id: 5, name: 'May'},
+    {id: 6, name: 'Iyun'},
+    {id: 7, name: 'Iyul'},
+    {id: 8, name: 'Avgust'},
+    {id: 9, name: 'Sentyabr'},
+    {id: 10, name: 'Oktyabr'},
+    {id: 11, name: 'Noyabr'},
+    {id: 12, name: 'Dekabr'},
+]
+
 // ===================THEAD DATA==================
 export const topGroupEdu: IThead[] = [
     {id: 5, name: 'ID'},

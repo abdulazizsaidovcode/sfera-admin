@@ -8,7 +8,7 @@ import {
     successAdd,
     successDelete,
     successEdit,
-    paymentTHead
+    paymentTHead, monthList
 } from "@/helpers/constanta.tsx";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function";
 import {config} from "@/helpers/token";
@@ -25,11 +25,11 @@ import toast from "react-hot-toast";
 import {styles} from "@/styles/style.tsx";
 import TextInput from "@/components/custom/inputs/text-input.tsx";
 import moment from "moment";
-import NumberGenerate from "@/components/magicui/number-ticker.tsx";
 import DateInput from "@/components/custom/inputs/date-input.tsx";
 import StatisticCard from "@/components/custom/cards/statistic-card.tsx";
 import LineChart from "@/components/custom/chart/line-chart.tsx";
 import {SiCashapp} from "react-icons/si";
+import {formatNumber, notFoundTable} from "@/helpers/functions/common-functions.tsx";
 
 const crudValueDef = {
     paySum: 0,
@@ -49,6 +49,7 @@ const Payment = () => {
     const [chartData, setChartData] = useState<number[]>([])
     const [chartDataMonth, setChartDataMonth] = useState<string[]>([])
     const [crudValue, setCrudValue] = useState<any>(crudValueDef);
+    const [totalMonth, setTotalMonth] = useState(new Date().getMonth() + 1)
     const {editOrDeleteStatus, setEditOrDeleteStatus} = courseStore()
 
     // ===========================REQUEST FUNCTION================================
@@ -73,7 +74,7 @@ const Payment = () => {
         response: stsCardData,
         globalDataFunc: stsCardFunc,
         loading: stsLoading
-    } = useGlobalRequest(paymentTotal, 'GET', '', config);
+    } = useGlobalRequest(`${paymentTotal}?month=${totalMonth}`, 'GET', '', config);
     const {
         response: stsChartData,
         globalDataFunc: stsChartFunc,
@@ -89,6 +90,10 @@ const Payment = () => {
         stsCardFunc()
         stsChartFunc()
     }, []);
+
+    useEffect(() => {
+        stsCardFunc()
+    }, [totalMonth]);
 
     useEffect(() => {
         users.globalDataFunc()
@@ -186,12 +191,24 @@ const Payment = () => {
             <div className={'flex justify-between flex-wrap md:flex-nowrap gap-5 items-start'}>
                 <div className={'w-full md:w-[30%]'}>
                     {stsLoading ? <Skeleton/> :
-                        <StatisticCard
-                            key={'totalMonthPay'}
-                            total={stsCardData ? stsCardData.totalSum : 0}
-                            title={stsCardData ? `${moment(stsCardData.startDate).format('DD.MM.YYYY')} - ${moment(stsCardData.endDate).format('DD.MM.YYYY')}` : notFound}
-                            children={<SiCashapp className={'text-xl'}/>}
-                        />
+                        <>
+                            <Select
+                                value={totalMonth}
+                                placeholder={`Oylar kesimida...`}
+                                className={`w-full bg-transparent h-11 custom-select mb-3`}
+                                onChange={(e) => setTotalMonth(e)}
+                            >
+                                {monthList.map(item => (
+                                    <Select.Option value={item.id}>{item.name}</Select.Option>
+                                ))}
+                            </Select>
+                            <StatisticCard
+                                key={'totalMonthPay'}
+                                total={stsCardData ? stsCardData.totalSum : 0}
+                                title={stsCardData ? `${moment(stsCardData.startDate).format('DD.MM.YYYY')} - ${moment(stsCardData.endDate).format('DD.MM.YYYY')}` : notFound}
+                                children={<SiCashapp className={'text-xl'}/>}
+                            />
+                        </>
                     }
                 </div>
                 <div className={'w-full md:w-[70%]'}>
@@ -273,7 +290,7 @@ const Payment = () => {
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
                                     <p className="text-black">
-                                        {<NumberGenerate value={sts.paySum} delay={0.3}/>} (UZS)
+                                        {formatNumber(sts.paySum)} (UZS)
                                     </p>
                                 </td>
                                 <td className="border-b border-[#eee] p-5">
@@ -299,13 +316,7 @@ const Payment = () => {
                                     </Dropdown>
                                 </td>
                             </tr>
-                        )) : <tr>
-                            <td className="border-b border-[#eee] p-5" colSpan={paymentTHead.length}>
-                                <p className="text-black text-center">
-                                    {notFound}
-                                </p>
-                            </td>
-                        </tr>}
+                        )) : notFoundTable(paymentTHead)}
                     </Tables>
                 }
                 <Pagination
