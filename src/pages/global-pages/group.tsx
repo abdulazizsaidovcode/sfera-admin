@@ -2,7 +2,7 @@ import Breadcrumb from "@/components/custom/breadcrumb/Breadcrumb.tsx";
 import ShinyButton from "@/components/magicui/shiny-button.tsx";
 import {MdNextPlan, MdOutlineAddCircle} from "react-icons/md";
 import Tables from "@/components/custom/tables/table.tsx";
-import {groupThead, successAdd, successDelete, successEdit} from "@/helpers/constanta.tsx";
+import {deleteText, groupThead, regNotFound, successAdd, successDelete, successEdit} from "@/helpers/constanta.tsx";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {config} from "@/helpers/token.tsx";
 import {useEffect, useState} from "react";
@@ -20,6 +20,10 @@ import {CoursesList} from "@/types/course.ts";
 import Modal from "@/components/custom/modal/modal.tsx";
 import toast from "react-hot-toast";
 import {useNavigate} from "react-router-dom";
+import {notFoundTable} from "@/helpers/functions/common-functions.tsx";
+import {styles} from "@/styles/style.tsx";
+import TextInput from "@/components/custom/inputs/text-input.tsx";
+import DateInput from "@/components/custom/inputs/date-input.tsx";
 
 const odd: number[] = [1, 3, 5]
 const couple: number[] = [2, 4, 6]
@@ -72,12 +76,12 @@ const Groups = () => {
     }, [groupDataEdit.response]);
 
     useEffect(() => {
-      if (groupDataDelete.response) {
+        if (groupDataDelete.response) {
             globalDataFunc()
             toast.success(successDelete('Guruh'))
             closeModal()
         }
-    }, [ groupDataDelete.response]);
+    }, [groupDataDelete.response]);
 
     useEffect(() => {
         handleEdit()
@@ -208,142 +212,147 @@ const Groups = () => {
                                     </p>
                                 </td>
                             </tr>
-                        )) : (
-                            <tr className={`hover:bg-whiteGreen duration-100`}>
-                                <td className="border-b border-[#eee] p-5" colSpan={groupThead.length}>
-                                    <p className="text-black text-center">
-                                        Guruhlar topilmadi
-                                    </p>
-                                </td>
-                            </tr>
-                        )}
+                        )) : notFoundTable(groupThead)}
                     </Tables>
                 }
             </div>
 
             <Modal onClose={closeModal} isOpen={isModal}>
-                <div className={`min-w-54 sm:w-64 md:w-96 lg:w-[40rem]`}>
+                <div className={styles.modalMain}>
                     {editOrDeleteStatus === 'DELETE' ? (
                         <p className={`text-center text-black text-base lg:text-xl mb-10 mt-7`}>
-                            Haqiqatdan xam bu guruhni o'chirib tashlamoqchimisiz?
+                            {deleteText('guruhni')}
                         </p>
                     ) : (
-                        <div className={`mt-7`}>
-                            <input
-                                value={crudGroup.name}
-                                onChange={(e) => handleChange('name', e.target.value)}
-                                placeholder="Guruh nomini kiriting"
-                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5"
-                            />
-                            <select
-                                value={crudGroup.categoryId}
-                                onChange={(e) => handleChange(`categoryId`, +e.target.value)}
-                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
-                            >
-                                <option disabled selected value={0}>
-                                    Yo'nalishni tanlang
-                                </option>
-                                {categoryLists.response && categoryLists.response.map((item: CoursesList) => (
-                                    <option value={item.id}>{item.name}</option>
-                                ))}
-                            </select>
-                            <select
-                                value={crudGroup.teacherId}
-                                onChange={(e) => handleChange(`teacherId`, +e.target.value)}
-                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
-                            >
-                                <option disabled selected value={0}>
-                                    O'qituvchini tanlang
-                                </option>
-                                {teachersList.response && teachersList.response.map((item: any) => (
-                                    <option value={item.userId}>{item.firstName} {item.lastName}</option>
-                                ))}
-                            </select>
-                            <select
-                                value={crudGroup.daysWeekIds}
-                                onChange={(e) => handleChange(`daysWeekIds`, e.target.value)}
-                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 mt-7 mb-5"
-                            >
-                                <option disabled selected value={``}>
-                                    Hafta kunlarini tanlang
-                                </option>
-                                <option value={`TOQ`}>Toq kunlari: Dushanba, Chorshanba, Juma</option>
-                                <option value={`JUF`}>Juft kunlari: Seshanba, Payshanba, Shanba</option>
-                            </select>
-                            <label className={`mb-2`}>Guruh ochiladigan kunni tanlang</label>
-                            <div className="custom-date-input">
-                                <input
-                                    type="date"
-                                    value={crudGroup.startDate}
-                                    onChange={(e) => handleChange('startDate', e.target.value)}
-                                    placeholder="Guruh ochiladigan kunni tanlang"
-                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mb-5"
+                        <div className={`my-7 grid grid-cols-1 md:grid-cols-2 gap-4`}>
+                            <div>
+                                <TextInput
+                                    handleChange={(e) => handleChange('name', e.target.value)}
+                                    placeholder={'Guruh nomini kiriting'}
+                                    value={crudGroup.name}
+                                    label={'Guruh nomini'}
                                 />
                             </div>
-                            <label className={`mb-2`}>
-                                Guruh dars boshlanish vaqtini kiriting. Namuna: (08:00 yoki 20:00)
-                            </label>
-                            <input
-                                value={crudGroup.startTime}
-                                onChange={(e) => {
-                                    const value = e.target.value;
-                                    if (/^\d{0,2}(:\d{0,2})?$/.test(value)) handleChange('startTime', value);
-                                }}
-                                onBlur={(e) => {
-                                    const value = e.target.value;
-                                    if (/^\d{1,2}(:\d{1,2})?$/.test(value)) {
-                                        let [hours, minutes] = value.split(':');
-                                        hours = hours.padStart(2, '0');
-                                        minutes = (minutes || '00').padStart(2, '0');
-                                        handleChange('startTime', `${hours}:${minutes}`);
-                                    }
-                                }}
-                                onKeyDown={(e) => {
-                                    if (e.key === "-" || e.key === "e" || e.key === "+" || e.key === " ") e.preventDefault();
-                                }}
-                                placeholder="Guruh dars vaqtini kiriting"
-                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5 mb-5"
-                            />
-                            <label className={`mb-2`}>
-                                Guruh dars tugash vaqtini kiriting. Namuna: (10:00 yoki 16:00)
-                            </label>
-                            <input
-                                value={crudGroup.endTime}
-                                onChange={(e) => {
-                                    const value = e.target.value;
-                                    if (/^\d{0,2}(:\d{0,2})?$/.test(value)) handleChange('endTime', value);
-                                }}
-                                onBlur={(e) => {
-                                    const value = e.target.value;
-                                    if (/^\d{1,2}(:\d{1,2})?$/.test(value)) {
-                                        let [hours, minutes] = value.split(':');
-                                        hours = hours.padStart(2, '0');
-                                        minutes = (minutes || '00').padStart(2, '0');
-                                        handleChange('endTime', `${hours}:${minutes}`);
-                                    }
-                                }}
-                                onKeyDown={(e) => {
-                                    if (e.key === "-" || e.key === "e" || e.key === "+" || e.key === " ") e.preventDefault();
-                                }}
-                                placeholder="Guruh dars vaqtini kiriting"
-                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5"
-                            />
+                            <div>
+                                <label>Yo'nalishni tanlang</label>
+                                <select
+                                    value={crudGroup.categoryId}
+                                    onChange={(e) => handleChange(`categoryId`, +e.target.value)}
+                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5"
+                                >
+                                    <option disabled selected value={0}>
+                                        Yo'nalishni tanlang
+                                    </option>
+                                    {categoryLists.response && categoryLists.response.map((item: CoursesList) => (
+                                        <option value={item.id}>{item.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div>
+                                <label>O'qituvchini tanlang</label>
+                                <select
+                                    value={crudGroup.teacherId}
+                                    onChange={(e) => handleChange(`teacherId`, +e.target.value)}
+                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5"
+                                >
+                                    <option disabled selected value={0}>
+                                        O'qituvchini tanlang
+                                    </option>
+                                    {teachersList.response && teachersList.response.map((item: any) => (
+                                        <option value={item.userId}>{item.firstName} {item.lastName}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div>
+                                <label>Hafta kunlarini tanlang</label>
+                                <select
+                                    value={crudGroup.daysWeekIds}
+                                    onChange={(e) => handleChange(`daysWeekIds`, e.target.value)}
+                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5"
+                                >
+                                    <option disabled selected value={``}>
+                                        Hafta kunlarini tanlang
+                                    </option>
+                                    <option value={`TOQ`}>Toq kunlari: Dushanba, Chorshanba, Juma</option>
+                                    <option value={`JUF`}>Juft kunlari: Seshanba, Payshanba, Shanba</option>
+                                </select>
+                            </div>
+                            <div>
+                                <DateInput
+                                    handleChange={(e) => handleChange('startDate', e.target.value)}
+                                    placeholder={'Guruh ochiladigan kunni tanlang'}
+                                    value={crudGroup.startDate}
+                                    label={'Guruh ochiladigan kunni tanlang'}
+                                />
+                            </div>
+                            <div>
+                                <label>
+                                    Guruh dars boshlanish vaqtini kiriting. Namuna: (08:00 yoki 20:00)
+                                </label>
+                                <input
+                                    value={crudGroup.startTime}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        if (/^\d{0,2}(:\d{0,2})?$/.test(value)) handleChange('startTime', value);
+                                    }}
+                                    onBlur={(e) => {
+                                        const value = e.target.value;
+                                        if (/^\d{1,2}(:\d{1,2})?$/.test(value)) {
+                                            let [hours, minutes] = value.split(':');
+                                            hours = hours.padStart(2, '0');
+                                            minutes = (minutes || '00').padStart(2, '0');
+                                            handleChange('startTime', `${hours}:${minutes}`);
+                                        }
+                                    }}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "-" || e.key === "e" || e.key === "+" || e.key === " ") e.preventDefault();
+                                    }}
+                                    placeholder="Guruh dars vaqtini kiriting"
+                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5"
+                                />
+                            </div>
+                            <div>
+                                <label>
+                                    Guruh dars tugash vaqtini kiriting. Namuna: (10:00 yoki 16:00)
+                                </label>
+                                <input
+                                    value={crudGroup.endTime}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        if (/^\d{0,2}(:\d{0,2})?$/.test(value)) handleChange('endTime', value);
+                                    }}
+                                    onBlur={(e) => {
+                                        const value = e.target.value;
+                                        if (/^\d{1,2}(:\d{1,2})?$/.test(value)) {
+                                            let [hours, minutes] = value.split(':');
+                                            hours = hours.padStart(2, '0');
+                                            minutes = (minutes || '00').padStart(2, '0');
+                                            handleChange('endTime', `${hours}:${minutes}`);
+                                        }
+                                    }}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "-" || e.key === "e" || e.key === "+" || e.key === " ") e.preventDefault();
+                                    }}
+                                    placeholder="Guruh dars vaqtini kiriting"
+                                    className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5"
+                                />
+                            </div>
                         </div>
                     )}
-                    <div className={`flex justify-end items-center gap-5 mt-5`}>
+                    <div className={styles.modalFooter}>
                         <ShinyButton
                             text={`Orqaga`}
-                            className={`bg-darkGreen`}
+                            className={`${styles.modalBtn}`}
                             onClick={closeModal}
                         />
                         {editOrDeleteStatus === 'POST' && (
                             <ShinyButton
                                 text={groupDataAdd.loading ? 'Saqlanmoqda...' : 'Saqlash'}
-                                className={`bg-darkGreen ${groupDataAdd.loading && 'cursor-not-allowed opacity-60'}`}
+                                className={`${styles.modalBtn} ${groupDataAdd.loading && 'cursor-not-allowed opacity-60'}`}
                                 onClick={() => {
                                     if (!groupDataAdd.loading) {
                                         if (changeRegex()) groupDataAdd.globalDataFunc()
-                                        else toast.error('Ma\'lumotlar tuliqligini tekshirib kuring')
+                                        else toast.error(regNotFound)
                                     }
                                 }}
                             />
@@ -351,11 +360,11 @@ const Groups = () => {
                         {editOrDeleteStatus === 'EDIT' && (
                             <ShinyButton
                                 text={groupDataEdit.loading ? 'Yuklanmoqda...' : 'Taxrirlash'}
-                                className={`bg-darkGreen ${groupDataEdit.loading && 'cursor-not-allowed opacity-60'}`}
+                                className={`${styles.modalBtn} ${groupDataEdit.loading && 'cursor-not-allowed opacity-60'}`}
                                 onClick={() => {
                                     if (!groupDataEdit.loading) {
                                         if (changeRegex()) groupDataEdit.globalDataFunc()
-                                        else toast.error('Ma\'lumotlar tuliqligini tekshirib kuring')
+                                        else toast.error(regNotFound)
                                     }
                                 }}
                             />
@@ -363,7 +372,7 @@ const Groups = () => {
                         {editOrDeleteStatus === 'DELETE' && (
                             <ShinyButton
                                 text={groupDataDelete.loading ? 'O\'chirilmoqda...' : 'Xa'}
-                                className={`bg-darkGreen ${groupDataDelete.loading && 'cursor-not-allowed opacity-60'}`}
+                                className={`${styles.modalBtn} ${groupDataDelete.loading && 'cursor-not-allowed opacity-60'}`}
                                 onClick={() => {
                                     if (!groupDataDelete.loading) groupDataDelete.globalDataFunc()
                                 }}
