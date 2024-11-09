@@ -219,7 +219,7 @@ const Payment = () => {
                         <LineChart
                             title={`Yillik statistika`}
                             category={chartDataMonth}
-                            seriesTitle={`Umumiy summa`}
+                            seriesTitle={`Umumiy summa (UZS)`}
                             seriesData={chartData}
                             type={`bar`}
                             maxSize={maxSize + 100000}

@@ -341,16 +341,16 @@ const Lesson = () => {
                                 </div>)}
                             </div>
                     )}
-                    <div className={`flex justify-end items-center gap-5 mt-5`}>
+                    <div className={`${styles.modalFooter} mt-5`}>
                         <ShinyButton
                             text={`Orqaga`}
-                            className={`bg-darkGreen`}
+                            className={`${styles.modalBtn}`}
                             onClick={closeModal}
                         />
                         {editOrDeleteStatus === 'POST' && (
                             <ShinyButton
                                 text={lessonAdd.loading ? 'Saqlanmoqda...' : 'Saqlash'}
-                                className={`bg-darkGreen ${lessonAdd.loading && 'cursor-not-allowed opacity-60'}`}
+                                className={`${styles.modalBtn} ${lessonAdd.loading && 'cursor-not-allowed opacity-60'}`}
                                 onClick={() => {
                                     if (!lessonAdd.loading) {
                                         if (crudLesson.name && crudLesson.description && crudLesson.videoLink && crudLesson.videoTime && crudLesson.moduleId) lessonAdd.globalDataFunc()
@@ -362,7 +362,7 @@ const Lesson = () => {
                         {editOrDeleteStatus === 'EDIT' && (
                             <ShinyButton
                                 text={lessonEdit.loading ? 'Yuklanmoqda...' : 'Taxrirlash'}
-                                className={`bg-darkGreen ${lessonEdit.loading && 'cursor-not-allowed opacity-60'}`}
+                                className={`${styles.modalBtn} ${lessonEdit.loading && 'cursor-not-allowed opacity-60'}`}
                                 onClick={() => {
                                     if (!lessonEdit.loading) {
                                         if (crudLesson.name && crudLesson.description && crudLesson.videoLink && crudLesson.videoTime) lessonEdit.globalDataFunc()
@@ -374,7 +374,7 @@ const Lesson = () => {
                         {editOrDeleteStatus === 'DELETE' && (
                             <ShinyButton
                                 text={lessonDelete.loading ? 'O\'chirilmoqda...' : 'Xa'}
-                                className={`bg-darkGreen ${lessonDelete.loading && 'cursor-not-allowed opacity-60'}`}
+                                className={`${styles.modalBtn} ${lessonDelete.loading && 'cursor-not-allowed opacity-60'}`}
                                 onClick={() => {
                                     if (!lessonDelete.loading) lessonDelete.globalDataFunc()
                                 }}

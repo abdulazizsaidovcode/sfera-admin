@@ -14,9 +14,20 @@ import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import {FaEdit} from "react-icons/fa";
 import {AiFillDelete} from "react-icons/ai";
 import Tables from "@/components/custom/tables/table.tsx";
-import {lessonThead, notFound, successAdd, successDelete, successEdit} from "@/helpers/constanta.tsx";
+import {
+    deleteText,
+    lessonThead,
+    notFound,
+    regNotFound,
+    successAdd,
+    successDelete,
+    successEdit
+} from "@/helpers/constanta.tsx";
 import Checkbox from "@/components/custom/checkbox/checkbox.tsx";
 import {Link} from "react-router-dom";
+import {notFoundTable} from "@/helpers/functions/common-functions.tsx";
+import {styles} from "@/styles/style.tsx";
+import TextInput from "@/components/custom/inputs/text-input.tsx";
 
 const defVal = {
     name: '',
@@ -155,6 +166,7 @@ const Module = () => {
                     {loading ?
                         <Skeleton/> : (response && response.length > 0) ? response.map((item: any, idx: number) => (
                             <HoverEffect
+                                key={idx}
                                 idx={idx}
                                 title={item.name}
                                 description={`Darslar soni: ${item.lessonCount}`}
@@ -229,8 +241,9 @@ const Module = () => {
                                                     </td>
                                                     <td className="border-b border-[#eee] p-5">
                                                         <p className="text-black">
-                                                            <Link to={m.videoLink} target={`_blank`}>vedioni
-                                                                kurish</Link>
+                                                            <Link to={m.videoLink} target={`_blank`}>
+                                                                vedioni kurish
+                                                            </Link>
                                                         </p>
                                                     </td>
                                                     <td className="border-b border-[#eee] p-5">
@@ -247,14 +260,7 @@ const Module = () => {
                                                         </p>
                                                     </td>
                                                 </tr>
-                                            )) : <tr className={`hover:bg-whiteGreen duration-100`}>
-                                                <td
-                                                    className="border-b border-[#eee] p-5 text-black text-center"
-                                                    colSpan={lessonThead.length}
-                                                >
-                                                    {notFound}
-                                                </td>
-                                            </tr>}
+                                            )) : notFoundTable(lessonThead)}
                                         </Tables>
                                     </div>
                                 )}
@@ -265,23 +271,25 @@ const Module = () => {
             </div>
 
             <Modal onClose={closeModal} isOpen={isModal}>
-                <div className={`min-w-54 sm:w-64 md:w-96 lg:w-[40rem]`}>
+                <div className={styles.modalMain}>
                     {editOrDeleteStatus === 'DELETE' ? (
                         <p className={`text-center text-black text-base lg:text-xl mb-10 mt-7`}>
-                            Haqiqatdan xam bu modulni o'chirib tashlamoqchimisiz?
+                            {deleteText('modulni')}
                         </p>
                     ) : (
                         <div className={`mt-7`}>
-                            <input
+                            <TextInput
+                                handleChange={(e) => handleChange('name', e.target.value)}
+                                placeholder={'Modul nomini kiriting'}
                                 value={crudModule.name}
-                                onChange={(e) => handleChange('name', e.target.value)}
-                                placeholder="Modul nomini kiriting"
-                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg focus:border-darkGreen block w-full p-2.5"
+                                label={'Modul nomi'}
+                                className={'mb-5'}
                             />
+                            <label>Kursni tanlang</label>
                             <select
                                 value={crudModule.categoryId}
                                 onChange={(e) => handleChange(`categoryId`, e.target.value)}
-                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5 my-7"
+                                className="bg-white border border-lighterGreen text-gray-900 rounded-lg block w-full p-2.5"
                             >
                                 <option disabled selected value={0}>Kursni tanlang</option>
                                 {categoryLists.response && categoryLists.response.map((item: any) => (
@@ -290,20 +298,20 @@ const Module = () => {
                             </select>
                         </div>
                     )}
-                    <div className={`flex justify-end items-center gap-5 mt-5`}>
+                    <div className={`${styles.modalFooter} mt-5`}>
                         <ShinyButton
                             text={`Orqaga`}
-                            className={`bg-darkGreen`}
+                            className={`${styles.modalBtn}`}
                             onClick={closeModal}
                         />
                         {editOrDeleteStatus === 'POST' && (
                             <ShinyButton
                                 text={moduleAdd.loading ? 'Saqlanmoqda...' : 'Saqlash'}
-                                className={`bg-darkGreen ${moduleAdd.loading && 'cursor-not-allowed opacity-60'}`}
+                                className={`${styles.modalBtn} ${moduleAdd.loading && 'cursor-not-allowed opacity-60'}`}
                                 onClick={() => {
                                     if (!moduleAdd.loading) {
                                         if (crudModule.name && crudModule.categoryId) moduleAdd.globalDataFunc()
-                                        else toast.error('Ma\'lumotlar tuliqligini tekshirib kuring')
+                                        else toast.error(regNotFound)
                                     }
                                 }}
                             />
@@ -311,11 +319,11 @@ const Module = () => {
                         {editOrDeleteStatus === 'EDIT' && (
                             <ShinyButton
                                 text={moduleEdit.loading ? 'Yuklanmoqda...' : 'Taxrirlash'}
-                                className={`bg-darkGreen ${moduleEdit.loading && 'cursor-not-allowed opacity-60'}`}
+                                className={`${styles.modalBtn} ${moduleEdit.loading && 'cursor-not-allowed opacity-60'}`}
                                 onClick={() => {
                                     if (!moduleEdit.loading) {
                                         if (crudModule.name && crudModule.categoryId) moduleEdit.globalDataFunc()
-                                        else toast.error('Ma\'lumotlar tuliqligini tekshirib kuring')
+                                        else toast.error(regNotFound)
                                     }
                                 }}
                             />
@@ -323,7 +331,7 @@ const Module = () => {
                         {editOrDeleteStatus === 'DELETE' && (
                             <ShinyButton
                                 text={moduleDelete.loading ? 'O\'chirilmoqda...' : 'Xa'}
-                                className={`bg-darkGreen ${moduleDelete.loading && 'cursor-not-allowed opacity-60'}`}
+                                className={`${styles.modalBtn} ${moduleDelete.loading && 'cursor-not-allowed opacity-60'}`}
                                 onClick={() => {
                                     if (!moduleDelete.loading) moduleDelete.globalDataFunc()
                                 }}
