@@ -132,9 +132,7 @@ const AttendanceTable = ({active, setActive, response, setAddResp}: {
                 </table>
             </div>
             {response?.length > 0 && (
-                <div
-                    className={`${response.length >= 6 ? 'flex justify-end mt-7' : 'absolute bottom-5 right-5'}`}
-                >
+                <div className="flex justify-end mt-5">
                     <ShinyButton
                         text={addLoading ? 'Yuborilmoqda...' : 'Saqlash'}
                         className={`bg-darkGreen ${addLoading && 'cursor-not-allowed opacity-60'}`}
