@@ -49,9 +49,8 @@ export const siteSecurity = () => {
 };
 
 // ==============CONSOLE CLEAR FUNCTION==============
-// export const consoleClear = () => console.clear();
-export const consoleClear = () => {
-}
+export const consoleClear = () => console.clear();
+// export const consoleClear = () => {}
 
 // ============TOASTS MESSAGES==========
 export const toastMessage = (code: string | number, message: string) => {
