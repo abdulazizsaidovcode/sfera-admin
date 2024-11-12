@@ -8,6 +8,7 @@ import {attendanceGet, groupCrud, paymentSts} from "@/helpers/api.tsx";
 import {useEffect, useState} from "react";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import StsTable from "@/pages/edu-admin/group/components/stsTable.tsx";
+import {unReload} from "@/helpers/functions/common-functions.tsx";
 
 const GroupAttendance = () => {
     const {id, name} = useParams<{ id: string; name: string }>();
@@ -35,6 +36,7 @@ const GroupAttendance = () => {
         globalDataFunc()
         oneGetGroup()
         stsFunction()
+        unReload()
     }, []);
 
     useEffect(() => {
@@ -73,7 +75,7 @@ const GroupAttendance = () => {
                     />
                 }
             </div>
-            {stsLoading ? <div className={'grid grid-cols-1 gap-4'}>
+            {stsLoading ? <div className={'grid grid-cols-1 gap-4 mt-6'}>
                 <Skeleton/>
                 <Skeleton/>
             </div> : <StsTable res={stsData}/>}

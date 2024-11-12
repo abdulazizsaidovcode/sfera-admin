@@ -3,7 +3,7 @@ import moment from "moment";
 import ShinyButton from "@/components/magicui/shiny-button.tsx";
 import toast from "react-hot-toast";
 import {useEffect, useState} from "react";
-import {todayDate} from "@/helpers/functions/common-functions.tsx";
+// import {todayDate} from "@/helpers/functions/common-functions.tsx";
 import {IStudentData} from "@/types/global.ts";
 import {useGlobalRequest} from "@/helpers/functions/restApi-function.tsx";
 import {attendanceCreate} from "@/helpers/api.tsx";
@@ -43,7 +43,7 @@ const AttendanceTable = ({active, setActive, response, setAddResp}: {
     setAddResp: (v: string) => void,
 }) => {
     const [attendanceData, setAttendanceData] = useState<IStudentData[]>([]);
-    const [isAttendance, setIsAttendance] = useState<boolean>(false)
+    // const [isAttendance, setIsAttendance] = useState<boolean>(false)
 
     const {
         loading: addLoading,
@@ -51,23 +51,24 @@ const AttendanceTable = ({active, setActive, response, setAddResp}: {
         response: addResponse
     } = useGlobalRequest(attendanceCreate, 'POST', attendanceData, config)
 
-    useEffect(() => {
-        const foundAttendance = response?.length > 0 && response?.some(item =>
-            item.attendDtoList?.some(i => {
-                if (i.date === todayDate()) {
-                    setIsAttendance(i.attendance !== null);
-                    return true;
-                }
-                return false;
-            })
-        );
-        if (!foundAttendance) setIsAttendance(false);
-    }, [response]);
+    // ==========KERAK BULISHI MUMKIN==========
+    // useEffect(() => {
+    //     const foundAttendance = response?.length > 0 && response?.some(item =>
+    //         item.attendDtoList?.some(i => {
+    //             if (i.date === todayDate()) {
+    //                 setIsAttendance(i.attendance !== null);
+    //                 return true;
+    //             }
+    //             return false;
+    //         })
+    //     );
+    //     if (!foundAttendance) setIsAttendance(false);
+    // }, [response]);
 
     useEffect(() => {
         if (addResponse) {
             setAttendanceData([])
-            setIsAttendance(false)
+            // setIsAttendance(false)
             setAddResp(addResponse)
         }
     }, [addResponse]);
@@ -137,11 +138,8 @@ const AttendanceTable = ({active, setActive, response, setAddResp}: {
                         text={addLoading ? 'Yuborilmoqda...' : 'Saqlash'}
                         className={`bg-darkGreen ${addLoading && 'cursor-not-allowed opacity-60'}`}
                         onClick={() => {
-                            if (isAttendance) toast.error('Siz bugun bu guruhni yo\'qlama qilib bo\'ldingiz. Istasangiz tahrirlashingiz mumkin!');
-                            else {
-                                if (response.length === attendanceData.length && !addLoading) addAttendance()
-                                else toast.error('Hamma o\'quvchini yo\'qlama qilishingiz shart!')
-                            }
+                            if (attendanceData.length > 0 && !addLoading) addAttendance()
+                            else toast.error('Hech bo\'lmaganda 1 ta o\'quvchini tanlang!')
                         }}
                     />
                 </div>

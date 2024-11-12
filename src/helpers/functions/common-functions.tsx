@@ -48,6 +48,29 @@ export const siteSecurity = () => {
     });
 };
 
+// ==============UN_RELOAD==============
+export const unReload = () => {
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey && (
+            e.keyCode === 84 ||
+            e.keyCode === 87
+        ))) {
+            alert('Saxifani tark etmoqchimisiz, o\'zgarishlar saqlanmasligi mumkin');
+            e.preventDefault();
+        }
+    });
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+        const confirmationMessage = 'Siz kiritgan o\'zgarishlar saqlanmasligi mumkin';
+        e.preventDefault();
+        e.returnValue = confirmationMessage;
+        return confirmationMessage;
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+};
+
 // ==============CONSOLE CLEAR FUNCTION==============
 export const consoleClear = () => console.clear();
 // export const consoleClear = () => {}
