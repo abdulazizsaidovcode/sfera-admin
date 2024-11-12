@@ -60,7 +60,7 @@ const GroupAttendance = () => {
         <>
             <Breadcrumb pageName={`Guruhlar`} subPage={`Davomat: ${name}`}/>
 
-            <div className="flex bg-gray-100 min-h-[50vh] space-x-4">
+            <div className="flex bg-gray-100 w-full min-h-[50vh] space-x-4">
                 {groupLoading ? <div className={'grid grid-cols-1 gap-4 w-1/4'}>
                     <Skeleton/>
                     <Skeleton/>
