@@ -12,7 +12,7 @@ import {unReload} from "@/helpers/functions/common-functions.tsx";
 import toast from "react-hot-toast";
 
 const GroupAttendance = () => {
-    const {id, name} = useParams<{ id: string; name: string }>();
+    const {id} = useParams<{ id: string }>();
     const [addResp, setAddResp] = useState('')
     const [active, setActive] = useState<number>(new Date().getMonth() + 1)
     const defYear = new Date().getFullYear()
@@ -58,24 +58,30 @@ const GroupAttendance = () => {
 
     return (
         <>
-            <Breadcrumb pageName={`Guruhlar`} subPage={`Davomat: ${name}`}/>
+            <Breadcrumb pageName={`Guruhlar`} subPage={`Davomat`}/>
 
-            <div className="flex bg-gray-100 w-full min-h-[50vh] space-x-4">
-                {groupLoading ? <div className={'grid grid-cols-1 gap-4 w-1/4'}>
-                    <Skeleton/>
-                    <Skeleton/>
-                </div> : <SidebarStudent response={oneGroupData}/>}
-                {groupLoading && loading ? <div className={'grid grid-cols-1 gap-4 w-3/4'}>
+            <div
+                className="flex flex-col lg:flex-row bg-gray-100 w-full min-h-[50vh] lg:space-x-4 space-y-4 lg:space-y-0"
+            >
+                {groupLoading ? (
+                    <div className="grid grid-cols-1 gap-4 w-full lg:w-1/4">
                         <Skeleton/>
                         <Skeleton/>
-                    </div> :
+                    </div>
+                ) : <SidebarStudent response={oneGroupData}/>}
+                {groupLoading && loading ? (
+                    <div className="grid grid-cols-1 gap-4 w-full lg:w-3/4">
+                        <Skeleton/>
+                        <Skeleton/>
+                    </div>
+                ) : (
                     <AttendanceTable
                         response={response}
                         active={active}
                         setActive={setActive}
                         setAddResp={setAddResp}
                     />
-                }
+                )}
             </div>
             {stsLoading ? <div className={'grid grid-cols-1 gap-4 mt-6'}>
                 <Skeleton/>

@@ -85,13 +85,13 @@ const AttendanceTable = ({active, setActive, response, setAddResp}: {
     };
 
     return (
-        <div className="w-3/4 bg-white p-6 shadow-md rounded-lg relative">
-            <div className="flex flex-wrap items-center text-sm text-gray-600 mb-3 gap-2">
+        <div className="w-full lg:w-3/4 bg-white p-4 lg:p-6 shadow-md rounded-lg">
+            <div className="flex flex-wrap items-center text-xs md:text-sm text-gray-600 mb-2 md:mb-3 gap-2">
                 {months.map((month, index) => (
                     <span
                         key={index}
                         onClick={() => setActive(month.id)}
-                        className={`${month.id === active ? 'text-orange-600 font-bold border-orange-600' : 'border-black/40'} border rounded-xl px-4 py-1.5 hover:cursor-pointer shadow-md`}
+                        className={`${month.id === active ? "text-orange-600 font-bold border-orange-600" : "border-black/40"} border rounded-xl px-3 py-1 md:px-4 md:py-1.5 hover:cursor-pointer shadow-md`}
                     >
                         {month.month}
                     </span>
@@ -102,44 +102,49 @@ const AttendanceTable = ({active, setActive, response, setAddResp}: {
                 <table className="w-full text-left border-collapse">
                     <thead>
                     <tr>
-                        {response?.length > 0 && <th className="font-medium border-b border-black/50 p-2">Ism</th>}
-                        {response?.length > 0 && response[0].attendDtoList.map((date: {
-                            attendance: null | boolean
-                            date: string
-                            id: null | number
-                        }, index: number) => (
-                            <th key={index}
-                                className="text-center font-medium border-b border-black/50 min-w-24">
-                                {moment(date.date).format('DD MMM')}
+                        {response?.length > 0 && (
+                            <th className="font-medium border-b border-black/50 p-2 text-xs md:text-sm">
+                                Ism
                             </th>
-                        ))}
+                        )}
+                        {response?.length > 0 &&
+                            response[0].attendDtoList.map((date, index) => (
+                                <th
+                                    key={index}
+                                    className="text-center font-medium border-b border-black/50 min-w-[70px] text-xs md:text-sm"
+                                >
+                                    {moment(date.date).format("DD MMM")}
+                                </th>
+                            ))}
                     </tr>
                     </thead>
                     <tbody>
-                    {response?.length > 0 ? response.map((item: IAttendance, index: number) => (
-                        <StudentRow
-                            key={index}
-                            data={item}
-                            updateAttendance={handleUpdateAttendance}
-                        />
-                    )) : <>
+                    {response?.length > 0 ? (
+                        response.map((item, index) => (
+                            <StudentRow
+                                key={index}
+                                data={item}
+                                updateAttendance={handleUpdateAttendance}
+                            />
+                        ))
+                    ) : (
                         <tr>
-                            <td colSpan={response?.length} className={'py-3 text-center'}>
+                            <td colSpan={response?.length} className="py-3 text-center text-xs md:text-sm">
                                 {notFound}
                             </td>
                         </tr>
-                    </>}
+                    )}
                     </tbody>
                 </table>
             </div>
             {response?.length > 0 && (
-                <div className="flex justify-end mt-5">
+                <div className="flex justify-end mt-4 md:mt-5">
                     <ShinyButton
-                        text={addLoading ? 'Yuborilmoqda...' : 'Saqlash'}
-                        className={`bg-darkGreen ${addLoading && 'cursor-not-allowed opacity-60'}`}
+                        text={addLoading ? "Yuborilmoqda..." : "Saqlash"}
+                        className={`bg-darkGreen ${addLoading && "cursor-not-allowed opacity-60"}`}
                         onClick={() => {
-                            if (attendanceData.length > 0 && !addLoading) addAttendance()
-                            else toast.error('Hech bo\'lmaganda 1 ta o\'quvchini tanlang!')
+                            if (attendanceData.length > 0 && !addLoading) addAttendance();
+                            else toast.error("Hech bo'lmaganda 1 ta o'quvchini tanlang!");
                         }}
                     />
                 </div>
