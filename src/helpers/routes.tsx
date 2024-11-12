@@ -146,7 +146,7 @@ export const routes = [
         </>
     },
     {
-        path: '/edu/group-attendance/:name/:id',
+        path: '/edu/group-attendance/:id',
         element: <>
             <PageTitle title="Education | Attendance"/>
             <GroupAttendance/>

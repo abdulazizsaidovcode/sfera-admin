@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {IAttendance} from './attendanceTable.tsx';
 import {todayDate} from "@/helpers/functions/common-functions.tsx";
+import {IAttendance} from "@/types/attendance.ts";
 
 interface StudentRowProps {
     data: IAttendance;

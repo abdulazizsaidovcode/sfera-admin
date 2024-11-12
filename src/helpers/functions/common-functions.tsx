@@ -50,7 +50,7 @@ export const siteSecurity = () => {
 
 // ==============UN_RELOAD==============
 export const unReload = () => {
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         if ((e.ctrlKey && (
             e.keyCode === 84 ||
             e.keyCode === 87
@@ -88,6 +88,7 @@ export const toastMessage = (code: string | number, message: string) => {
     else return toast.error(message);
 };
 
+// ============TABLE NOT FOUND================
 export const notFoundTable = (thead: { id: number, name: string }[]) => {
     return (
         <tr className={`hover:bg-whiteGreen duration-100`}>

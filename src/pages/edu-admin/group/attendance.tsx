@@ -8,19 +8,20 @@ import {attendanceGet, groupCrud, paymentSts} from "@/helpers/api.tsx";
 import {useEffect, useState} from "react";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import StsTable from "@/pages/edu-admin/group/components/stsTable.tsx";
-import {unReload} from "@/helpers/functions/common-functions.tsx";
 import toast from "react-hot-toast";
+import attendanceStore from "@/helpers/state-management/attendanceStore.tsx";
 
 const GroupAttendance = () => {
     const {id} = useParams<{ id: string }>();
+    const {activeYear} = attendanceStore()
     const [addResp, setAddResp] = useState('')
     const [active, setActive] = useState<number>(new Date().getMonth() + 1)
-    const defYear = new Date().getFullYear()
+
     const {
         loading,
         globalDataFunc,
         response
-    } = useGlobalRequest(`${attendanceGet}?groupId=${id}&year=${defYear}&month=${active}`, 'GET', '', config)
+    } = useGlobalRequest(`${attendanceGet}?groupId=${id}&year=${activeYear}&month=${active}`, 'GET', '', config)
     const {
         loading: groupLoading,
         globalDataFunc: oneGetGroup,
@@ -30,20 +31,22 @@ const GroupAttendance = () => {
         loading: stsLoading,
         globalDataFunc: stsFunction,
         response: stsData
-    } = useGlobalRequest(`${paymentSts}${id}?year=${defYear}&month=${active}`, 'GET', '', config)
-
+    } = useGlobalRequest(`${paymentSts}${id}?year=${activeYear}&month=${active}`, 'GET', '', config)
 
     useEffect(() => {
         globalDataFunc()
         oneGetGroup()
         stsFunction()
-        unReload()
-    }, []);
+    }, [id, globalDataFunc, oneGetGroup, stsFunction]);
 
     useEffect(() => {
         globalDataFunc()
         stsFunction()
-    }, [active]);
+    }, [active, activeYear, globalDataFunc, stsFunction]);
+
+    useEffect(() => {
+        oneGetGroup()
+    }, [activeYear, oneGetGroup]);
 
     useEffect(() => {
         if (addResp) {
@@ -54,7 +57,7 @@ const GroupAttendance = () => {
                 setAddResp('')
             }, 200)
         }
-    }, [addResp]);
+    }, [addResp, globalDataFunc, stsFunction]);
 
     return (
         <>

@@ -39,6 +39,9 @@ const crudValueDef = {
 }
 
 const Users = () => {
+    const admin_role = sessionStorage.getItem('admin_roles');
+    const {editOrDeleteStatus, setEditOrDeleteStatus} = courseStore()
+    const {imgUpload} = globalStore()
     const [name, setName] = useState<string>('');
     const [phone, setPhone] = useState<string>('');
     const [group, setGroup] = useState<string | null>(null);
@@ -47,9 +50,6 @@ const Users = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [updateGroupId, setUpdateGroupId] = useState<string>('');
     const [crudValue, setCrudValue] = useState<any>(crudValueDef);
-    const admin_role = sessionStorage.getItem('admin_roles');
-    const {editOrDeleteStatus, setEditOrDeleteStatus} = courseStore()
-    const {imgUpload} = globalStore()
 
     // ===========================REQUEST FUNCTION================================
     const urls = () => {
@@ -267,7 +267,7 @@ const Users = () => {
                     onChange={(e) => setGroup(e)}
                     allowClear
                 >
-                    {groups.response && groups.response.map((grp: any, idx: number) => (
+                    {groups.response && groups.response.map((grp: {id: number, name: string}, idx: number) => (
                         <Select.Option key={idx} value={grp.id}>{grp.name}</Select.Option>
                     ))}
                 </Select>
@@ -278,7 +278,11 @@ const Users = () => {
                     onChange={(e) => setTeacher(e)}
                     allowClear
                 >
-                    {teachersList.response && teachersList.response.map((item: any) => (
+                    {teachersList.response && teachersList.response.map((item: {
+                        userId: number
+                        firstName: string
+                        lastName: string
+                    }) => (
                         <Select.Option key={item.userId} value={item.userId}>
                             {item.firstName} {item.lastName}
                         </Select.Option>
@@ -387,7 +391,7 @@ const Users = () => {
                                     <option disabled selected>
                                         Guruhni tanlang
                                     </option>
-                                    {groups.response && groups.response.map((item: any) => (
+                                    {groups.response && groups.response.map((item: {id: number, name: string}) => (
                                         <option value={item.id} key={item.id}>{item.name}</option>
                                     ))}
                                 </select>
@@ -400,7 +404,7 @@ const Users = () => {
                                     <option disabled selected>
                                         Guruhni tanlang
                                     </option>
-                                    {groups.response && groups.response.map((item: any) => (
+                                    {groups.response && groups.response.map((item: {id: number, name: string}) => (
                                         <option value={item.id} key={item.id}>{item.name}</option>
                                     ))}
                                 </select>

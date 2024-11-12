@@ -206,7 +206,7 @@ const Groups = () => {
                                         <Popover title="Davomatga o'tish" overlayStyle={{textAlign: 'center'}}>
                                             <MdNextPlan
                                                 className={`text-2xl hover:cursor-pointer hover:text-darkGreen duration-300`}
-                                                onClick={() => navigate(`/edu/group-attendance/${sts.name}/${sts.id}`)}
+                                                onClick={() => navigate(`/edu/group-attendance/${sts.id}`)}
                                             />
                                         </Popover>
                                     </p>
