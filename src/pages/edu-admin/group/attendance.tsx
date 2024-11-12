@@ -9,6 +9,7 @@ import {useEffect, useState} from "react";
 import Skeleton from "@/components/custom/skeleton/skeleton-cards.tsx";
 import StsTable from "@/pages/edu-admin/group/components/stsTable.tsx";
 import {unReload} from "@/helpers/functions/common-functions.tsx";
+import toast from "react-hot-toast";
 
 const GroupAttendance = () => {
     const {id, name} = useParams<{ id: string; name: string }>();
@@ -48,6 +49,7 @@ const GroupAttendance = () => {
         if (addResp) {
             globalDataFunc()
             stsFunction()
+            toast.success('O\'zgarishlar muvaffaqiyatli saqlandi ✅')
             setTimeout(() => {
                 setAddResp('')
             }, 200)
@@ -58,7 +60,7 @@ const GroupAttendance = () => {
         <>
             <Breadcrumb pageName={`Guruhlar`} subPage={`Davomat: ${name}`}/>
 
-            <div className="flex bg-gray-100 min-h-screen space-x-4">
+            <div className="flex bg-gray-100 min-h-[50vh] space-x-4">
                 {groupLoading ? <div className={'grid grid-cols-1 gap-4 w-1/4'}>
                     <Skeleton/>
                     <Skeleton/>
